@@ -1,0 +1,251 @@
+###########################################################################/**
+# @RdocDefault setMethodS3
+#
+# @title "Creates a method for a class using S3/UseMethod style"
+#
+# \description{
+#  Creates a method for a class using S3/UseMethod style. A function with
+#  name \code{name.class} will be set to \code{definition}. The method
+#  will get the modifiers specified by \code{modifiers}.
+#  If there exists no generic function for this method, it will be
+#  created automatically.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{name}{The name of the method.}
+#   \item{class}{The class for which the method should be defined. If
+#      \code{class == "default"} (or \code{class == "ANY"}) a function
+#      with name \code{name.default} will be created.}
+#   \item{definition}{The method defintion.}
+#   \item{private, protected}{If \code{private=TRUE}, the method is declared
+#      private. If \code{protected=TRUE}, the method is declared protected.
+#      In all other cases the method is declared public.}
+#   \item{static}{If @TRUE this method is defined to be static,
+#      otherwise not. Currently this has no effect expect as an indicator.}
+#   \item{abstract}{If @TRUE this method is defined to be abstract,
+#      otherwise not. Currently this has no effect expect as an indicator.}
+#   \item{trial}{If @TRUE this method is defined to be a trial method,
+#      otherwise not. A trial method is a method that is introduced to be
+#      tried out and it might be modified, replaced or even removed in a
+#      future release. Some people prefer to call trial versions, beta
+#      version. Currently this has no effect expect as an indicator.}
+#   \item{deprecated}{If @TRUE this method is defined to be deprecated,
+#      otherwise not. Currently this has no effect expect as an indicator.}
+#   \item{envir}{The environment for where this method should be stored.}
+#   \item{overwrite}{If @TRUE an already existing method with the same
+#      name (and of the same class) will be overwritten, otherwise not.}
+#   \item{conflict}{If a method already exists with the same name (and of
+#      the same class), different actions can be taken. If \code{"error"},
+#      an exception will be thrown and the method will not be created.
+#      If \code{"warning"}, a @warning will be given and the method \emph{will}
+#      be created, otherwise the conflict will be passed unnotice.}
+#   \item{createGeneric}{If @TRUE, a generic S3/UseMethod function is
+#      defined for this method.}
+#   \item{enforceRCC}{If @TRUE, only class names following the R Coding
+#      Convention is accepted. If the RCC is violated an RccViolationException
+#      is thrown.}
+#   \item{appendVarArgs}{If @TRUE, argument \code{...} is added with a
+#      warning, if missing.  For special methods such as \code{$} and 
+#      \code{[[}, this is never done.
+#      This will increase the chances that the method is consistent with a
+#      generic function with many arguments and/or argument \code{...}.}
+#   \item{...}{Not used.}
+# }
+#
+# \examples{
+#  @include "setMethodS3.Rex"
+#
+#  \dontrun{For a complete example see help(Object).}
+# }
+#
+# \seealso{
+#   To define a class, see @see "setConstructorS3".
+#   For a thorough example of how to use this method see @see "Object".
+#   For information about the R Coding Conventions, see
+#   @see "RccViolationException".
+#   For more information about \code{UseMethod()} see @see "base::methods".
+# }
+#
+# @author
+#
+# \keyword{programming}
+# \keyword{methods}
+#*/###########################################################################
+setMethodS3.default <- function(name, class="default", definition, private=FALSE, protected=FALSE, static=FALSE, abstract=FALSE, trial=FALSE, deprecated=FALSE, envir=parent.frame(), overwrite=TRUE, conflict=c("warning", "error", "quiet"), createGeneric=TRUE, appendVarArgs=TRUE, enforceRCC=TRUE, ...) {
+  conflict <- match.arg(conflict);
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Assert that RCC naming conventions are followed.
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  if (enforceRCC) {
+    # Assert that the generic function name is a valid function name.
+    firstLetter <- substring(gsub("^[.]*", "", name), 1,1);
+
+    if (!is.element(firstLetter, c("$", "$<-", "[", "[<-", "[[", "[[<-"))) {
+      if (!is.element(tolower(firstLetter), letters))
+        throw(RccViolationException(
+                     "Method names must begin with a lower case letter (a-z): ", name));
+
+      # Check first letter  
+      if (firstLetter == toupper(firstLetter))
+        throw(RccViolationException("Method names should start with a lower case letter: ", name));
+    }
+  }
+
+  # Ignore argument 'appendVarArgs' if a "special" method
+  if (appendVarArgs) {
+    appendVarArgs <- !(name %in% c("$", "$<-", "[[", "[[<-", "[", "[<-"));
+  }
+
+  # Check for forbidden names.
+  if (is.element(name, R.KEYWORDS))
+    throw(RccViolationException("Method names must not be same as a reserved keyword in R: ", name));
+  
+  if (class == "ANY") class <- "default";
+
+  # Create the modifiers
+  if (private)
+    protection <- "private"
+  else if (protected)
+    protection <- "protected"
+  else
+    protection <- "public";
+
+  modifiers <- protection;
+  if (static == TRUE) modifiers <- c(modifiers, "static");
+  if (abstract == TRUE) modifiers <- c(modifiers, "abstract");
+  if (deprecated == TRUE) modifiers <- c(modifiers, "deprecated");
+  if (trial == TRUE) modifiers <- c(modifiers, "trial");
+
+  if (missing(definition) && abstract == TRUE) {
+    # Set default 'definition'.
+    src <- paste("definition <- function(this, ...) throw(\"Method \\\"", name, "\\\" is defined abstract in class \\\"", class, "\\\" and has not been overridden by any of the subclasses: \", class(this)[1])", sep="");
+    expr <- parse(text=src);
+
+#    expr <- substitute(definition <- function(this, ...) {
+#      throw("Method \"", name, "\" is defined abstract in class \"", class, 
+#            "\" and is not redefined in any of its subclasses: ", 
+#            class(this)[1])
+#    }, list=list(name=name, class=class));
+    eval(expr);
+  }
+  
+  # Create the class method 'name':
+  methodName <- paste(name, class, sep=".");
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # 2. Find the environment where sys.source() loads the package, which is
+  # the local variable (argument) of sys.source() named as "envir".
+  # Unfortunately, the only way we can be sure which of the parent frames
+  # are the sys.source() function frame is to compare its definition with
+  # each of the definitions of the parent frames using sys.function().
+  # Comment: sys.source() is used by library() and require() for loading
+  # packages. Also note that packages that are currently loaded are not in
+  # the search path, cf. search(), and there and standard exists() will not
+  # find it. *Not* checking the currently loading environment would *not* 
+  # be harmful, but it would produce too many warnings.
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  sys.source.def <- get("sys.source", mode="function", envir=NULL);
+  loadenv <- NULL;
+  for (framePos in sys.parents()[-1]) {
+    if (identical(sys.source.def, sys.function(framePos))) {
+      loadenv <- parent.frame(framePos);
+      break;
+    }
+  }
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # 3. Check for preexisting functions with the same name
+  #     i) in the environment that we are saving to ('envir'), 
+  #    ii) in the currently loading environment ('loadenv'), or
+  #   iii) in the environments in the search path (search()).
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  envirs <- c(envir, loadenv, lapply(search(), FUN=as.environment));
+  fcnDef <- NULL;
+  for (env in envirs) {
+    if (exists(methodName, mode="function", envir=env, inherits=FALSE)) {
+      fcnDef <- get(methodName, mode="function", envir=env, inherits=FALSE);
+      fcnPkg <- attr(env, "name");
+      if (is.null(fcnPkg)) 
+        fcnPkg <- "base" 
+      else 
+        fcnPkg <- gsub("^package:", "", fcnPkg);
+      break;
+    }
+  }
+
+  if (appendVarArgs) {
+    # Append '...' if missing.
+    if (!hasVarArgs(definition)) {
+      warning("Added missing argument '...' to make it more compatible with a generic function: ", methodName);
+      definition <- appendVarArgs(definition);
+    }
+  }
+
+  if (is.null(fcnDef) || overwrite == TRUE) {
+    eval(substitute({fcn <- definition; attr(fcn, "modifiers") <- modifiers},
+  	 list=list(fcn=as.name(methodName), definition=definition,
+  		   modifiers=modifiers)),
+  	 envir=envir);
+  }
+
+  if (!is.null(fcnDef)) {
+    msg <- paste("Method already existed and was", if (overwrite != TRUE) " not", " overwritten: ", sep="");
+    if (is.null(conflict))
+      conflict <- "quiet";
+    if (conflict == "quiet") {
+    } else if (conflict == "warning") {
+      warning(msg, methodName)
+    } else
+      throw(msg, methodName)
+  }
+
+  if (createGeneric == TRUE)
+    setGenericS3(name, envir=envir);
+}
+
+setGenericS3("setMethodS3");
+
+
+
+
+############################################################################
+# HISTORY:
+# 2005-02-15
+# o Added argument 'addVarArgs' if missing.
+# o Added arguments '...' in order to match any generic functions.
+# 2003-04-24
+# o From R v1.7.0, 'if (vector == scalar)' gives a warning. Had to do
+#   conflict <- match.arg(conflict), which is more correct.
+# 2003-01-18
+# o Replaced all occurences of getClass() with data.class(). Will change
+#   the use of getClass() in the future to return a Class object.
+# 2002-12-05
+# o Spell correction in error message.
+# 2002-12-02
+# o Change to argument 'overwrite=TRUE'.
+# 2002-12-01
+# o Added argument 'overwrite=FALSE' and 'conflict=c("error", "warning",
+#   "quiet")' to setMethodS3().
+# 2002-11-29
+# o Updated some error messages.
+# o Now it is possible to create methods (also generic) with one (or several) 
+#   . (period) as a prefix of the name. Such a method should be considered
+#   private in the same manner as fields with a period are private.
+# 2002-10-17
+# o Removed obsolete "modifiers<-"().
+# o Added also "Object" to the class attribute to make static methods to
+#   work.
+# 2002-10-16
+# o There are times when
+#     generic <- function(...) UseMethod() 
+#   is not working, for example
+#     fcn <- get("generic"); fcn(myObj, ...);
+#   For this reason, always do method dispatching using the name explicitly;
+#     generic <- function(...) UseMethod("generic") 
+# 2002-10-15
+# o Created from R.oo Object.R and ideas as described on
+#    http://www.maths.lth.se/help/R/
+############################################################################

@@ -1,0 +1,49 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Do not modify this file since it was automatically generated from:
+% 
+%  
+% 
+% on Tue Feb 15 13:44:31 2005.
+% 
+% Generator was the Rdoc class, which is part of the R.oo package written
+% by Henrik Bengtsson, 2001-2004.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\name{detach.Object}
+\alias{detach.Object}
+\alias{Object.detach}
+\alias{detach.Object}
+\alias{detach,Object-method}
+\keyword{methods}
+\keyword{internal}
+
+
+\title{Detach an Object from the \R search path}
+
+\description{
+ Detach, from the \R search path, an Object that has previously been
+ attached. If the Object was not attached, a \code{\link[base]{warning}} will be generated
+ and nothing will be done.
+}
+
+\usage{\method{detach}{Object}(this, ...)}
+
+\arguments{
+  \item{...}{Not used.}
+}
+
+\value{
+ Returns \code{\link[base:logical]{TRUE}} if the Object was detached, otherwise \code{\link[base:logical]{FALSE}}.
+}
+
+\examples{\dontrun{For a complete example see help(Object).}}
+
+\author{Henrik Bengtsson \url{http://www.braju.com/R/}}
+
+\seealso{
+  \code{\link[R.oo:attach.Object]{*attach}()} and \code{\link[base]{attach}}(), \code{\link[base]{detach}}().
+  For more information see \code{\link{Object}}.
+}
+
+\keyword{programming}
+\keyword{methods}
