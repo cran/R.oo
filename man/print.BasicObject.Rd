@@ -1,0 +1,43 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Do not modify this file since it was automatically generated from:
+% 
+%  
+% 
+% on Tue Feb 15 13:44:53 2005.
+% 
+% Generator was the Rdoc class, which is part of the R.oo package written
+% by Henrik Bengtsson, 2001-2004.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\name{print.BasicObject}
+\alias{print.BasicObject}
+\alias{BasicObject.print}
+\alias{print.BasicObject}
+\alias{print,BasicObject-method}
+\keyword{methods}
+\keyword{internal}
+
+
+\title{Prints an BasicObject}
+
+\description{
+ For all objects of class \code{\link{BasicObject}}, this method will print the
+ value of \code{as.character()} of the object. Note that this function is
+ not called if the argument is not an object of class \code{\link{BasicObject}}.
+}
+
+\usage{\method{print}{BasicObject}(x, ...)}
+
+\arguments{
+  \item{...}{Not used.}
+}
+
+\author{Henrik Bengtsson \url{http://www.braju.com/R/}}
+
+\seealso{
+  \code{\link[base]{print.default}}()
+  For more information see \code{\link{BasicObject}}.
+}
+
+\keyword{programming}
+\keyword{methods}
