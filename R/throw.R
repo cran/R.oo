@@ -20,7 +20,7 @@
 #    \code{throw(Exception("Value out of range: ", value, "."))}.
 #
 #  Note that \code{throw()} can be defined for specific classes, which can
-#  then be caught (or not) using @see "base::tryCatch".
+#  then be caught (or not) using \link[base:conditions]{tryCatch}().
 # }
 #
 # @synopsis
@@ -64,6 +64,8 @@ setMethodS3("throw", "ANY", function(...) {
 
 ############################################################################
 # HISTORY:
+# 2005-02-20
+# o Updated broken link to tryCatch().
 # 2005-02-10
 # o Making use of tryCatch() only.
 # 2002-10-17

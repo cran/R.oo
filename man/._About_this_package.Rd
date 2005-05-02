@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue Feb 15 13:44:20 2005.
+% on Tue May 03 13:27:46 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -33,12 +33,29 @@ since 2001 and is now considered very stable.
   To install this package do\cr
 
   \code{install.packages("R.oo")}
+
+  To get the "devel" version, use\cr
+
+  install.packages("R.classes", contriburl="http://www.maths.lth.se/help/R")
 }
 
 \section{Update}{
   To update this package do\cr
 
   \code{update.packages()}
+}
+
+\section{Dependancies and other requirements}{
+  This package only requires a standard \R installation.
+  This is a cross-platform package implemented in pure \R.
+}
+
+\section{To get started}{
+  To get started, see:
+  \enumerate{
+    \item \code{\link{setMethodS3}}().
+    \item \code{\link{Object}}.
+  }
 }
 
 \section{Further readings}{

@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue Feb 15 13:45:41 2005.
+% on Tue May 03 13:29:13 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -16,7 +16,8 @@
 \title{Evaluates an expression with the possibility to catch exceptions (DEPRECATED)}
 
 \description{
- \emph{This function is deprecated. Use \code{\link[base]{tryCatch()}} instead.}
+ \emph{This function is deprecated. Use \link[base:conditions]{tryCatch}()
+ instead.}
 
  Evaluates an expression with the possibility to catch exceptions.
  The class of the exception thrown by a standard \code{stop()} call is

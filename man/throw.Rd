@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue Feb 15 13:45:40 2005.
+% on Tue May 03 13:29:12 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -32,7 +32,7 @@
    \code{throw(Exception("Value out of range: ", value, "."))}.
 
  Note that \code{throw()} can be defined for specific classes, which can
- then be caught (or not) using \code{\link[base]{tryCatch}}().
+ then be caught (or not) using \link[base:conditions]{tryCatch}().
 }
 
 \usage{\method{throw}{default}(...)}

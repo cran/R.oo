@@ -1,6 +1,28 @@
 Package: R.oo
 =============
 
+Version: 1.0.4 [2005-05-02]
+o Added getDevelUrl() to the Package class.
+
+Version: 1.0.3 [2005-02-28]
+o Argument 'appendVarArgs' of setMethodS3() is now ignored if
+  a replacement function (named "nnn<-") is defined.
+
+Version: 1.0.2 [2005-02-25]
+o setMethodS3(..., abstract=TRUE) generated warnings of type
+  "using .GlobalEnv instead of package:<pkg>". Found a way 
+  (ad hoc?) to get rid of them. See source code for details.
+  This should remove similar warnings from package using R.oo.
+
+Version: 1.0.1 [2005-02-20]
+o Package now say "See ?R.oo for help" when loaded.
+o Now using three-digit version numbers, e.g. a.b.c where
+  a,b,c in 0,1,...,9. 'a' is updated for major updates, 
+  'b' for minor updates and 'c' is for minor revisions.
+o Removed require(methods) for R v2.0.0 and above.
+o setMethodS3(..., abstract=TRUE) now defines abstract methods
+  with '...' as the only argument(s).
+
 Version: 1.00 [2005-02-15]
 o Moved to CRAN.
 

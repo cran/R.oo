@@ -923,6 +923,48 @@ setMethodS3("getContribUrl", "Package", function(this, ...) {
 
 
 #########################################################################/**
+# @RdocMethod getDevelUrl
+#
+# @title "Gets the URL(s) from where the developers version of this package can be installed"
+#
+# \description{
+#   @get "title" by looking for comma or semicolon separated URLs
+#   at the optional \code{DevelURL} line in the \code{DESCRIPTION} file
+#   of the package.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns a vector of @character strings.
+# }
+#
+# \examples{
+#   pkg <- Package("R.oo")
+#   print(getDevelUrl(pkg))
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#*/#########################################################################
+setMethodS3("getDevelUrl", "Package", function(this, ...) {
+  urls <- getDescriptionFile(this, fields="DevelURL");
+  urls <- strsplit(urls, "[,;]")[[1]];
+  urls <- gsub("^[ \t]*", "", urls);
+  urls <- gsub("[ \t]*$", "", urls);
+  urls;
+}, private=TRUE)
+
+
+
+#########################################################################/**
 # @RdocMethod getMaintainer
 #
 # @title "Gets the Maintainer of this package"
@@ -1465,6 +1507,8 @@ setMethodS3("update", "Package", function(object, contribUrl=getContribUrl(this)
 
 ############################################################################
 # HISTORY:
+# 2005-05-02
+# o Added getDevelUrl().
 # 2005-02-15
 # o Added arguments '...' in order to match any generic functions.
 # 2005-02-10
