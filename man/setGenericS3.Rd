@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue Feb 15 13:44:22 2005.
+% on Tue May 03 13:27:06 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -23,26 +23,19 @@
  function with name \code{name} that despatch the method \code{name} via
  \code{UseMethod}. If there is already a function named \code{name} that
  function is renamed to \code{name.default}.
-
- By default methods in the \code{base} package that has to be renamed
- are not producing a \code{\link[base]{warning}} since such methods are expected be known
- by the programmer.
 }
 
 \usage{\method{setGenericS3}{default}(name, envir=parent.frame(), ellipsesOnly=TRUE, dontWarn=getOption("dontWarnPkgs"), enforceRCC=TRUE, ...)}
 
 \arguments{
   \item{name}{The name of the generic function.}
-  \item{envir}{The environment for where this method should be stored.
-     Default value is \code{parent.frame()}.}
+  \item{envir}{The environment for where this method should be stored.}
   \item{ellipsesOnly}{If \code{\link[base:logical]{TRUE}}, the only arguments in the generic function
      will be \code{...}.}
   \item{dontWarn}{If a non-generic method with the same name is found it
      will be "renamed" to a default method. If that method is found in
      a package with a name that is \emph{not} found in \code{dontWarn}
-     a warning will be produced, otherwise it will be renamed silently.
-     Default value is \code{getOption("dontWarnPkgs")}, which by default
-     is \code{c("base")}.}
+     a warning will be produced, otherwise it will be renamed silently.}
   \item{...}{Not used.}
 }
 

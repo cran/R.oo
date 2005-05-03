@@ -28,7 +28,7 @@
 # @author
 #
 # \seealso{
-#   See also @see "base::tryCatch" (and @see "base::try").
+#   See also \link[base:conditions]{tryCatch}() (and @see "base::try").
 # }
 #
 # \keyword{programming}
@@ -438,6 +438,8 @@ setMethodS3("printStackTrace", "Exception", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2005-02-20
+# o Updated broken link to tryCatch().
 # 2005-02-15
 # o Added arguments '...' in order to match any generic functions.
 # 2005-02-10

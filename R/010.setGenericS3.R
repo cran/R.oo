@@ -11,26 +11,19 @@
 #  function with name \code{name} that despatch the method \code{name} via
 #  \code{UseMethod}. If there is already a function named \code{name} that
 #  function is renamed to \code{name.default}.
-#
-#  By default methods in the \code{base} package that has to be renamed
-#  are not producing a @warning since such methods are expected be known
-#  by the programmer.
 # }
 #
 # @synopsis
 #
 # \arguments{
 #   \item{name}{The name of the generic function.}
-#   \item{envir}{The environment for where this method should be stored.
-#      Default value is \code{parent.frame()}.}
+#   \item{envir}{The environment for where this method should be stored.}
 #   \item{ellipsesOnly}{If @TRUE, the only arguments in the generic function
 #      will be @....}
 #   \item{dontWarn}{If a non-generic method with the same name is found it 
 #      will be "renamed" to a default method. If that method is found in
 #      a package with a name that is \emph{not} found in \code{dontWarn}
-#      a warning will be produced, otherwise it will be renamed silently.
-#      Default value is \code{getOption("dontWarnPkgs")}, which by default
-#      is \code{c("base")}.}
+#      a warning will be produced, otherwise it will be renamed silently.}
 #   \item{...}{Not used.}
 # }
 #

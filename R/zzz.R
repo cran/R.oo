@@ -14,5 +14,5 @@ detach("R.oo")
 
   assign(pkgname, pkg, pos=pos);
   cat(getName(pkg), " v", getVersion(pkg), " (", getDate(pkg), ")",
-      " was successfully loaded.\n", sep="");
+      " successfully loaded. See ?", pkgname, " for help.\n", sep="");
 }

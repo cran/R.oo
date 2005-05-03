@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue Feb 15 13:44:21 2005.
+% on Tue May 03 13:27:48 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -51,6 +51,7 @@
 \alias{getDescription}
 \alias{getDescriptionFile}
 \alias{getDetails}
+\alias{getDevelUrl}
 \alias{getDocPath}
 \alias{getEnvironment}
 \alias{getExamplePath}

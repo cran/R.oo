@@ -953,7 +953,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       rd <<- paste(rd, line, sep="");
       bfr;
     }
-  
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagAliasMethod <- function(bfr) {
@@ -967,6 +967,20 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       rd <<- paste(rd, line, sep="");
       bfr;
     }
+  
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    tagAliasUndocumented <- function(bfr) {
+      bfr <- getTagValue(bfr);
+      value <- attr(bfr, "value");
+      alias <- unlist(tools::undoc(package=value));
+      alias <- sapply(alias, FUN=escapeAlias);
+      lines <- paste("\\alias{", alias, "}", sep="");
+      lines <- paste(lines, collapse="\n");
+      rd <<- paste(rd, lines, sep="");
+      bfr;
+    }
+
   
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1298,6 +1312,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       "name"             = tagName,
   #
       "aliasmethod"      = tagAliasMethod,     # must be *before* "alias".
+  #   "aliasundocumented" = tagAliasUndocumented, # not useful.
       "alias"            = tagAlias,
       "title"            = tagTitle,
       "usage"            = tagSynopsis,        # deprecated

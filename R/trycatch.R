@@ -4,7 +4,8 @@
 # @title "Evaluates an expression with the possibility to catch exceptions (DEPRECATED)"
 #
 # \description{
-#  \emph{This function is deprecated. Use @see "base::tryCatch()" instead.}
+#  \emph{This function is deprecated. Use \link[base:conditions]{tryCatch}()
+#  instead.}
 #
 #  Evaluates an expression with the possibility to catch exceptions.
 #  The class of the exception thrown by a standard \code{stop()} call is
@@ -199,6 +200,8 @@ if (R.Version()$major <= 1 && R.Version()$minor < 8.0) {
 
 ############################################################################
 # HISTORY:
+# 2005-02-20
+# o Updated broken link to tryCatch().
 # 2005-02-10
 # o Planning to make trycatch() deprecated in favor of tryCatch().
 # 2004-03-03

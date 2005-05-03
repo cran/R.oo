@@ -3,14 +3,17 @@
 # is named "000.R" (zeros).
 ##############################################################################
 
-require(methods) || throw("Package 'methods' is missing.");
-
-options(dontWarnPkgs=c("R.oo", "methods", "base", "ctest", "Autoloads"))
-
+if (R.Version()$major < 2) { 
+  require(methods) || stop("Could not load package: methods");
+  options(dontWarnPkgs=unique(c("base", "datasets", "graphics", "grDevices", 
+      "methods", "stats", "utils", "Autoloads", getOption("dontWarnPkgs"))))
+}
 
 
 ############################################################################
 # HISTORY:
+# 2005-02-15
+# o Now require() is only called for R v1.9.1 or eariler.
 # 2005-02-10
 # o Moved R.KEYWORDS into its own source file.
 # 2003-05-06

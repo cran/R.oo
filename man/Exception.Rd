@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue Feb 15 13:45:03 2005.
+% on Tue May 03 13:28:15 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -166,7 +166,7 @@ cat("The logarithm of ", x, " is ", l, ".\n\n", sep="")
 \author{Henrik Bengtsson \url{http://www.braju.com/R/}}
 
 \seealso{
-  See also \code{\link[base]{tryCatch}}() (and \code{\link[base]{try}}()).
+  See also \link[base:conditions]{tryCatch}() (and \code{\link[base]{try}}()).
 }
 
 \keyword{programming}

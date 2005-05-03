@@ -94,9 +94,11 @@ setMethodS3.default <- function(name, class="default", definition, private=FALSE
     }
   }
 
-  # Ignore argument 'appendVarArgs' if a "special" method
+  # Ignore argument 'appendVarArgs' if a "special" method 
+  # or a replacement method.
   if (appendVarArgs) {
     appendVarArgs <- !(name %in% c("$", "$<-", "[[", "[[<-", "[", "[<-"));
+    appendVarArgs <- appendVarArgs && !(regexpr("<-", name) != -1);
   }
 
   # Check for forbidden names.
@@ -121,16 +123,20 @@ setMethodS3.default <- function(name, class="default", definition, private=FALSE
 
   if (missing(definition) && abstract == TRUE) {
     # Set default 'definition'.
-    src <- paste("definition <- function(this, ...) throw(\"Method \\\"", name, "\\\" is defined abstract in class \\\"", class, "\\\" and has not been overridden by any of the subclasses: \", class(this)[1])", sep="");
+    src <- paste("...R.oo.definition <- function(...) throw(\"Method \\\"", name, "\\\" is defined abstract in class \\\"", class, "\\\" and has not been overridden by any of the subclasses: \", class(list(...)[[1]])[1])", sep="");
     expr <- parse(text=src);
 
-#    expr <- substitute(definition <- function(this, ...) {
-#      throw("Method \"", name, "\" is defined abstract in class \"", class, 
-#            "\" and is not redefined in any of its subclasses: ", 
-#            class(this)[1])
-#    }, list=list(name=name, class=class));
-    eval(expr);
+    # If just defining a local 'definition' function, to be used below,
+    # one will get warnings "using .GlobalEnv instead of package:<pkg>"
+    # when loading the package *with lazy loading*. I do not understand
+    # the reasons for it, but here follows a trick in order to not get
+    # such warnings. It kinda borrows the 'envir' frame to define a local
+    # function. It works, but don't ask me why. /HB 2005-02-25
+    eval(expr, envir=envir);
+    definition <- get("...R.oo.definition", envir=envir);
+    rm(list="...R.oo.definition", envir=envir);
   }
+
   
   # Create the class method 'name':
   methodName <- paste(name, class, sep=".");
@@ -156,6 +162,7 @@ setMethodS3.default <- function(name, class="default", definition, private=FALSE
     }
   }
 
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   # 3. Check for preexisting functions with the same name
   #     i) in the environment that we are saving to ('envir'), 
@@ -176,11 +183,20 @@ setMethodS3.default <- function(name, class="default", definition, private=FALSE
     }
   }
 
+
+
   if (appendVarArgs) {
     # Append '...' if missing.
     if (!hasVarArgs(definition)) {
       warning("Added missing argument '...' to make it more compatible with a generic function: ", methodName);
-      definition <- appendVarArgs(definition);
+#      definition <- appendVarArgs(definition);
+
+      # As above, to avoid "using .GlobalEnv instead of package:<pkg>"
+      # warnings, we do the below trick. /HB 2005-02-25
+      assign("...R.oo.definition", definition, envir=envir);
+      eval(substitute(fcn <- appendVarArgs(fcn), list=list(fcn=as.name("...R.oo.definition"))), envir=envir);
+      definition <- get("...R.oo.definition", envir=envir);
+      rm(list="...R.oo.definition", envir=envir);
     }
   }
 
@@ -213,6 +229,17 @@ setGenericS3("setMethodS3");
 
 ############################################################################
 # HISTORY:
+# 2005-02-28
+# o Now appendVarArgs is ignore if replacement function, i.e. named "nnn<-".
+# 2005-02-25
+# o Tracked down the source of "using .GlobalEnv instead of package:<pkg>" 
+#   warnings. They occured when defining abstract methods. They also occured
+#   when automatically adding missing '...' arguments. Made an ad hoc fix
+#   for this, which I do not really understand why it works, or rather why
+#   it did not work before.
+# 2005-02-20
+# o Abstract methods are now defined with '...' as the only argument(s).
+#   This will please R CMD check for some methods, e.g. open().
 # 2005-02-15
 # o Added argument 'addVarArgs' if missing.
 # o Added arguments '...' in order to match any generic functions.

@@ -37,6 +37,7 @@
 # @alias "getDescription"
 # @alias "getDescriptionFile"
 # @alias "getDetails"
+# @alias "getDevelUrl"
 # @alias "getDocPath"
 # @alias "getEnvironment"
 # @alias "getExamplePath"
