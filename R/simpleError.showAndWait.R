@@ -1,6 +1,7 @@
 ###########################################################################/**
 # @set "class=simpleError"
 # @RdocMethod showAndWait
+# @keyword internal
 #
 # @title "Display the message to the user and wait for the user to respond"
 #
@@ -69,6 +70,8 @@ setMethodS3("showAndWait", "simpleError", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2005-06-08
+# o Added keyword "internal" to all methods, because of change in Rdoc.
 # 2005-02-15
 # o Added arguments '...' in order to match any generic functions.
 # 2005-02-10

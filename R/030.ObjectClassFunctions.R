@@ -10,6 +10,13 @@ attach(list(
     class(this) <- "Object";
     attr(this, "...instanciationTime") <- Sys.time();
 
+    # Note, we cannot register the finalizer here, because then
+    # the reference variable 'this' will be of the wrong class,
+    # that is, not the "final" class. However, we still do it so
+    # that pure Object:s will be finalized too.  This will be
+    # overridden if extend(<Object>) is called.
+    reg.finalizer(attr(this, ".env"), function(env) finalize(this));
+
     this;
   },
   
@@ -43,6 +50,9 @@ attach(list(
 
 ############################################################################
 # HISTORY:
+# 2005-06-10
+# o Added reg.finalizer() to Object() for pure Object:s. However, it must
+#   be done in extend.Object() too.
 # 2004-10-18
 # o Updated the arguments for extend() so that they are identical to the
 #   ones in extend.Object.

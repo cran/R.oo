@@ -83,10 +83,11 @@ setMethodS3.default <- function(name, class="default", definition, private=FALSE
     # Assert that the generic function name is a valid function name.
     firstLetter <- substring(gsub("^[.]*", "", name), 1,1);
 
-    if (!is.element(firstLetter, c("$", "$<-", "[", "[<-", "[[", "[[<-"))) {
+    allowedFirst <- c("?", "$", "$<-", "[", "[<-", "[[", "[[<-");
+    if (!is.element(firstLetter, allowedFirst)) {
       if (!is.element(tolower(firstLetter), letters))
         throw(RccViolationException(
-                     "Method names must begin with a lower case letter (a-z): ", name));
+            "Method names must begin with a lower case letter (a-z): ", name));
 
       # Check first letter  
       if (firstLetter == toupper(firstLetter))
@@ -219,7 +220,7 @@ setMethodS3.default <- function(name, class="default", definition, private=FALSE
   }
 
   if (createGeneric == TRUE)
-    setGenericS3(name, envir=envir);
+    setGenericS3(name, envir=envir, enforceRCC=enforceRCC);
 }
 
 setGenericS3("setMethodS3");
@@ -229,6 +230,8 @@ setGenericS3("setMethodS3");
 
 ############################################################################
 # HISTORY:
+# 2005-06-14
+# o BUG FIX: Argument 'enforceRCC' was not passed to setGenericS3().
 # 2005-02-28
 # o Now appendVarArgs is ignore if replacement function, i.e. named "nnn<-".
 # 2005-02-25

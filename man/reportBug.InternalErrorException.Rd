@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:28:25 2005.
+% on Mon Jul 18 15:07:55 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -14,8 +14,6 @@
 \alias{InternalErrorException.reportBug}
 \alias{reportBug.InternalErrorException}
 \alias{reportBug,InternalErrorException-method}
-\keyword{methods}
-\keyword{internal}
 
 
 \title{Send a bug report}
@@ -74,3 +72,5 @@ trycatch({
 \keyword{programming}
 \keyword{methods}
 \keyword{error}
+\keyword{internal}
+\keyword{methods}

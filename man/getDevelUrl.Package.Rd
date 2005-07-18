@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:28:43 2005.
+% on Mon Jul 18 15:08:08 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -14,8 +14,6 @@
 \alias{Package.getDevelUrl}
 \alias{getDevelUrl.Package}
 \alias{getDevelUrl,Package-method}
-\keyword{methods}
-\keyword{internal}
 
 
 \title{Gets the URL(s) from where the developers version of this package can be installed}
@@ -46,3 +44,5 @@
 \seealso{
   For more information see \code{\link{Package}}.
 }
+\keyword{internal}
+\keyword{methods}

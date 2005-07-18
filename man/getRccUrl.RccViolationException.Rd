@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:28:53 2005.
+% on Mon Jul 18 15:08:14 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -14,8 +14,6 @@
 \alias{RccViolationException.getRccUrl}
 \alias{getRccUrl.RccViolationException}
 \alias{getRccUrl,RccViolationException-method}
-\keyword{methods}
-\keyword{internal}
 
 
 \title{Static method to get a URL where the RCC can be found}
@@ -48,3 +46,5 @@
 \keyword{programming}
 \keyword{methods}
 \keyword{error}
+\keyword{internal}
+\keyword{methods}

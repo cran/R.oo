@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:28:40 2005.
+% on Mon Jul 18 15:08:06 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -14,8 +14,6 @@
 \alias{Package.isLoaded}
 \alias{isLoaded.Package}
 \alias{isLoaded,Package-method}
-\keyword{methods}
-\keyword{internal}
 
 
 \title{Checks if the package is installed on the search path or not}
@@ -46,3 +44,5 @@
   \code{\link[base]{search.}}
   For more information see \code{\link{Package}}.
 }
+\keyword{internal}
+\keyword{methods}

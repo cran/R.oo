@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:27:15 2005.
+% on Mon Jul 18 15:07:10 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -14,8 +14,6 @@
 \alias{Object.getInstanciationTime}
 \alias{getInstanciationTime.Object}
 \alias{getInstanciationTime,Object-method}
-\keyword{methods}
-\keyword{internal}
 
 
 \title{Gets the time when the object was instanciated}
@@ -47,4 +45,6 @@
 \author{Henrik Bengtsson \url{http://www.braju.com/R/}}
 
 \keyword{programming}
+\keyword{methods}
+\keyword{internal}
 \keyword{methods}

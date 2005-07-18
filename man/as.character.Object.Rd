@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:27:15 2005.
+% on Mon Jul 18 15:07:10 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -14,8 +14,6 @@
 \alias{Object.as.character}
 \alias{as.character.Object}
 \alias{as.character,Object-method}
-\keyword{methods}
-\keyword{internal}
 
 
 \title{Gets a character string representing the object}
@@ -49,4 +47,6 @@
 }
 
 \keyword{programming}
+\keyword{methods}
+\keyword{internal}
 \keyword{methods}

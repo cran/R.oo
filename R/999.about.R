@@ -4,22 +4,22 @@
 #
 # \description{
 #  @eval "getDescription(R.oo)"
+#
+#  Please note that the Rdoc syntax/grammar used to convert Rdoc comments
+#  in code into Rd files is not strictly defined and is modified by the
+#  need of the author. Ideally, there will be a well defined Rdoc language
+#  one day.
 # }
 #
-# \section{Installation}{
+# \section{Installation and updates}{
 #   To install this package do\cr
 #
 #   \code{install.packages("R.oo")}
 #
-#   To get the "devel" version, use\cr
-#
-#   install.packages("R.classes", contriburl="http://www.maths.lth.se/help/R")
-# }
-#
-# \section{Update}{
-#   To update this package do\cr
-#
-#   \code{update.packages()}
+#   To update our packages do \code{update.packages()}.
+#   To get the "devel" version, add argument
+#   \code{contriburl="http://www.maths.lth.se/help/R"}
+#   to the above commands.
 # }
 #
 # \section{Dependancies and other requirements}{
@@ -37,6 +37,7 @@
 #
 # \section{Further readings}{
 #   For a detailed introduction to the package see [1].
+#   To define static fields, see help on @see "Object".
 # }
 #
 # \section{How to cite this package}{
@@ -46,6 +47,11 @@
 # }
 #
 # @author
+#
+# \section{License}{
+#   The releases of this package is licensed under 
+#   LGPL version 2.1 or newer.
+# }
 #
 # \references{
 # [1] Henrik Bengtsson, \emph{The R.oo package - Object-Oriented Programming

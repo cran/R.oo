@@ -2,6 +2,7 @@
 # @set "class=classRepresentation"
 #
 # @RdocMethod getKnownSubclasses
+# @keyword internal
 #
 # @title "Gets the known subclasses"
 #
@@ -35,6 +36,7 @@ setMethodS3("getKnownSubclasses", "classRepresentation", function(this, ...) {
 
 ###########################################################################/**
 # @RdocMethod getSuperclasses
+# @keyword internal
 #
 # @title "Gets the superclasses"
 #
@@ -71,6 +73,7 @@ setMethodS3("getSuperclasses", "classRepresentation", function(this, ...) {
 
 ###########################################################################/**
 # @RdocMethod getRdHierarchy
+# @keyword internal
 #
 # @title "Gets the class hierarchy in Rd format"
 #
@@ -133,6 +136,7 @@ setMethodS3("getRdHierarchy", "classRepresentation", function(this, ...) {
 
 ###########################################################################/**
 # @RdocMethod getRdDeclaration
+# @keyword internal
 #
 # @title "Gets the class declaration in Rd format"
 #
@@ -193,6 +197,7 @@ setMethodS3("getRdDeclaration", "classRepresentation", function(this, ...) {
 
 ###########################################################################/**
 # @RdocMethod getRdMethods
+# @keyword internal
 #
 # @title "Gets the methods in Rd format"
 #
@@ -229,6 +234,8 @@ setMethodS3("getRdMethods", "classRepresentation", function(class, visibility=c(
 
 #########################################################################
 # HISTORY:
+# 2005-06-08
+# o Added keyword "internal" to all methods, because of change in Rdoc.
 # 2005-02-15
 # o Added arguments '...' in order to match any generic functions.
 # 2004-10-17

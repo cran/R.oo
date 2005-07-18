@@ -29,7 +29,22 @@
 #  @allmethods
 # }
 #
-# @examples "Object.Rex"
+# \section{Defining static fields}{
+#  To define a static field of an Object class, use a private field 
+#  \code{<.field>} and then create a virtual field \code{<field>} by 
+#  defining methods \code{get<Field>()} and \code{set<Field>()}.  
+#  These methods should retrieve and assign the value of the field 
+#  \code{<.field>} of the \emph{static} instance of the class.  The 
+#  second example below shows how to do this.  The example modifies 
+#  also the static field already in the constructor, which is something 
+#  that otherwise may be tricky.
+# }
+#
+# \examples{
+#   @include "Person.Rex"
+#
+#   @include "StaticFields.Rex"
+# }
 #
 # @author
 #
@@ -119,7 +134,7 @@ setMethodS3("as.character", "Object", function(this, ...) {
     ans
   }
 
-  paste(data.class(this), ": 0x", intToHex(getInternalAddress(this), width=8), sep="");
+  paste(class(this)[1], ": 0x", intToHex(getInternalAddress(this), width=8), sep="");
 }) # as.character()
 
 
@@ -515,12 +530,70 @@ setMethodS3("print", "Object", function(x, ...) {
 
 
 
+########################################################################/**
+# @RdocMethod attachLocally
+#
+# @title "Attaches an Object locally to an environment"
+#
+# @synopsis
+#
+# \description{
+#  @get "title".  By default, the fields of the Object are attached to
+#  the parent frame, that is, the calling environment.
+# }
+#
+# \arguments{
+#   \item{private}{If @TRUE, private fields are included, otherwise not.
+#      This is only effective if \code{fields==NULL}.}
+#   \item{fields}{A @character @vector specifying elements to be copied.
+#      If @NULL, all elements are considered.}
+#   \item{excludeFields}{A @character @vector specifying elements not to
+#      be copied.  This has higher priority than \code{fields}.}
+#   \item{overwrite}{If @FALSE, fields that already exists will not be
+#      copied.}
+#   \item{envir}{The @environment where fields are copied to.}
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns (invisibly) a @character @vector of the fields copied.
+# }
+# 
+# @examples "attachLocally.Object.Rex"
+#
+# @author
+# 
+# \seealso{
+#  @seemethod attach
+#  @seeclass
+# }
+#
+# @keyword "utilities" 
+# @keyword "programming"
+#*/#########################################################################
+setMethodS3("attachLocally", "Object", function(this, private=FALSE, fields=NULL, excludeFields=NULL, overwrite=TRUE, envir=parent.frame(), ...) {
+  if (is.null(fields))
+    fields <- getFields(this, private=private);
+  fields <- setdiff(fields, excludeFields);
+print(fields);
+
+  attachedFields <- c();
+  for (field in fields) {
+    if (overwrite || !hasField(this, field)) {
+      assign(field, this[[field]], envir=envir);
+      attachedFields <- c(attachedFields, field);
+    }
+  }
+
+  invisible(attachedFields);
+})
+
 
 
 ###########################################################################/**
 # @RdocMethod attach
 #
-# @title "Attach an Object to the \R search path"
+# @title "Attaches an Object to the \R search path"
 #
 # \description{
 #  Attach the members of an Object to the \R search path.
@@ -662,7 +735,7 @@ setMethodS3("detach", "Object", function(this, ...) {
 #*/###########################################################################
 setMethodS3("save", "Object", function(this, file=NULL, path=NULL, compress=TRUE, ...) {
   if (is.null(file)) {
-    file <- sprintf("%s.%d.RData", data.class(this), getInternalAddress(this));
+    file <- sprintf("%s.%d.RData", class(this)[1], getInternalAddress(this));
   } 
 
   if (!inherits(file, "connection")) {
@@ -714,7 +787,19 @@ setMethodS3("save", "Object", function(this, file=NULL, path=NULL, compress=TRUE
 # \details{
 #   Please note that no constructors are called when an Object is loaded
 #   and neither is any static class code called.
+# }
 #
+# \section{Type control}{
+#   Typically this static method is called as \code{<Object>$load(...)}
+#   where \code{<Object>} is any Object class.  When an Object has been
+#   loaded, it is verified that it inherits from \code{<Object>}. If it
+#   does not, an exception is thrown.  Thus, \code{Object$load(...)} will 
+#   load any Object, but \code{MyClass$load(...)} will only load an Object
+#   that inherits from MyClass.  If loaded object is not of correct class,
+#   an exception is thrown.
+# }
+#
+# \section{Troubleshooting}{
 #   Due to a bug, likely in \R itself, one can not specify the \code{file}
 #   argument by its name, i.e. \code{Object$load(file="foo.RData")} will
 #   not work, but \code{Object$load("foo.RData")} work just fine.
@@ -734,7 +819,7 @@ setMethodS3("save", "Object", function(this, file=NULL, path=NULL, compress=TRUE
 # \keyword{methods}
 # \keyword{IO}
 #*/###########################################################################
-setMethodS3("load", "Object", function(this, file, path=NULL, ...) {
+setMethodS3("load", "Object", function(static, file, path=NULL, ...) {
   if (!inherits(file, "connection")) {
     if (!is.null(path) && path != "") {
       # 1. Remove any '/' or '\' at the end of the path string.
@@ -749,10 +834,23 @@ setMethodS3("load", "Object", function(this, file, path=NULL, ...) {
   }
  
   # load.default() recognized gzip'ed files too.
-  load.default(file=file);
-  saveLoadReference;
-}, static=TRUE) # load()
+  vars <- load.default(file=file);
 
+  if (!"saveLoadReference" %in% vars)
+    throw("The file does not contain an R.oo Object: ", file);
+
+  object <- saveLoadReference;
+
+  # Assert that the loaded object inherits from the same class as the
+  # static object used to call this method.
+  if (!inherits(object, class(static)[1])) {
+    throw("Loaded an Object from file, but it does not inherit from ", 
+                                   class(static)[1], " as expected: ", 
+                                 paste(class(object), collapse=", "));
+  }
+
+  object;
+}, static=TRUE) # load()
 
 
 
@@ -845,7 +943,7 @@ setMethodS3("objectSize", "Object", function(this, ...) {
 # \keyword{methods}
 #*/###########################################################################
 setMethodS3("getStaticInstance", "Object", function(this, ...) {
-  class <- get(data.class(this));
+  class <- get(class(this)[1]);
   getStaticInstance(class);
 }, protected=TRUE) # getStaticInstance()
 
@@ -1152,6 +1250,9 @@ setMethodS3("extend", "Object", function(this, ...className, ...) {
       staticCode(static);
   }
 
+  # Note, we have to register the finalizer here and not in Object(), 
+  # because here the reference variable 'this' will have the correct
+  # class attribute, which it does not in Object().
   reg.finalizer(attr(this, ".env"), function(env) finalize(this));
 
   this;
@@ -1597,6 +1698,15 @@ setMethodS3("callSuperMethodS3", "ANY", function(this, methodName, ..., nbrOfCla
 
 ############################################################################
 # HISTORY:
+# 2005-07-12
+# o Added an Rdoc section on "Defining static fields" with an example
+#   showing how to do it.
+# 2005-06-14
+# o Replaced all data.class(obj) with class(obj)[1].
+# o Added attachLocally().
+# 2005-06-01
+# o Now load() asserts that the loaded Object inherits from the class that
+#   the static object, which is used to call load(), is of.
 # 2005-02-15
 # o Added arguments '...' in order to match any generic functions.
 # 2004-10-18

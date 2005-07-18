@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:27:46 2005.
+% on Mon Jul 18 15:07:29 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -11,38 +11,29 @@
 
 \name{. About this package}
 \alias{. About this package}
-\keyword{documentation}
 
 \title{About this package}
 
 \alias{R.oo}
 
 \description{
- Methods and classes for object-oriented programming in R
-with or without references.  Large effort has been made on
-making definition of methods as simple as possible with a
-minimum of maintainance for package developers.  For example,
-generic functions are created automatically, if missing, and
-name conflict are automatically solved, if possible.  The
-method setMethodS3() is a good start for those who in the
-future want to migrate to S4.  The package has been developed
-since 2001 and is now considered very stable.
+ Methods and classes for object-oriented programming in R with or without references.  Large effort has been made on making definition of methods as simple as possible with a minimum of maintainance for package developers.  For example, generic functions are created automatically, if missing, and name conflict are automatically solved, if possible.  The method setMethodS3() is a good start for those who in the future want to migrate to S4.  The package has been developed since 2001 and is now considered very stable.
+
+ Please note that the Rdoc syntax/grammar used to convert Rdoc comments
+ in code into Rd files is not strictly defined and is modified by the
+ need of the author. Ideally, there will be a well defined Rdoc language
+ one day.
 }
 
-\section{Installation}{
+\section{Installation and updates}{
   To install this package do\cr
 
   \code{install.packages("R.oo")}
 
-  To get the "devel" version, use\cr
-
-  install.packages("R.classes", contriburl="http://www.maths.lth.se/help/R")
-}
-
-\section{Update}{
-  To update this package do\cr
-
-  \code{update.packages()}
+  To update our packages do \code{update.packages()}.
+  To get the "devel" version, add argument
+  \code{contriburl="http://www.maths.lth.se/help/R"}
+  to the above commands.
 }
 
 \section{Dependancies and other requirements}{
@@ -60,6 +51,7 @@ since 2001 and is now considered very stable.
 
 \section{Further readings}{
   For a detailed introduction to the package see [1].
+  To define static fields, see help on \code{\link{Object}}.
 }
 
 \section{How to cite this package}{
@@ -84,6 +76,11 @@ since 2001 and is now considered very stable.
 
 \author{Henrik Bengtsson \url{http://www.braju.com/R/}}
 
+\section{License}{
+  The releases of this package is licensed under
+  LGPL version 2.1 or newer.
+}
+
 \references{
 [1] Henrik Bengtsson, \emph{The R.oo package - Object-Oriented Programming
     with References Using Standard R Code}, In Kurt Hornik, Friedrich
@@ -92,3 +89,4 @@ since 2001 and is now considered very stable.
     (DSC 2003), March 20-22, Vienna, Austria.
     \url{http://www.ci.tuwien.ac.at/Conferences/DSC-2003/Proceedings/}\cr
 }
+\keyword{documentation}

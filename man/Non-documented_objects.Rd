@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:27:48 2005.
+% on Mon Jul 18 15:07:30 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -11,125 +11,141 @@
 
 \name{Non-documented objects}
 \alias{Non-documented objects}
-\keyword{documentation}
 \title{Non-documented objects}
 
 
-\alias{appendVarArgs}
-\alias{appendVarArgs.function}
-\alias{argsToString}
+% The BasicObject class
+\alias{isReferable}
+
+% The Class class
+\alias{forName}
+\alias{getDetails}
+\alias{getKnownSubclasses}
+\alias{getMethods}
+\alias{getMethods.default}
+\alias{getName}
+\alias{getPackage}
+\alias{getStaticInstance}
+\alias{getSuperclasses}
+\alias{isAbstract}
+\alias{isDeprecated}
+\alias{isPrivate}
+\alias{isProtected}
+\alias{isPublic}
+\alias{isStatic}
+\alias{newInstance}
+
+% The Exception class
+\alias{getCall}
+\alias{getLastException}
+\alias{getMessage}
+\alias{getStackTrace}
+\alias{getStackTraceString}
+\alias{getWhen}
+\alias{printStackTrace}
+\alias{showAndWait}
+
+% The Object class
 \alias{attach}
 \alias{attach.default}
-\alias{callSuperMethodS3}
-\alias{callSuperMethodS3.default}
-\alias{check}
+\alias{attachLocally}
 \alias{clone}
-\alias{compile}
-\alias{createManPath}
-\alias{createName}
-\alias{declaration}
 \alias{detach}
 \alias{detach.default}
-\alias{escapeRdFilename}
-\alias{extend}
 \alias{finalize}
-\alias{forName}
+\alias{getClass}
+\alias{getClass.Object}
+\alias{getClass.default}
+\alias{getFields}
+\alias{getInstanciationTime}
+\alias{getInternalAddress}
+\alias{hasField}
+\alias{load}
+\alias{load.default}
+\alias{novirtual}
+\alias{objectSize}
+\alias{save}
+\alias{save.default}
+\alias{staticCode}
+
+% The Package class
 \alias{getAuthor}
 \alias{getBundle}
 \alias{getBundlePackages}
-\alias{getCall}
-\alias{getClass}
-\alias{getClass.default}
 \alias{getClasses}
 \alias{getClasses.default}
-\alias{getClassS4Usage}
-\alias{getContents}
 \alias{getContribUrl}
+\alias{getContents}
 \alias{getData}
 \alias{getDataPath}
 \alias{getDate}
 \alias{getDescription}
 \alias{getDescriptionFile}
-\alias{getDetails}
 \alias{getDevelUrl}
 \alias{getDocPath}
 \alias{getEnvironment}
 \alias{getExamplePath}
-\alias{getFields}
 \alias{getHistory}
 \alias{getHowToCite}
-\alias{getInstanciationTime}
-\alias{getInternalAddress}
-\alias{getKeywords}
-\alias{getKnownSubclasses}
-\alias{getLastException}
 \alias{getLicense}
 \alias{getMaintainer}
 \alias{getManPath}
-\alias{getMessage}
-\alias{getMethods}
-\alias{getMethods.default}
-\alias{getName}
-\alias{getNameFormat}
-\alias{getPackage}
-\alias{getPackageNameOf}
 \alias{getPath}
 \alias{getPosition}
-\alias{getRccUrl}
-\alias{getRdDeclaration}
-\alias{getRdHierarchy}
-\alias{getRdMethods}
-\alias{getRdTitle}
-\alias{getSource}
-\alias{getStackTrace}
-\alias{getStackTraceString}
-\alias{getStaticInstance}
-\alias{getSuperclasses}
 \alias{getTitle}
 \alias{getUrl}
-\alias{getUsage}
 \alias{getVersion}
-\alias{getWhen}
-\alias{hasField}
-\alias{hasVarArgs}
-\alias{hasVarArgs.function}
-\alias{hierarchy}
-\alias{isAbstract}
-\alias{isDeprecated}
-\alias{isKeyword}
 \alias{isLoaded}
-\alias{isPrivate}
-\alias{isProtected}
-\alias{isPublic}
-\alias{isReferable}
-\alias{isStatic}
-\alias{load}
-\alias{load.default}
-\alias{methodsInheritedFrom}
-\alias{newInstance}
-\alias{novirtual}
-\alias{objectSize}
-\alias{printStackTrace}
-\alias{save}
-\alias{save.default}
-\alias{setClassS3}
-\alias{setClassS3.default}
-\alias{setManPath}
-\alias{setNameFormat}
-\alias{showAndWait}
 \alias{showContents}
 \alias{showDescriptionFile}
 \alias{showHistory}
 \alias{showHowToCite}
-\alias{staticCode}
 \alias{unload}
 
-\alias{getClass}
-\alias{getClass.Object}
-\alias{getClass.BasicObject}
-\alias{getClass.default}
+% The RccViolationException class
+\alias{getRccUrl}
+
+% The Rdoc class
+\alias{argsToString}
+\alias{check}
+\alias{compile}
+\alias{createManPath}
+\alias{createName}
+\alias{declaration}
+\alias{escapeRdFilename}
+\alias{getClassS4Usage}
+\alias{getKeywords}
+\alias{getNameFormat}
+\alias{getPackageNameOf}
+\alias{getRdDeclaration}
+\alias{getRdHierarchy}
+\alias{getRdMethods}
+\alias{getRdTitle}
+\alias{getUsage}
+\alias{hierarchy}
+\alias{isKeyword}
+\alias{methodsInheritedFrom}
+\alias{setManPath}
+\alias{setNameFormat}
+
+% The RdocException class
+\alias{getSource}
+
+% Utility functions
+\alias{appendVarArgs}
+\alias{appendVarArgs.function}
+\alias{hasVarArgs}
+\alias{hasVarArgs.function}
+
+% Trial functions
+\alias{callSuperMethodS3}
+\alias{callSuperMethodS3.default}
+
+% Deprecated functions
 \alias{setClassS3}
 \alias{setClassS3.default}
+\alias{getClass.BasicObject}
+\alias{getClass.default}
 
 \description{
   This page contains aliases for all "non-documented" objects that
@@ -145,5 +161,6 @@
 
 \author{Henrik Bengtsson \url{http://www.braju.com/R/}}
 
-\keyword{internal}
 
+\keyword{documentation}
+\keyword{internal}

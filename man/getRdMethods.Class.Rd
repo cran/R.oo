@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:28:04 2005.
+% on Mon Jul 18 15:07:40 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -14,8 +14,6 @@
 \alias{Class.getRdMethods}
 \alias{getRdMethods.Class}
 \alias{getRdMethods,Class-method}
-\keyword{methods}
-\keyword{internal}
 
 
 \title{Gets the methods of a class in Rd format}
@@ -44,5 +42,7 @@
   For more information see \code{\link{Class}}.
 }
 
-\keyword{documentation}
 
+\keyword{internal}
+\keyword{methods}
+\keyword{documentation}

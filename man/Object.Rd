@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:27:14 2005.
+% on Mon Jul 18 15:07:10 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -12,7 +12,6 @@
  \name{Object}
 \docType{class}
 \alias{Object}
-\keyword{classes}
 
 
  \title{The root class that every class must inherit from}
@@ -47,7 +46,8 @@
  \tab \code{[[} \tab  -\cr
  \tab \code{[[<-} \tab  -\cr
  \tab \code{\link[R.oo:as.character.Object]{as.character}} \tab Gets a character string representing the object.\cr
- \tab \code{\link[R.oo:attach.Object]{attach}} \tab Attach an Object to the \R search path.\cr
+ \tab \code{\link[R.oo:attach.Object]{attach}} \tab Attaches an Object to the \R search path.\cr
+ \tab \code{\link[R.oo:attachLocally.Object]{attachLocally}} \tab Attaches an Object locally to an environment.\cr
  \tab \code{\link[R.oo:clone.Object]{clone}} \tab Clones an Object.\cr
  \tab \code{\link[R.oo:detach.Object]{detach}} \tab Detach an Object from the \R search path.\cr
  \tab \code{\link[R.oo:equals.Object]{equals}} \tab Compares an object with another.\cr
@@ -69,7 +69,19 @@
 
  }
 
+ \section{Defining static fields}{
+  To define a static field of an Object class, use a private field
+  \code{<.field>} and then create a virtual field \code{<field>} by
+  defining methods \code{get<Field>()} and \code{set<Field>()}.
+  These methods should retrieve and assign the value of the field
+  \code{<.field>} of the \emph{static} instance of the class.  The
+  second example below shows how to do this.  The example modifies
+  also the static field already in the constructor, which is something
+  that otherwise may be tricky.
+ }
+
  \examples{
+  
 #########################################################################
 # Defines the class Person with private fields .name and .age, and
 # with methods print(), getName(), setName(), getAge() and setAge().
@@ -208,7 +220,60 @@ print(obj)
 
 # Lists all (non-private) members of the new Object.
 print(ll(obj))
-}
+
+
+  
+######################################################################
+# Example illustrating how to "emulate" static fields using virtual
+# fields, i.e. get- and set-methods.  Here we use a private static
+# field '.count' of the static class instance 'MyClass', i.e.
+# MyClass$.count.  Then we define a virtual field 'count' via method
+# getCount() to access this static field.  This will make all queries
+# for 'count' of any object to use the static field instead.  In the
+# same way is assignment controlled via the setCount() method.  A
+# side effect of this way of coding is that all MyClass instances will
+# also have the private field '.count' (set to zero except for the
+# static field that is).
+######################################################################
+setConstructorS3("MyClass", function(...) {
+  # Create an instance (the static class instance included)
+  this <- extend(Object(), "MyClass",
+    .count = 0
+  )
+
+  # In order for a static field to be updated in the
+  # constructor it has to be done after extend().
+  this$count <- this$count + 1;
+
+  # Return the object
+  this;
+})
+
+
+setMethodS3("as.character", "MyClass", function(this, ...) {
+  paste(class(this)[1], ": Number of instances: ", this$count, sep="");
+})
+
+
+# Get virtual field 'count', e.g. obj$count.
+setMethodS3("getCount", "MyClass", function(this, ...) {
+  MyClass$.count;
+})
+
+
+# Set virtual field 'count', e.g. obj$count <- value.
+setMethodS3("setCount", "MyClass", function(this, value, ...) {
+  MyClass$.count <- value;
+})
+
+
+# Create four instances of class 'MyClass'
+obj <- lapply(1:4, MyClass)
+print(obj)
+print(MyClass$count)
+print(obj[[1]]$count)
+
+ }
 
  \author{Henrik Bengtsson \url{http://www.braju.com/R/}}
 
@@ -223,3 +288,4 @@ print(ll(obj))
 
  \keyword{programming}
  \keyword{methods}
+\keyword{classes}

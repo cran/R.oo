@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:28:38 2005.
+% on Mon Jul 18 15:08:05 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -14,8 +14,6 @@
 \alias{Package.getExamplePath}
 \alias{getExamplePath.Package}
 \alias{getExamplePath,Package-method}
-\keyword{methods}
-\keyword{internal}
 
 
 \title{Gets the path to the example (R-ex/) directory of this package}
@@ -39,3 +37,5 @@
 \seealso{
   For more information see \code{\link{Package}}.
 }
+\keyword{internal}
+\keyword{methods}

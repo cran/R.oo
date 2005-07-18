@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:28:57 2005.
+% on Mon Jul 18 15:08:19 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -12,7 +12,6 @@
 \name{Rdoc}
 \docType{class}
 \alias{Rdoc}
-\keyword{classes}
 
 
 \title{Class for converting Rdoc comments to Rd files}
@@ -55,7 +54,7 @@ extends \link[R.oo]{Object}\cr
 
 
 \bold{Methods inherited from Object}:\cr
-$, $<-, [[, [[<-, as.character, attach, clone, detach, equals, extend, finalize, getFields, getInstanciationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clone, detach, equals, extend, finalize, getFields, getInstanciationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
 
 
 }
@@ -66,7 +65,7 @@ $, $<-, [[, [[<-, as.character, attach, clone, detach, equals, extend, finalize,
 author <- "Henrik Bengtsson, \\url{http://www.braju.com/R/}"
 
 # Show the file containing the Rdoc comments
-rdocFile <- system.file("misc", "Exception.R", package="R.oo")
+rdocFile <- system.file("misc", "ASCII.R", package="R.oo")
 file.show(rdocFile)
 
 # Compile the Rdoc:s into Rd files (saved in the destPath directory)
@@ -96,5 +95,6 @@ file.remove(rdFiles)
   2003
 }
 
-\keyword{documentation}
 
+\keyword{classes}
+\keyword{documentation}

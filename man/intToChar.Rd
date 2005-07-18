@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:27:50 2005.
+% on Mon Jul 18 15:07:31 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -44,5 +44,6 @@
 \seealso{
   \code{\link{charToInt}}()
 }
+
 
 \keyword{character}

@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:27:05 2005.
+% on Mon Jul 18 15:07:02 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -25,7 +25,7 @@
  [1] R Language Definition, version 2.0.1 (2004-11-27).
 }
 
+
+
 \keyword{programming}
-
 \keyword{internal}
-

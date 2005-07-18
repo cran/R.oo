@@ -83,6 +83,8 @@ setConstructorS3("Package", function(name=NULL) {
 #   Returns a @character string.
 # }
 #
+# \examples{print(R.oo)}
+#
 # @author
 #
 # \seealso{
@@ -97,18 +99,28 @@ setMethodS3("as.character", "Package", function(this, ...) {
   else
     s <- paste(s, ".");
 
-  bundle <- getBundle(this);
-  if (!is.null(bundle))
-    s <- paste(s, " It is part of bundle ", bundle, " (", paste(getBundlePackages(this), collapse=", "), ").", sep="")
+  s <- paste(s, "  Title: ", getTitle(this), ".", sep="");
+
+  # Do not call getBundle() here; it can be very slow!
+#  bundle <- getBundle(this);
+#  if (!is.null(bundle))
+#    s <- paste(s, "  It is part of bundle ", bundle, " (", paste(getBundlePackages(this), collapse=", "), ").", sep="")
 
   url <- getUrl(this);
   if (!is.null(url))
-    s <- paste(s, " The official webpage is ", url, " and the", sep="")
+    s <- paste(s, "  The official webpage is ", url, " and the", sep="")
   else
-    s <- paste(s, " The", sep="");
+    s <- paste(s, "  The", sep="");
   s <- paste(s, " maintainer is ", getMaintainer(this), ".", sep="");
 
-  s <- paste(s, " The package is installed in ", getPath(this), ".", sep="");
+  s <- paste(s, "  The package is installed in ", getPath(this), ".", sep="");
+
+  license <- getLicense(this);
+  if (!is.null(license))
+    s <- paste(s, "  License: ", license, ".", sep="");
+
+  s <- paste(s, "  Description: ", getDescription(this), sep="");
+
   s;
 })
 
@@ -515,6 +527,8 @@ setMethodS3("getDate", "Package", function(this, ...) {
 # @synopsis
 #
 # \arguments{
+#   \item{replaceNewlines}{If a @character string, all newline characters
+#     are replaced with this string. Otherwise not.}
 #   \item{...}{Not used.}
 # }
 #
@@ -533,8 +547,11 @@ setMethodS3("getDate", "Package", function(this, ...) {
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("getDescription", "Package", function(this, ...) {
-  getDescriptionFile(this, fields="Description");
+setMethodS3("getDescription", "Package", function(this, replaceNewlines=" ", ...) {
+  value <- getDescriptionFile(this, fields="Description");
+  if (is.character(replaceNewlines))
+    value <- gsub("[\r\n]", replaceNewlines, value);
+  value;
 })
 
 
@@ -1503,10 +1520,13 @@ setMethodS3("update", "Package", function(object, contribUrl=getContribUrl(this)
   updated;
 })
 
-
-
 ############################################################################
 # HISTORY:
+# 2005-06-14
+# o Added argument 'replaceNewline' to getDescription().
+# o Now as.character() of Package reports the title, the license, and the
+#   description, but no longer if the package is part of a bundle. The
+#   latter was too slow since it had to scan all installed packages.
 # 2005-05-02
 # o Added getDevelUrl().
 # 2005-02-15

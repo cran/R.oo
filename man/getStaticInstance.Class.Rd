@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:27:42 2005.
+% on Mon Jul 18 15:07:27 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -14,8 +14,6 @@
 \alias{Class.getStaticInstance}
 \alias{getStaticInstance.Class}
 \alias{getStaticInstance,Class-method}
-\keyword{methods}
-\keyword{internal}
 
 
 \title{Gets the static instance of this class}
@@ -44,7 +42,8 @@
   For more information see \code{\link{Class}}.
 }
 
-\keyword{programming}
 
+
+\keyword{internal}
 \keyword{methods}
-
+\keyword{programming}

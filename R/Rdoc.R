@@ -482,6 +482,68 @@ setMethodS3("escapeRdFilename", "Rdoc", function(static, filename, ...) {
 # @keyword documentation
 #*/###########################################################################
 setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getManPath(this), showDeprecated=FALSE, verbose=FALSE, source=FALSE, check=TRUE, debug=FALSE, ...) {
+  isCapitalized <- function(str) {
+    first <- substring(str,1,1);
+    (first == toupper(first))
+  }
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # a d d K e y w o r d ( )
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  validateKeyword <- function(keyword) {
+    knownKeywords <- Rdoc$getKeywords();
+    if (!(keyword %in% knownKeywords)) {
+      alts <- agrep(keyword, knownKeywords);
+      alts <- paste("'", knownKeywords[alts], "'", collapse=", ", sep="");
+      if (nchar(alts) > 0)
+        alts <- paste("Did you mean ", alts, "?", sep="");
+      throw(RdocException("Unknown keyword: ", keyword, ". ", 
+                                                alts, source=sourcefile));
+    }
+  } # validateKeyword()
+
+
+  rdocKeywords <- c();
+
+  addKeyword <- function(keyword) {
+    keyword <- as.character(keyword);
+
+    # A remove keyword?
+    if (regexpr("^-", keyword) != -1) {
+      rdocKeywords <<- unique(c(rdocKeywords, keyword));
+      keyword <- gsub("^-", "", keyword);
+    } else {
+      rdocKeywords <<- unique(c(rdocKeywords, keyword));
+    }
+
+    # Validate keyword
+    validateKeyword(keyword);
+  } # addKeyword()
+
+
+  getRdKeywords <- function(...) {
+    # Get all keywords
+    if (length(rdocKeywords) == 0)
+      return("");
+
+    isRemove <- (regexpr("^-", rdocKeywords) != -1);
+    keywords <- rdocKeywords[!isRemove];
+    exclKeywords <- gsub("^-", "", rdocKeywords[isRemove]);
+    keywords <- setdiff(keywords, exclKeywords);
+    keywords <- unique(keywords);
+
+    # Empty current list of keywords
+    rdocKeywords <<- c();
+
+    if (length(keywords) == 0)
+      return(NULL);
+      
+    lines <- paste("\\keyword{", keywords, "}", sep="");
+    lines <- paste(lines, collapse="\n");
+    lines;
+  } # getRdKeywords()
+
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   # e s c a p e N a m e ( )
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -752,7 +814,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       line <- paste("\\name{", escapeName(class), "}\n", sep="");
       line <- paste(line, "\\docType{class}\n", sep="");
       line <- paste(line, "\\alias{", class, "}\n", sep="");
-      line <- paste(line, "\\keyword{classes}\n", sep="");
+      addKeyword("classes");
 
       if (typeOfClass == "S4") {
         line <- paste(line, "\\alias{", class, "-class}\n", sep="");
@@ -791,12 +853,20 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       line <- paste("\\name{", name, "}\n", sep="");
       alias <- escapeAlias(alias);
       line <- paste(line, "\\alias{", alias, "}\n", sep="");
-      if (!identical(alias, paste(class, ".", method, sep="")))
-        line <- paste(line, "\\alias{", class, ".", method, "}\n", sep="");
-      line <- paste(line, "\\alias{", method, ".", class, "}\n", sep="");
-      line <- paste(line, "\\alias{", method, ",", class, "-method}\n", sep="");
-      line <- paste(line, "\\keyword{methods}\n", sep="");
-      line <- paste(line, "\\keyword{internal}\n", sep="");
+
+      # Treat internal and non-internal methods differently
+      if (isCapitalized(class)) {
+        addKeyword("internal");
+        if (!identical(alias, paste(class, ".", method, sep="")))
+          line <- paste(line, "\\alias{", class, ".", method, "}\n", sep="");
+        line <- paste(line, "\\alias{", method, ".", class, "}\n", sep="");
+        line <- paste(line, "\\alias{", method, ",", class, "-method}\n", sep="");
+      } else {
+        line <- paste(line, "\\alias{", method, ".", class, "}\n", sep="");
+      }
+
+      addKeyword("methods");
+
       usage <<- Rdoc$getUsage(method=method, class=class);
       rd <<- paste(rd, line, sep="");
       bfr;
@@ -830,7 +900,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       name <<- name <- escapeName(name);
       line <- paste("\\name{", name, "}\n", sep="");
       line <- paste(line, "\\alias{", name, "}\n", sep="");
-      line <- paste(line, "\\keyword{methods}\n", sep="");
+      addKeyword("methods");
       usage <<- Rdoc$getUsage(method=generic);
       rd <<- paste(rd, line, sep="");
       bfr;
@@ -877,7 +947,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       name <<- name <- escapeName(name);
       line <- paste("\\name{", name, "}\n", sep="");
       line <- paste(line, "\\alias{", name, "}\n", sep="");
-      line <- paste(line, "\\keyword{datasets}\n", sep="");
+      addKeyword("datasets");
       objectName <<- value;
       usage <<- NULL;
       rd <<- paste(rd, line, sep="");
@@ -893,7 +963,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       name <<- name <- escapeName(name);
       line <- paste("\\name{", name, "}\n", sep="");
       line <- paste(line, "\\alias{", name, "}\n", sep="");
-      line <- paste(line, "\\keyword{documentation}\n", sep="");
+      addKeyword("documentation");
       hasTitle <- (regexpr("(@|[\\])title", bfr) != -1);
       if (!hasTitle)
         line <- paste(line, "\\title{", name, "}\n", sep="");
@@ -912,7 +982,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       name <<- name <- escapeName(name);
       line <- paste("\\name{", name, "}\n", sep="");
       line <- paste(line, "\\alias{", name, "}\n", sep="");
-      line <- paste(line, "\\keyword{documentation}\n", sep="");
+      addKeyword("documentation");
       line <- paste(line, "\n", sep="");
       hasTitle <- (regexpr("(@|[\\])title", bfr) != -1);
       if (!hasTitle)
@@ -1001,16 +1071,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
     tagKeyword <- function(bfr) {
       bfr <- getTagValue(bfr);
       keyword <- attr(bfr, "value");
-      keywords <- Rdoc$getKeywords();
-      if (!(keyword %in% keywords)) {
-  	alts <- agrep(keyword, keywords);
-  	alts <- paste("'", keywords[alts], "'", collapse=", ", sep="");
-  	if (nchar(alts) > 0)
-  	  alts <- paste("Did you mean ", alts, "?", sep="");
-  	throw(RdocException("Unknown keyword: ", keyword, ". ", alts, source=sourcefile));
-      }
-      line <- paste("\\keyword{", keyword, "}\n", sep="");
-      rd <<- paste(rd, line, sep="");
+      addKeyword(keyword);
       bfr;
     }
   
@@ -1058,7 +1119,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       if (!is.element(visibility, c("private", "protected", "public")))
   	throw(RdocException("Unknown type of visibility: ", value, source=sourcefile));
       if (visibility == "private")
-  	line <- paste("\\keyword{internal}\n", sep="");
+        addKeyword("internal");
       bfr;
     }
   
@@ -1477,18 +1538,21 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
   	rd <- paste(rd, rdoc, sep="");
   	rdoc <- NULL;
 
+        # Append all keywords at the end
+        rd <- paste(rd, getRdKeywords(), sep="\n");
+
   	# Remove all empty lines
   	rd <- gsub("[ \t]\n", "\n", rd);
   	rd <- gsub("[ \t]\r", "\r", rd);
 
   	if (is.null(name)) {
   	  # @RdocClass, @RdocDefault and/or @RdocMethod was not given. Search for classical \name{...}
-  	  search <- regexpr("\\name{[^\\}]*}", rd);
+  	  search <- regexpr("\\name\\{[^\\}]*\\}", rd);
   	  if (search == -1) {
   	    throw(RdocException("The resulting Rd text does not have a \\name{} tag.", source=sourcefile));
           }
   	  name <- substring(rd, search+5, search+attr(search, "match.length")-2);
-  	  search <- regexpr("\\name{[^\\}]*}", substring(rd, search+1));
+  	  search <- regexpr("\\name\\{[^\\}]*\\}", substring(rd, search+1));
   	  if (search != -1)
   	    throw(RdocException("The resulting Rd text has more than one \\name{} tag.", source=sourcefile));
   	}
@@ -2195,6 +2259,19 @@ setMethodS3("check", "Rdoc", function(this, manPath=getManPath(this), verbose=FA
 
 #########################################################################
 # HISTORY:
+# 2005-06-17
+# o BUG FIX: Used invalid regular expression '\\name{[^\\}]*}' instead
+#   of '\\name\\{[^\\}]*\\}'. Why? The correct string is literally
+#   '\name\{[^\}]\}' (no escape codes). The '\{' and '\}' (no escape)
+#   are to tell regexpr that it should match '{' and '}'; '{' and '}'
+#   are used for different purposes. Simple, ehe. Thanks Lorenz Wernisch,
+#   School of Crystallography, University of London of reporting this.
+# 2005-06-08
+# o BUG FIX: getRdKeywords() gave an error if no keywords are available.
+# 2005-06-03
+# o Added internal addKeyword() to Rdoc$compile(). 
+# o Now an RdocMethod tag will not add keyword 'internal' if the
+#   class starts with a lower case, e.g. 'matrix'.
 # 2005-02-15
 # o Added arguments '...' in order to match any generic functions.
 # 2005-02-11

@@ -1,6 +1,39 @@
 Package: R.oo
 =============
 
+Version: 1.1.0 [2005-07-18]
+o BUG FIX: Rdoc$compile() sometimes generated the error "invalid regular
+  expression '\name{[^\}]*}'" (forgot to escape '{' and '}'). Fixed.
+  Thanks Lorenz Wernisch, School of Crystallography, University of London 
+  of reporting this.
+o BUG FIX: getDetails() in Class would list private and protected methods 
+  as public.
+o BUG FIX: Argument 'enforceRCC' of setMethodS3() was not passed to 
+  setGenericS3().
+o Added a section on "Defining static fields" to the help page of Object.
+o Added argument 'replaceNewline' to getDescription() of Package.
+o Now as.character() of Package reports the title, the license, and the
+  description, but no longer if the package is part of a bundle. The
+  latter was too slow since it had to scan all installed packages.
+o Now print() of Class passes '...' to getDetails(), that is, now 
+  print(Class, private=TRUE) will work too.
+o Added attachLocally() to the Object class.
+o Added extend.default(), which can be used to extend any type of object.
+o Now pure Object:s are also finalized.  Before only subclasses defined
+  via extend(<Object>, "<SubClass>", ...) was finalized.  This was not a
+  big deal, because the finalize():er of the Object class is empty anyway.
+
+Version: 1.0.5 [2005-06-03]
+o Now the static load() method in Object asserts that the loaded Object
+  inherits from the class that the static object, which is used to call
+  load(), is of.  Thus, Object$load(...) will load all Object:s, whereas
+  MyClass$load(...) will only load objects inheriting from MyClass.
+o Rdoc compiler: 
+  - Now an RdocMethod tag will not add keyword 'internal' if the class
+    starts with a lower case, e.g. 'matrix'.
+  - A '@keyword foo' can now be removed with '@keyword -foo'. Order
+    is irrelevant, since @keyword:s are added at the very end.
+
 Version: 1.0.4 [2005-05-02]
 o Added getDevelUrl() to the Package class.
 
@@ -12,10 +45,10 @@ Version: 1.0.2 [2005-02-25]
 o setMethodS3(..., abstract=TRUE) generated warnings of type
   "using .GlobalEnv instead of package:<pkg>". Found a way 
   (ad hoc?) to get rid of them. See source code for details.
-  This should remove similar warnings from package using R.oo.
+  This should remove similar warnings from packages loading R.oo.
 
 Version: 1.0.1 [2005-02-20]
-o Package now say "See ?R.oo for help" when loaded.
+o Package now outputs "See ?R.oo for help" when loaded.
 o Now using three-digit version numbers, e.g. a.b.c where
   a,b,c in 0,1,...,9. 'a' is updated for major updates, 
   'b' for minor updates and 'c' is for minor revisions.

@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:27:20 2005.
+% on Mon Jul 18 15:07:13 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -14,8 +14,6 @@
 \alias{Object.load}
 \alias{load.Object}
 \alias{load,Object-method}
-\keyword{methods}
-\keyword{internal}
 
 
 \title{Static method to load an Object from a file or a connection}
@@ -25,7 +23,7 @@
   class Object.
 }
 
-\synopsis{load.Object(this, file, path=NULL, ...)}
+\synopsis{load.Object(static, file, path=NULL, ...)}
 \usage{Object$load(file, path=NULL, ...)}
 
 \arguments{
@@ -41,7 +39,19 @@
 \details{
   Please note that no constructors are called when an Object is loaded
   and neither is any static class code called.
+}
 
+\section{Type control}{
+  Typically this static method is called as \code{<Object>$load(...)}
+  where \code{<Object>} is any Object class.  When an Object has been
+  loaded, it is verified that it inherits from \code{<Object>}. If it
+  does not, an exception is thrown.  Thus, \code{Object$load(...)} will
+  load any Object, but \code{MyClass$load(...)} will only load an Object
+  that inherits from MyClass.  If loaded object is not of correct class,
+  an exception is thrown.
+}
+
+\section{Troubleshooting}{
   Due to a bug, likely in \R itself, one can not specify the \code{file}
   argument by its name, i.e. \code{Object$load(file="foo.RData")} will
   not work, but \code{Object$load("foo.RData")} work just fine.
@@ -60,3 +70,5 @@
 \keyword{programming}
 \keyword{methods}
 \keyword{IO}
+\keyword{internal}
+\keyword{methods}

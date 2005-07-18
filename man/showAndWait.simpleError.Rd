@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:29:11 2005.
+% on Mon Jul 18 15:08:28 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -12,11 +12,8 @@
 
 \name{showAndWait.simpleError}
 \alias{showAndWait.simpleError}
-\alias{simpleError.showAndWait}
 \alias{showAndWait.simpleError}
-\alias{showAndWait,simpleError-method}
-\keyword{methods}
-\keyword{internal}
+
 
 
 \title{Display the message to the user and wait for the user to respond}
@@ -57,3 +54,5 @@
 \keyword{programming}
 \keyword{methods}
 \keyword{error}
+\keyword{methods}
+\keyword{internal}

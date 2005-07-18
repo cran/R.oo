@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:29:04 2005.
+% on Mon Jul 18 15:08:24 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -14,8 +14,6 @@
 \alias{Rdoc.getClassS4Usage}
 \alias{getClassS4Usage.Rdoc}
 \alias{getClassS4Usage,Rdoc-method}
-\keyword{methods}
-\keyword{internal}
 
 
 \title{Gets the usage of a S4 class}
@@ -42,5 +40,7 @@
   For more information see \code{\link{Rdoc}}.
 }
 
-\keyword{documentation}
 
+\keyword{internal}
+\keyword{methods}
+\keyword{documentation}

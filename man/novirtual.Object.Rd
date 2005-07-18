@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:27:25 2005.
+% on Mon Jul 18 15:07:16 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -14,8 +14,6 @@
 \alias{Object.novirtual}
 \alias{novirtual.Object}
 \alias{novirtual,Object-method}
-\keyword{methods}
-\keyword{internal}
 
 
 \title{Returns a reference to the same Object with virtual fields turned off}
@@ -41,4 +39,6 @@
 }
 
 \keyword{programming}
+\keyword{methods}
+\keyword{internal}
 \keyword{methods}

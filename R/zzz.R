@@ -10,7 +10,7 @@ detach("R.oo")
 
   # Remove temporary extend.default() created by the extend() 
   # defined in 030.ObjectClassFunctions.R.
-  remove("extend.default", pos=pos);
+#  remove("extend.default", pos=pos);
 
   assign(pkgname, pkg, pos=pos);
   cat(getName(pkg), " v", getVersion(pkg), " (", getDate(pkg), ")",

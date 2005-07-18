@@ -120,7 +120,7 @@ setMethodS3("as.character", "Class", function(this, ...) {
 # @synopsis
 #
 # \arguments{
-#   \item{...}{Not used.}
+#   \item{...}{Arguments passed to @seemethod "getDetails".}
 # }
 #
 # \value{
@@ -134,6 +134,7 @@ setMethodS3("as.character", "Class", function(this, ...) {
 # @author
 #
 # \seealso{
+#   @seemethod "getDetails"
 #   @seeclass
 # }
 #
@@ -141,7 +142,7 @@ setMethodS3("as.character", "Class", function(this, ...) {
 # @keyword methods
 #*/###########################################################################
 setMethodS3("print", "Class", function(x, ...) {
-  cat(getDetails(x));
+  cat(getDetails(x, ...));
 }) # print()
 
 
@@ -1122,6 +1123,11 @@ setMethodS3("getDetails", "Class", function(this, private=FALSE, ...) {
         for (k in seq(along=methodNames)) {
           fcn <- get(methods[k], mode="function");
           fcnModifiers <- attr(fcn, "modifiers");
+          if (is.element("protected", fcnModifiers)) {
+            modifiers[k] <- "protected";
+          } else if (is.element("private", fcnModifiers)) {
+            modifiers[k] <- "private";
+          }
           if (is.element("public", fcnModifiers) || private == TRUE) {
             if (is.element("abstract", fcnModifiers))
               modifiers[k] <- paste(modifiers[k], " ", "abstract", sep="");
@@ -1375,6 +1381,11 @@ setMethodS3("[[<-", "Class", function(this, name, value) {
 
 ############################################################################
 # HISTORY:
+# 2005-06-14
+# o BUG FIX: getDetails() would list private and protected methods as
+#   public.
+# o Now print() passes '...' to getDetails(), that is, now 
+#   print(Class, private=TRUE) will work too.
 # 2005-02-15
 # o Added arguments '...' in order to match any generic functions.
 # 2004-06-28
