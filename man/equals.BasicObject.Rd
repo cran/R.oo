@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:27:58 2005.
+% on Mon Jul 18 15:07:37 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -14,8 +14,6 @@
 \alias{BasicObject.equals}
 \alias{equals.BasicObject}
 \alias{equals,BasicObject-method}
-\keyword{methods}
-\keyword{internal}
 
 
 \title{Compares an object with another}
@@ -61,4 +59,6 @@
 \author{Henrik Bengtsson \url{http://www.braju.com/R/}}
 
 \keyword{programming}
+\keyword{methods}
+\keyword{internal}
 \keyword{methods}

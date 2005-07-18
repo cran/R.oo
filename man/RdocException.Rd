@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:29:08 2005.
+% on Mon Jul 18 15:08:27 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -12,7 +12,6 @@
 \name{RdocException}
 \docType{class}
 \alias{RdocException}
-\keyword{classes}
 
 
 \title{RdocException are thrown by the Rdoc compiler}
@@ -78,7 +77,7 @@ as.character, conditionCall, conditionMessage, print
 
 
 \bold{Methods inherited from Object}:\cr
-$, $<-, [[, [[<-, as.character, attach, clone, detach, equals, extend, finalize, getFields, getInstanciationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clone, detach, equals, extend, finalize, getFields, getInstanciationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
 
 
 }
@@ -92,3 +91,4 @@ $, $<-, [[, [[<-, as.character, attach, clone, detach, equals, extend, finalize,
 \keyword{programming}
 \keyword{methods}
 \keyword{error}
+\keyword{classes}

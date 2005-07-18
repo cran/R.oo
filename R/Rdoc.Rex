@@ -2,7 +2,7 @@
 author <- "Henrik Bengtsson, \\url{http://www.braju.com/R/}"
 
 # Show the file containing the Rdoc comments
-rdocFile <- system.file("misc", "Exception.R", package="R.oo")
+rdocFile <- system.file("misc", "ASCII.R", package="R.oo")
 file.show(rdocFile)
 
 # Compile the Rdoc:s into Rd files (saved in the destPath directory)

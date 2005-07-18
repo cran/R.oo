@@ -86,12 +86,15 @@ setGenericS3.default <- function(name, envir=parent.frame(), ellipsesOnly=TRUE, 
     # Assert that the generic function name is a valid function name.
     firstLetter <- substring(gsub("^[.]*", "", name), 1,1);
 
-    if (!is.element(tolower(firstLetter), letters))
-      throw(RccViolationException("Method names must begin with a lower case letter (a-z): ", name));
-
-    # Check first letter  
-    if (firstLetter == toupper(firstLetter))
-      throw(RccViolationException("Method names should start with a lower case letter: ", name));
+    allowedFirst <- c("?", "$", "$<-", "[", "[<-", "[[", "[[<-");
+    if (!is.element(firstLetter, allowedFirst)) {
+      if (!is.element(tolower(firstLetter), letters))
+        throw(RccViolationException("Method names must begin with a lower case letter (a-z): ", name));
+    
+      # Check first letter  
+      if (firstLetter == toupper(firstLetter))
+        throw(RccViolationException("Method names should start with a lower case letter: ", name));
+    }
   }
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -292,6 +295,9 @@ setGenericS3("isGenericS4");
 
 ############################################################################
 # HISTORY:
+# 2005-06-14
+# o Now setGenericS3() allows a few methods that starts with a non-letter
+#   as the first character. See code for details.
 # 2005-02-15
 # o Added arguments '...' in order to match any generic functions.
 # 2004-10-18

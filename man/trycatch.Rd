@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:29:13 2005.
+% on Mon Jul 18 15:08:30 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -77,7 +77,7 @@
 
 \author{Henrik Bengtsson \url{http://www.braju.com/R/}}
 
+
+
 \keyword{error}
-
 \keyword{internal}
-

@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:27:38 2005.
+% on Mon Jul 18 15:07:25 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -14,8 +14,6 @@
 \alias{Class.isStatic}
 \alias{isStatic.Class}
 \alias{isStatic,Class-method}
-\keyword{methods}
-\keyword{internal}
 
 
 \title{Checks if a class is static or not}
@@ -46,7 +44,8 @@
   For more information see \code{\link{Class}}.
 }
 
-\keyword{programming}
 
+
+\keyword{internal}
 \keyword{methods}
-
+\keyword{programming}

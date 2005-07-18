@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:28:39 2005.
+% on Mon Jul 18 15:08:05 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -14,8 +14,6 @@
 \alias{Package.getDescription}
 \alias{getDescription.Package}
 \alias{getDescription,Package-method}
-\keyword{methods}
-\keyword{internal}
 
 
 \title{Gets the description of the package}
@@ -24,9 +22,11 @@
   Gets the description of the package. Not to be mixed up with \code{\link[R.oo:getDescriptionFile.Package]{*getDescriptionFile}()}.
 }
 
-\usage{\method{getDescription}{Package}(this, ...)}
+\usage{\method{getDescription}{Package}(this, replaceNewlines=" ", ...)}
 
 \arguments{
+  \item{replaceNewlines}{If a \code{\link[base]{character}} string, all newline characters
+    are replaced with this string. Otherwise not.}
   \item{...}{Not used.}
 }
 
@@ -44,3 +44,5 @@
 \seealso{
   For more information see \code{\link{Package}}.
 }
+\keyword{internal}
+\keyword{methods}

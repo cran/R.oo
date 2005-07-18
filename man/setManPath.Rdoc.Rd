@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:29:00 2005.
+% on Mon Jul 18 15:08:21 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -14,8 +14,6 @@
 \alias{Rdoc.setManPath}
 \alias{setManPath.Rdoc}
 \alias{setManPath,Rdoc-method}
-\keyword{methods}
-\keyword{internal}
 
 
 \title{Sets the path to the directory where the Rd files should be saved}
@@ -44,5 +42,7 @@
   For more information see \code{\link{Rdoc}}.
 }
 
-\keyword{documentation}
 
+\keyword{internal}
+\keyword{methods}
+\keyword{documentation}

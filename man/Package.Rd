@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:28:32 2005.
+% on Mon Jul 18 15:08:02 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -12,7 +12,6 @@
 \name{Package}
 \docType{class}
 \alias{Package}
-\keyword{classes}
 
 
 \title{The Package class provides methods for accessing package information}
@@ -82,7 +81,7 @@ extends \link[R.oo]{Object}\cr
 
 
 \bold{Methods inherited from Object}:\cr
-$, $<-, [[, [[<-, as.character, attach, clone, detach, equals, extend, finalize, getFields, getInstanciationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clone, detach, equals, extend, finalize, getFields, getInstanciationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
 
 
 }
@@ -128,3 +127,6 @@ update(R.oo)
 
 \keyword{programming}
 \keyword{methods}
+\keyword{internal}
+\keyword{methods}
+\keyword{classes}

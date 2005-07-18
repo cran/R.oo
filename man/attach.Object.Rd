@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:27:18 2005.
+% on Mon Jul 18 15:07:12 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -14,11 +14,9 @@
 \alias{Object.attach}
 \alias{attach.Object}
 \alias{attach,Object-method}
-\keyword{methods}
-\keyword{internal}
 
 
-\title{Attach an Object to the \R search path}
+\title{Attaches an Object to the \R search path}
 
 \description{
  Attach the members of an Object to the \R search path.
@@ -51,4 +49,6 @@
 }
 
 \keyword{programming}
+\keyword{methods}
+\keyword{internal}
 \keyword{methods}

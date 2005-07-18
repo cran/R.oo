@@ -8,7 +8,6 @@ getClasses <- appendVarArgs(getClasses)
 getMethods <- appendVarArgs(getMethods)
 load <- appendVarArgs(load)
 
-
 ############################################################################
 # HISTORY:
 # 2005-02-15

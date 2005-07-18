@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:27:58 2005.
+% on Mon Jul 18 15:07:36 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -14,8 +14,6 @@
 \alias{BasicObject.hashCode}
 \alias{hashCode.BasicObject}
 \alias{hashCode,BasicObject-method}
-\keyword{methods}
-\keyword{internal}
 
 
 \title{Gets a hash code for the object}
@@ -42,4 +40,6 @@
 }
 
 \keyword{programming}
+\keyword{methods}
+\keyword{internal}
 \keyword{methods}

@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:27:21 2005.
+% on Mon Jul 18 15:07:14 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -14,8 +14,6 @@
 \alias{Object.getFields}
 \alias{getFields.Object}
 \alias{getFields,Object-method}
-\keyword{methods}
-\keyword{internal}
 
  \alias{Object.names}
 \alias{names.Object}
@@ -64,3 +62,5 @@
 
  \keyword{programming}
  \keyword{methods}
+\keyword{internal}
+\keyword{methods}

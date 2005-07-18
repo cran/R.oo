@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:28:10 2005.
+% on Mon Jul 18 15:07:44 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -12,11 +12,7 @@
 
 \name{throw.error}
 \alias{throw.error}
-\alias{error.throw}
 \alias{throw.error}
-\alias{throw,error-method}
-\keyword{methods}
-\keyword{internal}
 
 
 \title{Throws (rethrows) an object of class 'error'}
@@ -45,3 +41,4 @@
 }
 
 \keyword{error}
+\keyword{methods}

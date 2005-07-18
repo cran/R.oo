@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:28:07 2005.
+% on Mon Jul 18 15:07:42 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -11,11 +11,8 @@
 
 \name{getRdHierarchy.classRepresentation}
 \alias{getRdHierarchy.classRepresentation}
-\alias{classRepresentation.getRdHierarchy}
 \alias{getRdHierarchy.classRepresentation}
-\alias{getRdHierarchy,classRepresentation-method}
-\keyword{methods}
-\keyword{internal}
+
 
 
 \title{Gets the class hierarchy in Rd format}
@@ -39,5 +36,7 @@
 \seealso{
 }
 
-\keyword{documentation}
 
+\keyword{methods}
+\keyword{internal}
+\keyword{documentation}

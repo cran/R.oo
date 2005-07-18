@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:28:07 2005.
+% on Mon Jul 18 15:07:42 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -11,11 +11,8 @@
 
 \name{getSuperclasses.classRepresentation}
 \alias{getSuperclasses.classRepresentation}
-\alias{classRepresentation.getSuperclasses}
 \alias{getSuperclasses.classRepresentation}
-\alias{getSuperclasses,classRepresentation-method}
-\keyword{methods}
-\keyword{internal}
+
 
 
 \title{Gets the superclasses}
@@ -40,5 +37,7 @@
   \code{\link[R.oo:setNameFormat.classRepresentation]{*setNameFormat}()}
 }
 
-\keyword{documentation}
 
+\keyword{methods}
+\keyword{internal}
+\keyword{documentation}

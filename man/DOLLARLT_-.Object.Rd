@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:27:24 2005.
+% on Mon Jul 18 15:07:16 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -14,8 +14,6 @@
 \alias{Object.$<-}
 \alias{$<-.Object}
 \alias{$<-,Object-method}
-\keyword{methods}
-\keyword{internal}
 
 \alias{Object.[[<-}
 \alias{[[<-.Object}
@@ -77,4 +75,6 @@
 }
 
 \keyword{programming}
+\keyword{methods}
+\keyword{internal}
 \keyword{methods}

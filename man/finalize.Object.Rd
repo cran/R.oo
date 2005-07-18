@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:27:17 2005.
+% on Mon Jul 18 15:07:11 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -14,8 +14,6 @@
 \alias{Object.finalize}
 \alias{finalize.Object}
 \alias{finalize,Object-method}
-\keyword{methods}
-\keyword{internal}
 
 
 \title{Finalizer methods called when object is clean out}
@@ -64,7 +62,8 @@
   For more information see \code{\link{Object}}.
 }
 
-\keyword{programming}
 
+
+\keyword{internal}
 \keyword{methods}
-
+\keyword{programming}

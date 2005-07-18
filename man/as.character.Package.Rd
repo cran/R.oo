@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:28:32 2005.
+% on Mon Jul 18 15:08:02 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -14,8 +14,6 @@
 \alias{Package.as.character}
 \alias{as.character.Package}
 \alias{as.character,Package-method}
-\keyword{methods}
-\keyword{internal}
 
 
 \title{Gets a string representation of this package}
@@ -34,8 +32,12 @@
   Returns a \code{\link[base]{character}} string.
 }
 
+\examples{print(R.oo)}
+
 \author{Henrik Bengtsson \url{http://www.braju.com/R/}}
 
 \seealso{
   For more information see \code{\link{Package}}.
 }
+\keyword{internal}
+\keyword{methods}

@@ -3,7 +3,7 @@
 % 
 %  
 % 
-% on Tue May 03 13:27:19 2005.
+% on Mon Jul 18 15:07:13 2005.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
 % by Henrik Bengtsson, 2001-2004.
@@ -14,8 +14,6 @@
 \alias{Object.detach}
 \alias{detach.Object}
 \alias{detach,Object-method}
-\keyword{methods}
-\keyword{internal}
 
 
 \title{Detach an Object from the \R search path}
@@ -46,4 +44,6 @@
 }
 
 \keyword{programming}
+\keyword{methods}
+\keyword{internal}
 \keyword{methods}
