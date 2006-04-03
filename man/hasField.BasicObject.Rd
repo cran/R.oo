@@ -3,10 +3,10 @@
 % 
 %  
 % 
-% on Mon Jul 18 15:07:38 2005.
+% on Mon Apr 03 17:20:11 2006.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
-% by Henrik Bengtsson, 2001-2004.
+% by Henrik Bengtsson, 2001-2006.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \name{hasField.BasicObject}
@@ -33,7 +33,7 @@
  Returns a \code{\link[base]{logical}} \code{\link[base]{vector}} indicating for each field if it exists or not.
 }
 
-\author{Henrik Bengtsson \url{http://www.braju.com/R/}}
+\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
   To get the fields of an Object, see \code{\link[R.oo:getFields.BasicObject]{*getFields}()}.

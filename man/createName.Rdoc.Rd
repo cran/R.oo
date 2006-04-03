@@ -3,10 +3,10 @@
 % 
 %  
 % 
-% on Mon Jul 18 15:08:21 2005.
+% on Mon Apr 03 17:20:46 2006.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
-% by Henrik Bengtsson, 2001-2004.
+% by Henrik Bengtsson, 2001-2006.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \name{createName.Rdoc}
@@ -22,8 +22,8 @@
   Creates a class-method name.
 }
 
-\synopsis{createName.Rdoc(static, class, method, escape=FALSE, ...)}
-\usage{Rdoc$createName(class, method, escape=FALSE, ...)}
+\synopsis{createName.Rdoc(static, class, method, escape=TRUE, ...)}
+\usage{Rdoc$createName(class, method, escape=TRUE, ...)}
 
 \arguments{
   \item{class}{A class name (\code{\link[base]{character}} string).}
@@ -37,7 +37,7 @@
  Returns \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson \url{http://www.braju.com/R/}}
+\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
   \code{\link[R.oo:escapeRdFilename.Rdoc]{*escapeRdFilename}()}.

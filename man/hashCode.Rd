@@ -3,10 +3,10 @@
 % 
 %  
 % 
-% on Mon Jul 18 15:07:51 2005.
+% on Mon Apr 03 17:20:21 2006.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
-% by Henrik Bengtsson, 2001-2004.
+% by Henrik Bengtsson, 2001-2006.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \name{hashCode}
@@ -41,7 +41,7 @@
   For all other objects, by default \code{as.integer()} is called.
 }
 
-\author{Henrik Bengtsson \url{http://www.braju.com/R/}}
+\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \keyword{programming}
 \keyword{methods}

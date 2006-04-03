@@ -3,10 +3,10 @@
 % 
 %  
 % 
-% on Mon Jul 18 15:07:04 2005.
+% on Mon Apr 03 18:46:47 2006.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
-% by Henrik Bengtsson, 2001-2004.
+% by Henrik Bengtsson, 2001-2006.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \name{setConstructorS3}
@@ -18,7 +18,7 @@
 \description{
  Defines a class in R.oo/S3 style.
  The class name is validated so it starts with a letter (A-Z) and it
- also gives a \code{\link[base]{warning}} if its first letter is \emph{not} captial. The'
+ also gives a \code{\link[base]{warning}} if its first letter is \emph{not} captial. The
  reason for this is to enforce a naming convention that names classes
  with upper-case initial letters and methods with lower-case initial
  letters (this is also the case in for instance Java).
@@ -75,7 +75,7 @@
   For a thorough example of how to use this method see \code{\link{Object}}.
 }
 
-\author{Henrik Bengtsson \url{http://www.braju.com/R/}}
+\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \keyword{programming}
 \keyword{methods}

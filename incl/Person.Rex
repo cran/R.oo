@@ -14,35 +14,35 @@ setConstructorS3("Person", function(name, age) {
 })
 
 
-setMethodS3("as.character", "Person", function(this) {
+setMethodS3("as.character", "Person", function(this, ...) {
   paste(this$.name, "is", as.integer(this$.age), "years old.");
 })
 
-setMethodS3("equals", "Person", function(this, obj) {
+setMethodS3("equals", "Person", function(this, obj, ...) {
   ( identical(data.class(this), data.class(obj)) &&
     identical(this$getName(), obj$getName()) &&
     identical(this$getAge() , obj$getAge() )    );
 })
 
-setMethodS3("hashCode", "Person", function(this) {
+setMethodS3("hashCode", "Person", function(this, ...) {
   # Get the hashCode() of the '.name' and the '.age' fields
   # using hashCode.default().
   hashCode(this$.name) * hashCode(this$.age);
 })
 
-setMethodS3("getName", "Person", function(this) {
+setMethodS3("getName", "Person", function(this, ...) {
   this$.name;
 })
 
-setMethodS3("setName", "Person", function(this, newName) {
+setMethodS3("setName", "Person", function(this, newName, ...) {
   throw("It is not possible to change the name of a Person.");
 })
 
-setMethodS3("getAge", "Person", function(this) {
+setMethodS3("getAge", "Person", function(this, ...) {
   this$.age;
 })
 
-setMethodS3("setAge", "Person", function(this, newAge) {
+setMethodS3("setAge", "Person", function(this, newAge, ...) {
   if (!is.numeric(newAge))
     throw("Age must be numeric: ", newAge);
   if (newAge < 0)

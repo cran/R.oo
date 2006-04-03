@@ -160,7 +160,7 @@ setMethodS3("getMessage", "InternalErrorException", function(this, ...) {
 #
 # @author
 #
-# \examples{\dontrun{@include "InternalErrorException.reportBug.Rex"}}
+# \examples{\dontrun{@include "../incl/InternalErrorException.reportBug.Rex"}}
 #
 # \seealso{
 #   @see "base::bug.report" to report non-package specific bugs in R.

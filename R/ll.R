@@ -16,19 +16,27 @@
 #    \code{functionName()} will be called on each member found. If the 
 #    result matches the \code{value}, the member is returned, otherwise
 #    not.}
+#   \item{private}{If @TRUE, also private members, i.e. members with
+#    a name starting with a @. (period), will be listed, otherwise not.}
 #   \item{properties}{Names of properties to be returned. There must exist
 #    a @function with the same name, because it will be called. This way
 #    one can extract any type of property by defining new methods.}
 #   \item{sortBy}{Name or index of column (property) to be sorted by. 
 #    If @NULL, the objects are listed in the order they are found.}
-#   \item{private}{If @TRUE, also private members, i.e. members with
-#    a name starting with a @. (period), will be listed, otherwise not.}
 #   \item{envir}{An @environment, a search path index or a name of a package
 #    to be scanned.}
 # }
 #
 # \value{
 #  Returns a @data.frame containing information about all the members.
+# }
+#
+# \section{Default properties returned}{
+#  It is possible to set the default value of argument \code{properties}
+#  by setting option \code{"R.oo::ll/properties"}, e.g.
+#  \code{options("R.oo::ll/properties"=c("data.class", "dimension"))}.
+#  If this option is not set when the package is loaded, it is set to
+#  \code{c("data.class", "dimension", "object.size")}.
 # }
 #
 # \examples{
@@ -70,7 +78,7 @@
 #
 # \keyword{utilities}
 #*/###########################################################################
-setMethodS3("ll", "ANY", function(pattern=".*", ..., private=FALSE, properties=c("data.class", "dimension", "object.size"), sortBy=NULL, envir=parent.frame()) {
+setMethodS3("ll", "ANY", function(pattern=".*", ..., private=FALSE, properties=getOption("R.oo::ll/properties"), sortBy=NULL, envir=parent.frame()) {
   if (is.numeric(envir)) {
     envir <- as.environment(envir);
   } else if (is.character(envir)) {
@@ -132,8 +140,19 @@ setMethodS3("ll", "ANY", function(pattern=".*", ..., private=FALSE, properties=c
     members <- keep;
   }
 
-  if (length(properties) == 0)
+  if (identical(properties, ""))
     return(data.frame(member=members));
+
+  if (length(properties) == 0) {
+    # Set default 'properties' argument for ll(), if missing
+    key <- "R.oo::ll/properties";
+    if (!key %in% names(options())) {
+str(2);
+      properties <- c("data.class", "dimension", "object.size");
+      options(key=properties);
+    }
+  }
+
 
   # Generate a data frame row by row where each row contains the name of the
   # member and the properties as character strings.
@@ -199,6 +218,10 @@ setMethodS3("ll", "ANY", function(pattern=".*", ..., private=FALSE, properties=c
 
 ############################################################################
 # HISTORY:
+# 2005-03-28
+# o Now argument 'properties' of ll() is given by the option 
+#   "R.oo::ll/properties".  If not set when the package is loaded, it is
+#   set to c("data.class", "dimension", "object.size").
 # 2005-02-11
 # o Made all regular expression patterns strict.
 # 2003-09-02

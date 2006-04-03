@@ -3,10 +3,10 @@
 % 
 %  
 % 
-% on Mon Jul 18 15:07:04 2005.
+% on Mon Apr 03 18:46:47 2006.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
-% by Henrik Bengtsson, 2001-2004.
+% by Henrik Bengtsson, 2001-2006.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \name{setMethodS3}
@@ -122,10 +122,10 @@ bar("123")
   For a thorough example of how to use this method see \code{\link{Object}}.
   For information about the R Coding Conventions, see
   \code{\link{RccViolationException}}.
-  For more information about \code{UseMethod()} see \code{\link[base]{methods}}.
+  For more information about S3/UseMethod, see \code{\link[base]{UseMethod}}().
 }
 
-\author{Henrik Bengtsson \url{http://www.braju.com/R/}}
+\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \keyword{programming}
 \keyword{methods}

@@ -3,10 +3,10 @@
 % 
 %  
 % 
-% on Mon Jul 18 15:07:48 2005.
+% on Mon Apr 03 17:20:20 2006.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
-% by Henrik Bengtsson, 2001-2004.
+% by Henrik Bengtsson, 2001-2006.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \name{Exception}
@@ -33,7 +33,7 @@
 \code{~~~~~~~~~~~~~~~~~~~~~~+--}\code{Exception}\cr
 
 \bold{Directly known subclasses:}\cr
-InternalErrorException, RccViolationException, RdocException\cr
+\link[R.oo]{InternalErrorException}, \link[R.oo]{RccViolationException}, \link[R.oo]{RdocException}\cr
 
 public static class \bold{Exception}\cr
 extends simpleError\cr
@@ -129,11 +129,11 @@ setConstructorS3("NegativeLogValueException", function(
   )
 })
 
-setMethodS3("as.character", "NegativeLogValueException", function(this) {
+setMethodS3("as.character", "NegativeLogValueException", function(this, ...) {
   paste(as.character.Exception(this), ": ", getValue(this), sep="");
 })
 
-setMethodS3("getValue", "NegativeLogValueException", function(this) {
+setMethodS3("getValue", "NegativeLogValueException", function(this, ...) {
   this$.value;
 })
 
@@ -162,10 +162,10 @@ cat("The logarithm of ", x, " is ", l, ".\n\n", sep="")
 
 }
 
-\author{Henrik Bengtsson \url{http://www.braju.com/R/}}
+\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
-  See also \link[base:conditions]{tryCatch}() (and \code{\link[base]{try}}()).
+  See also \code{\link[base:conditions]{tryCatch}}() (and \code{\link[base]{try}}()).
 }
 
 \keyword{programming}

@@ -3,10 +3,10 @@
 % 
 %  
 % 
-% on Mon Jul 18 15:07:16 2005.
+% on Mon Apr 03 17:19:48 2006.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
-% by Henrik Bengtsson, 2001-2004.
+% by Henrik Bengtsson, 2001-2006.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \name{DOLLAR< -.Object}
@@ -32,14 +32,16 @@
   If such a method exists it will be called with the Object as the first
   argument and \code{value} as the second, e.g. \code{setAge(this, value)}.
 
-  A \code{get<Name>()} is only looked for if \code{<name>} is not a private
-  field. A private field is a name \emph{beginning} with a \code{.}
-  (period). The rational for this naming convention is to be consistent
+  A \code{set<Name>()} is only looked for if \code{<name>} is a non-private
+  field. A private field is a name \emph{beginning} with a \code{.} (period).
+  The rational for this naming convention is to be consistent
   with how \code{\link[base]{ls}}() works, which will not list such members
   by default.
+  Moreover, excluding private fields for the search of a \code{set<Name>()}
+  will decrease the overhead for such field.
 
   2) If no such method exists the \code{value} will be assigned to an
-     existing field named \code{name}.
+     existing field named \code{name}, if such exists.
 
   3) Otherwise, the value will be assigned to a static field,
      if such exists.
@@ -68,7 +70,7 @@
 
 \examples{\dontrun{For a complete example see help(Object).}}
 
-\author{Henrik Bengtsson \url{http://www.braju.com/R/}}
+\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
   For more information see \code{\link{Object}}.

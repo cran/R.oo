@@ -3,10 +3,10 @@
 % 
 %  
 % 
-% on Mon Jul 18 15:07:10 2005.
+% on Mon Apr 03 17:19:48 2006.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
-% by Henrik Bengtsson, 2001-2004.
+% by Henrik Bengtsson, 2001-2006.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
  \name{Object}
@@ -34,7 +34,7 @@
      Object. By default, this is just the smallest possible \R object, but
      there are situations where it is useful to have another kind of core,
      which is the case with the Class class.
-     \emph{Note that this value is belonging to the reference variable
+     \emph{Note that this value belongs to the reference variable
      and not to the Object, which means it can not be referenced.}}
  }
 
@@ -97,35 +97,35 @@ setConstructorS3("Person", function(name, age) {
 })
 
 
-setMethodS3("as.character", "Person", function(this) {
+setMethodS3("as.character", "Person", function(this, ...) {
   paste(this$.name, "is", as.integer(this$.age), "years old.");
 })
 
-setMethodS3("equals", "Person", function(this, obj) {
+setMethodS3("equals", "Person", function(this, obj, ...) {
   ( identical(data.class(this), data.class(obj)) &&
     identical(this$getName(), obj$getName()) &&
     identical(this$getAge() , obj$getAge() )    );
 })
 
-setMethodS3("hashCode", "Person", function(this) {
+setMethodS3("hashCode", "Person", function(this, ...) {
   # Get the hashCode() of the '.name' and the '.age' fields
   # using hashCode.default().
   hashCode(this$.name) * hashCode(this$.age);
 })
 
-setMethodS3("getName", "Person", function(this) {
+setMethodS3("getName", "Person", function(this, ...) {
   this$.name;
 })
 
-setMethodS3("setName", "Person", function(this, newName) {
+setMethodS3("setName", "Person", function(this, newName, ...) {
   throw("It is not possible to change the name of a Person.");
 })
 
-setMethodS3("getAge", "Person", function(this) {
+setMethodS3("getAge", "Person", function(this, ...) {
   this$.age;
 })
 
-setMethodS3("setAge", "Person", function(this, newAge) {
+setMethodS3("setAge", "Person", function(this, newAge, ...) {
   if (!is.numeric(newAge))
     throw("Age must be numeric: ", newAge);
   if (newAge < 0)
@@ -273,17 +273,16 @@ print(obj)
 print(MyClass$count)
 print(obj[[1]]$count)
 
+stopifnot(obj[[1]]$count == length(obj))
+stopifnot(MyClass$count == length(obj))
+
  }
 
- \author{Henrik Bengtsson \url{http://www.braju.com/R/}}
+ \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
  \references{
-   [1] Henrik Bengtsson, \emph{The R.oo package - Object-Oriented Programming
-       with References Using Standard R Code}, In Kurt Hornik, Friedrich
-       Leisch and Achim Zeileis, editors, Proceedings of the 3rd
-       International Workshop on Distributed Statistical Computing
-       (DSC 2003), March 20-22, Vienna, Austria.
-       \url{http://www.ci.tuwien.ac.at/Conferences/DSC-2003/Proceedings/}\cr
+  [1] H. Bengtsson, \emph{The R.oo package - Object-Oriented Programming with References Using Standard R Code}, In Kurt Hornik, Friedrich Leisch and Achim Zeileis, editors, Proceedings of the 3rd International Workshop on Distributed Statistical Computing (DSC 2003), March 20-22, Vienna, Austria. \url{http://www.ci.tuwien.ac.at/Conferences/DSC-2003/Proceedings/}
+ \cr
  }
 
  \keyword{programming}

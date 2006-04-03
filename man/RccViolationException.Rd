@@ -3,10 +3,10 @@
 % 
 %  
 % 
-% on Mon Jul 18 15:08:14 2005.
+% on Mon Apr 03 17:20:39 2006.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
-% by Henrik Bengtsson, 2001-2004.
+% by Henrik Bengtsson, 2001-2006.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \name{RccViolationException}
@@ -99,10 +99,10 @@ $, $<-, [[, [[<-, as.character, attach, attachLocally, clone, detach, equals, ex
  }
 }
 
-\author{Henrik Bengtsson \url{http://www.braju.com/R/}}
+\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
-  See also \code{\link[base]{try}}() and \code{\link{trycatch}}().
+  See also \code{\link[base]{try}}() and \code{\link[base:conditions]{tryCatch}()}.
   For detailed information about exceptions see \code{\link{Exception}}.
   The R Coding Conventions (RCC) can be found at
   \url{http://www.maths.lth.se/help/R/RCC/}.

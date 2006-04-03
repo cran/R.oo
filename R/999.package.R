@@ -1,6 +1,5 @@
 #########################################################################/**
-# @RdocAbout
-# @alias R.oo
+# @RdocPackage R.oo
 #
 # \description{
 #  @eval "getDescription(R.oo)"
@@ -16,10 +15,7 @@
 #
 #   \code{install.packages("R.oo")}
 #
-#   To update our packages do \code{update.packages()}.
-#   To get the "devel" version, add argument
-#   \code{contriburl="http://www.maths.lth.se/help/R"}
-#   to the above commands.
+#   To get the "devel" version, see \url{http://www.braju.com/R/}.
 # }
 #
 # \section{Dependancies and other requirements}{
@@ -30,8 +26,11 @@
 # \section{To get started}{
 #   To get started, see:
 #   \enumerate{
-#     \item @see "setMethodS3".
-#     \item @see "Object".
+#     \item @see "setMethodS3" - Simple and safe creation of S3 methods
+#         and, whenever needed,  automatic creation of S3 generic function.
+#     \item @see "Object" - Root class providing support for reference
+#         variables. Any class inheriting from this class supports reference
+#         variables.
 #   }
 # } 
 #
@@ -54,12 +53,7 @@
 # }
 #
 # \references{
-# [1] Henrik Bengtsson, \emph{The R.oo package - Object-Oriented Programming
-#     with References Using Standard R Code}, In Kurt Hornik, Friedrich
-#     Leisch and Achim Zeileis, editors, Proceedings of the 3rd
-#     International Workshop on Distributed Statistical Computing
-#     (DSC 2003), March 20-22, Vienna, Austria. 
-#     \url{http://www.ci.tuwien.ac.at/Conferences/DSC-2003/Proceedings/}\cr 
+#  [1] @include "../incl/BengtssonH_2003.bib.Rdoc" \cr
 # }
 #*/#########################################################################  
 

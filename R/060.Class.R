@@ -288,13 +288,19 @@ setMethodS3("getKnownSubclasses", "Class", function(this, sort=TRUE, ...) {
 
   # Look in the search path
   for (pos in seq(along=search())) {
+    # Get the environment
+    envir <- as.environment(pos);
+
     # Get all objects
-    objectNames <- ls(pos=pos);
+    objectNames <- ls(envir=envir);
+
+    # Exclude itself (to avoid recursive calls)
+    objectNames <- setdiff(objectNames, name);
 
     # For each object, check if it is a function...
     for (objectName in objectNames) {
-      if (exists(objectName, mode="function")) {
-        object <- get(objectName, mode="function");
+      if (exists(objectName, mode="function", envir=envir, inherits=FALSE)) {
+        object <- get(objectName, mode="function", envir=envir, inherits=FALSE);
         # ...and then if it is a Class function (constructor).
         if (inherits(object, "Class")) {
           # If it is a Class object, get all its super classes.
@@ -1381,6 +1387,10 @@ setMethodS3("[[<-", "Class", function(this, name, value) {
 
 ############################################################################
 # HISTORY:
+# 2006-04-01
+# o Added argument 'envir' to all exists() and get() calls in the search
+#   function getKnownSubclasses() (and inherits=FALSE).  This will improve
+#   speed a bit.
 # 2005-06-14
 # o BUG FIX: getDetails() would list private and protected methods as
 #   public.
