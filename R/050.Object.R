@@ -21,7 +21,7 @@
 #     Object. By default, this is just the smallest possible \R object, but
 #     there are situations where it is useful to have another kind of core,
 #     which is the case with the Class class.
-#     \emph{Note that this value is belonging to the reference variable
+#     \emph{Note that this value belongs to the reference variable
 #     and not to the Object, which means it can not be referenced.}}
 # }
 #
@@ -41,20 +41,15 @@
 # }
 #
 # \examples{
-#   @include "Person.Rex"
+#   @include "../incl/Person.Rex"
 #
-#   @include "StaticFields.Rex"
+#   @include "../incl/StaticFields.Rex"
 # }
 #
 # @author
 #
 # \references{
-#   [1] Henrik Bengtsson, \emph{The R.oo package - Object-Oriented Programming
-#       with References Using Standard R Code}, In Kurt Hornik, Friedrich
-#       Leisch and Achim Zeileis, editors, Proceedings of the 3rd
-#       International Workshop on Distributed Statistical Computing
-#       (DSC 2003), March 20-22, Vienna, Austria. 
-#       \url{http://www.ci.tuwien.ac.at/Conferences/DSC-2003/Proceedings/}\cr
+#  [1] @include "../incl/BengtssonH_2003.bib.Rdoc" \cr
 # }
 #
 # \keyword{programming}
@@ -559,7 +554,7 @@ setMethodS3("print", "Object", function(x, ...) {
 #   Returns (invisibly) a @character @vector of the fields copied.
 # }
 # 
-# @examples "attachLocally.Object.Rex"
+# @examples "../incl/attachLocally.Object.Rex"
 #
 # @author
 # 
@@ -744,7 +739,7 @@ setMethodS3("save", "Object", function(this, file=NULL, path=NULL, compress=TRUE
       path <- gsub("[/\\]*$", "", path);
       # 2. Add a '/' to the end.
       if (regexpr("/$", path) == -1)
-  	path <- paste(path, "/", sep="");
+        path <- paste(path, "/", sep="");
       # 3. Paste the path and the file together.
       file <- as.character(file);
       file <- paste(path, file, sep="");
@@ -826,7 +821,7 @@ setMethodS3("load", "Object", function(static, file, path=NULL, ...) {
       path <- gsub("[/\\]*$", "", path);
       # 2. Add a '/' to the end.
       if (regexpr("/$", path) == -1)
-  	path <- paste(path, "/", sep="");
+        path <- paste(path, "/", sep="");
       # 3. Paste the path and the file together.
       file <- as.character(file);
       file <- paste(path, file, sep="");
@@ -1336,14 +1331,14 @@ setMethodS3("$", "Object", function(this, name) {
         # Still to be figured out how to do! /HB 2003-01-18
 #        memberAccessorOrder <- attr(lookup, "possibilities");
       } else if (lookup == 2) {
-  	return( get(name, envir=envir) );
+        return( get(name, envir=envir) );
       } else if (lookup == 3) {
         return( attr(this, name) );
       } else if (lookup == 4) {
          method <- attr(lookup, "method");
-  	 return( function(...) method(this, ...) );
+         return( function(...) method(this, ...) );
       } else if (lookup == 5) {
-	 return( get(name, envir=attr(lookup, "static.envir")) );
+         return( get(name, envir=attr(lookup, "static.envir")) );
       }
     }
     lookup <- NULL;
@@ -1354,39 +1349,39 @@ setMethodS3("$", "Object", function(this, name) {
   for (memberAccessor in memberAccessorOrder) {
     if (memberAccessor == 1) {
       if (is.null(attr(this, "disableGetMethods"))) {
-  	firstChar <- substr(name, 1,1);
-  	# Do not try to access private fields using a get<Name>() method,
-  	# because such a functionality means that the user *expects* that
-  	# there actually is a field called '.<name>', which he or she
-	# should not do since it is a private field!
+        firstChar <- substr(name, 1,1);
+        # Do not try to access private fields using a get<Name>() method,
+        # because such a functionality means that the user *expects* that
+        # there actually is a field called '.<name>', which he or she
+        # should not do since it is a private field!
         # Is it a private field?
-  	if (!identical(firstChar, ".")) {
+        if (!identical(firstChar, ".")) {
           # Field names can not contain spaces...
-  	  if (regexpr(" ", name) == -1) {
-  	    # 1. Is there a get<Name>() method?
+          if (regexpr(" ", name) == -1) {
+            # 1. Is there a get<Name>() method?
             capitalizedName <- name;
             substr(capitalizedName,1,1) <- toupper(firstChar);
             getMethodNames <- paste("get", capitalizedName, ".", class(this), sep="");
-  	    for (getMethodName in getMethodNames) {
-  	      if (exists(getMethodName, mode="function")) {
-  		ref <- this;
-  		attr(ref, "disableGetMethods") <- TRUE;
-  		method <- get(getMethodName, mode="function");
-  		# For caching purposes, if the field <name> is trying to be
-  		# accessed, we do not want to call get<name>() again! If <name>
-  		# is not a virtual field, the it has to be a real field, an
-  		# attribute, a static field etc. We do not know in advance,
-  		# but we know it is nothing we already tried, hence
-  		lookup <- memberAccessor;
-  		attr(lookup, "memberAccessorOrder") <- memberAccessorOrder;
-  		pos <- which(memberAccessorOrder == memberAccessor);
-  		attr(lookup, "possibilities") <- memberAccessorOrder[-(1:pos)];
-  		assign(cacheName, lookup, envir=envir);
-  		return(method(ref));
-  	      }
-  	    } # for (...)
-  	  } # if ("no space in the name")
-	} # if ("is private field")
+            for (getMethodName in getMethodNames) {
+              if (exists(getMethodName, mode="function")) {
+                ref <- this;
+                attr(ref, "disableGetMethods") <- TRUE;
+                method <- get(getMethodName, mode="function");
+                # For caching purposes, if the field <name> is trying to be
+                # accessed, we do not want to call get<name>() again! If <name>
+                # is not a virtual field, the it has to be a real field, an
+                # attribute, a static field etc. We do not know in advance,
+                # but we know it is nothing we already tried, hence
+                lookup <- memberAccessor;
+                attr(lookup, "memberAccessorOrder") <- memberAccessorOrder;
+                pos <- which(memberAccessorOrder == memberAccessor);
+                attr(lookup, "possibilities") <- memberAccessorOrder[-(1:pos)];
+                assign(cacheName, lookup, envir=envir);
+                return(method(ref));
+              }
+            } # for (...)
+          } # if ("no space in the name")
+        } # if ("is private field")
       } # if (is.null(attr(this, "disableGetMethods")))
     } else if (memberAccessor == 2) {
   
@@ -1398,7 +1393,7 @@ setMethodS3("$", "Object", function(this, name) {
         lookup <- memberAccessor;
         attr(lookup, "memberAccessorOrder") <- memberAccessorOrder;
         assign(cacheName, lookup, envir=envir);
-  	return(get(name, envir=envir));
+        return(get(name, envir=envir));
       }
     } else if (memberAccessor == 3) {
   
@@ -1407,7 +1402,7 @@ setMethodS3("$", "Object", function(this, name) {
         lookup <- memberAccessor;
         attr(lookup, "memberAccessorOrder") <- memberAccessorOrder;
         assign(cacheName, lookup, envir=envir);
-  	return(attr(this, name));
+        return(attr(this, name));
       }
 
     } else if (memberAccessor == 4) {
@@ -1415,14 +1410,14 @@ setMethodS3("$", "Object", function(this, name) {
       # 3. Is it a method?
       methodNames <- paste(name, class(this), sep=".");
       for (methodName in methodNames) {
-  	if (exists(methodName, mode="function")) {
-  	  method <- get(methodName, mode="function");
+        if (exists(methodName, mode="function")) {
+          method <- get(methodName, mode="function");
           lookup <- memberAccessor;
           attr(lookup, "memberAccessorOrder") <- memberAccessorOrder;
           attr(lookup, "method") <- method;
           assign(cacheName, lookup, envir=envir);
-  	  return(function(...) method(this, ...));
-  	}
+          return(function(...) method(this, ...));
+        }
       }
     } else if (memberAccessor == 5) {
     
@@ -1470,14 +1465,16 @@ setMethodS3("$", "Object", function(this, name) {
 #   If such a method exists it will be called with the Object as the first 
 #   argument and \code{value} as the second, e.g. \code{setAge(this, value)}.
 #
-#   A \code{get<Name>()} is only looked for if \code{<name>} is not a private
-#   field. A private field is a name \emph{beginning} with a \code{.} 
-#   (period). The rational for this naming convention is to be consistent
+#   A \code{set<Name>()} is only looked for if \code{<name>} is a non-private
+#   field. A private field is a name \emph{beginning} with a \code{.} (period). 
+#   The rational for this naming convention is to be consistent
 #   with how @see "base::ls" works, which will not list such members 
 #   by default.
+#   Moreover, excluding private fields for the search of a \code{set<Name>()}
+#   will decrease the overhead for such field.
 #
 #   2) If no such method exists the \code{value} will be assigned to an
-#      existing field named \code{name}. 
+#      existing field named \code{name}, if such exists.
 #
 #   3) Otherwise, the value will be assigned to a static field,
 #      if such exists.
@@ -1522,47 +1519,57 @@ setMethodS3("$<-", "Object", function(this, name, value) {
 
   for (memberAccessor in memberAccessorOrder) {
     if (memberAccessor == 1) {
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+      # Search for a set<Name>() method
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
       if (is.null(attr(this, "disableSetMethods"))) {
-  	firstChar <- substr(name, 1,1);
-  	# Do not try to access private fields using a set<Name>() method,
-  	# because such a functionality means that the user *expects* that
-  	# there actually is a field called '.<name>', which he or she
-	# should not do since it is a private field!
+        firstChar <- substr(name, 1,1);
+        # Do not try to access private fields using a set<Name>() method,
+        # because such a functionality means that the user *expects* that
+        # there actually is a field called '.<name>', which he or she
+        # should not do since it is a private field!
         # Is it a private field?
-  	if (!identical(firstChar, ".")) {
+        if (!identical(firstChar, ".")) {
           # Field names can not contain spaces...
-  	  if (regexpr(" ", name) == -1) {
-    	    # 1. Is it a set<Name>() method?
+          if (regexpr(" ", name) == -1) {
+            # 1. Is it a set<Name>() method?
             capitalizedName <- name;
             substr(capitalizedName,1,1) <- toupper(firstChar);
             setMethodNames <- paste("set", capitalizedName, ".", class(this), sep="");
-  	    for (setMethodName in setMethodNames) {
-  	      if (exists(setMethodName, mode="function")) {
-  	    	ref <- this;
-  	    	attr(ref, "disableSetMethods") <- TRUE;
-  	    	get(setMethodName, mode="function")(ref, value);
-  	    	return(this);
-  	      }
-  	    }
-  	  } # if ("no space in the name")
-	} # if ("is private field")
-      } # if (is.null(attr(this, "disableGetMethods")))
+            for (setMethodName in setMethodNames) {
+              if (exists(setMethodName, mode="function")) {
+                ref <- this;
+                attr(ref, "disableSetMethods") <- TRUE;
+                get(setMethodName, mode="function")(ref, value);
+                return(invisible(this));
+              }
+            }
+          } # if ("no space in the name")
+        } # if ("is private field")
+      } # if (is.null(attr(this, "disableSetMethods")))
     } else if (memberAccessor == 2) {
-
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+      # Search for a <name> field
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
       # 2. If there exists a field, assign the value to that field.
       envir <- attr(this, ".env");
-      if (exists(name, envir=envir))
-  	 assign(name, value, envir=envir);
-
+      if (exists(name, envir=envir)) {
+        assign(name, value, envir=envir);
+        return(invisible(this));
+      }
     } else if (memberAccessor == 3) {
-
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+      # Search for a <name> attribute.   /Should this be removed?
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
       # 3. If there exists an attribute field, assign the value to that field.
       if (is.element(name, names(attributes(this)))) {
-  	 attr(this, name) <- value;
+        attr(this, name) <- value;
+        return(invisible(this));
       }
-
     } else if (memberAccessor == 4) {
-    
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+      # Search for a static <name> field
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
       # 4. If not, it might be that it is a static field
       static <- getStaticInstance(get(class(this)[1]));
       static.envir <- attr(static, ".env");
@@ -1570,13 +1577,16 @@ setMethodS3("$<-", "Object", function(this, name, value) {
       # environment assigned and therefore, for now, no static
       # fields.
       if (!is.null(static.envir) && exists(name, envir=static.envir, inherit=FALSE)) {
-  	assign(name, value, envir=static.envir);
-  	return(this);
+        assign(name, value, envir=static.envir);
+        return(invisible(this));
       }
     } else if (memberAccessor == 5) {
-    
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+      # Create a new field <name>
+      # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
       # 5. Otherwise, assign the value to a new field.
       assign(name, value, envir=envir);
+      return(invisible(this));
     }
   } # for (memberAccessor in memberAccessorOrder)
 
@@ -1698,6 +1708,20 @@ setMethodS3("callSuperMethodS3", "ANY", function(this, methodName, ..., nbrOfCla
 
 ############################################################################
 # HISTORY:
+# 2005-11-28
+# o Added assertion code to example of static fields (?Object).
+# 2005-11-23
+# o BUG FIX: The "$<-" function goes through alternatives where to save
+#   the new value, e.g. set<Name>(), <name> field, static <name> field etc.
+#   When a "match" found and the value was assigned, it did not return
+#   (except for the set<Name>() match), but instead contiued search for
+#   the rest.  One effect of this was that the new value was always assign
+#   to the static field too.  Thanks Edouard Duchesnay at Service 
+#   Hospitalier Frédéric Joliot, Commissariat à l'Energie Atomique, France
+#   for spotting this.
+# o Minor typo corrections in the Rdoc.
+# o Replaced all TABs with spaces in source code. Don't know where they 
+#   came from.
 # 2005-07-12
 # o Added an Rdoc section on "Defining static fields" with an example
 #   showing how to do it.

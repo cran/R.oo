@@ -3,18 +3,19 @@
 % 
 %  
 % 
-% on Mon Jul 18 15:07:29 2005.
+% on Mon Apr 03 17:20:05 2006.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
-% by Henrik Bengtsson, 2001-2004.
+% by Henrik Bengtsson, 2001-2006.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{. About this package}
-\alias{. About this package}
-
-\title{About this package}
-
+\name{R.oo-package}
+\alias{R.oo-package}
 \alias{R.oo}
+\docType{package}
+
+\title{Package R.oo}
+
 
 \description{
  Methods and classes for object-oriented programming in R with or without references.  Large effort has been made on making definition of methods as simple as possible with a minimum of maintainance for package developers.  For example, generic functions are created automatically, if missing, and name conflict are automatically solved, if possible.  The method setMethodS3() is a good start for those who in the future want to migrate to S4.  The package has been developed since 2001 and is now considered very stable.
@@ -30,10 +31,7 @@
 
   \code{install.packages("R.oo")}
 
-  To update our packages do \code{update.packages()}.
-  To get the "devel" version, add argument
-  \code{contriburl="http://www.maths.lth.se/help/R"}
-  to the above commands.
+  To get the "devel" version, see \url{http://www.braju.com/R/}.
 }
 
 \section{Dependancies and other requirements}{
@@ -44,8 +42,11 @@
 \section{To get started}{
   To get started, see:
   \enumerate{
-    \item \code{\link{setMethodS3}}().
-    \item \code{\link{Object}}.
+    \item \code{\link{setMethodS3}}() - Simple and safe creation of S3 methods
+        and, whenever needed,  automatic creation of S3 generic function.
+    \item \code{\link{Object}} - Root class providing support for reference
+        variables. Any class inheriting from this class supports reference
+        variables.
   }
 }
 
@@ -74,7 +75,7 @@
 
 }
 
-\author{Henrik Bengtsson \url{http://www.braju.com/R/}}
+\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \section{License}{
   The releases of this package is licensed under
@@ -82,11 +83,7 @@
 }
 
 \references{
-[1] Henrik Bengtsson, \emph{The R.oo package - Object-Oriented Programming
-    with References Using Standard R Code}, In Kurt Hornik, Friedrich
-    Leisch and Achim Zeileis, editors, Proceedings of the 3rd
-    International Workshop on Distributed Statistical Computing
-    (DSC 2003), March 20-22, Vienna, Austria.
-    \url{http://www.ci.tuwien.ac.at/Conferences/DSC-2003/Proceedings/}\cr
+ [1] H. Bengtsson, \emph{The R.oo package - Object-Oriented Programming with References Using Standard R Code}, In Kurt Hornik, Friedrich Leisch and Achim Zeileis, editors, Proceedings of the 3rd International Workshop on Distributed Statistical Computing (DSC 2003), March 20-22, Vienna, Austria. \url{http://www.ci.tuwien.ac.at/Conferences/DSC-2003/Proceedings/}
+ \cr
 }
-\keyword{documentation}
+\keyword{package}

@@ -9,9 +9,15 @@ if (R.Version()$major < 2) {
       "methods", "stats", "utils", "Autoloads", getOption("dontWarnPkgs"))))
 }
 
+if (!exists("baseenv", mode="function")) {
+  baseenv <- function() NULL;
+}
 
 ############################################################################
 # HISTORY:
+# 2006-02-09
+# o Added baseenv() for R versions (< v2.2.0) where it does not exist.
+#   This is used in setGenericS3() and setMethodS3() from R v2.3.0.
 # 2005-02-15
 # o Now require() is only called for R v1.9.1 or eariler.
 # 2005-02-10

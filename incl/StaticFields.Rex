@@ -48,3 +48,6 @@ obj <- lapply(1:4, MyClass)
 print(obj)
 print(MyClass$count)
 print(obj[[1]]$count)
+
+stopifnot(obj[[1]]$count == length(obj))
+stopifnot(MyClass$count == length(obj))

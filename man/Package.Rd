@@ -3,10 +3,10 @@
 % 
 %  
 % 
-% on Mon Jul 18 15:08:02 2005.
+% on Mon Apr 03 17:20:36 2006.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
-% by Henrik Bengtsson, 2001-2004.
+% by Henrik Bengtsson, 2001-2006.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \name{Package}
@@ -49,6 +49,7 @@ extends \link[R.oo]{Object}\cr
  \tab \code{\link[R.oo:getAuthor.Package]{getAuthor}} \tab Gets the Author of this package.\cr
  \tab \code{\link[R.oo:getBundle.Package]{getBundle}} \tab Gets the Bundle that this package might belong to.\cr
  \tab \code{\link[R.oo:getBundlePackages.Package]{getBundlePackages}} \tab Gets the names of the other packages that is in the same bundle as this package.\cr
+ \tab \code{\link[R.oo:getChangeLog.Package]{getChangeLog}} \tab Gets the change log of this package.\cr
  \tab \code{\link[R.oo:getClasses.Package]{getClasses}} \tab Gets all classes of a package.\cr
  \tab \code{\link[R.oo:getContents.Package]{getContents}} \tab Gets the contents of this package.\cr
  \tab \code{\link[R.oo:getDataPath.Package]{getDataPath}} \tab Gets the path to the data (data/) directory of this package.\cr
@@ -58,7 +59,7 @@ extends \link[R.oo]{Object}\cr
  \tab \code{\link[R.oo:getDocPath.Package]{getDocPath}} \tab Gets the path to the accompanying documentation (doc/) directory of this package.\cr
  \tab \code{\link[R.oo:getEnvironment.Package]{getEnvironment}} \tab Gets the environment of a loaded package.\cr
  \tab \code{\link[R.oo:getExamplePath.Package]{getExamplePath}} \tab Gets the path to the example (R-ex/) directory of this package.\cr
- \tab \code{\link[R.oo:getHistory.Package]{getHistory}} \tab Gets the history of this package.\cr
+ \tab \code{getHistory} \tab  -\cr
  \tab \code{\link[R.oo:getHowToCite.Package]{getHowToCite}} \tab Gets the howToCite of this package.\cr
  \tab \code{\link[R.oo:getLicense.Package]{getLicense}} \tab Gets the License of this package.\cr
  \tab \code{\link[R.oo:getMaintainer.Package]{getMaintainer}} \tab Gets the Maintainer of this package.\cr
@@ -71,9 +72,10 @@ extends \link[R.oo]{Object}\cr
  \tab \code{\link[R.oo:isLoaded.Package]{isLoaded}} \tab Checks if the package is installed on the search path or not.\cr
  \tab \code{\link[R.oo:ll.Package]{ll}} \tab Generates a list of informative properties of all members of the package.\cr
  \tab \code{\link[R.oo:load.Package]{load}} \tab Loads a package.\cr
+ \tab \code{\link[R.oo:showChangeLog.Package]{showChangeLog}} \tab Show the change log of this package.\cr
  \tab \code{\link[R.oo:showContents.Package]{showContents}} \tab Show the CONTENTS file of this package.\cr
  \tab \code{\link[R.oo:showDescriptionFile.Package]{showDescriptionFile}} \tab Show the DESCRIPTION file of this package.\cr
- \tab \code{\link[R.oo:showHistory.Package]{showHistory}} \tab Show the HISTORY file of this package.\cr
+ \tab \code{showHistory} \tab  -\cr
  \tab \code{\link[R.oo:showHowToCite.Package]{showHowToCite}} \tab Show the HOWTOCITE file of this package.\cr
  \tab \code{\link[R.oo:unload.Package]{unload}} \tab Unloads a package.\cr
  \tab \code{\link[R.oo:update.Package]{update}} \tab Updates the package is a newer version is available.\cr
@@ -123,7 +125,7 @@ update(R.oo)
 
 }}
 
-\author{Henrik Bengtsson \url{http://www.braju.com/R/}}
+\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \keyword{programming}
 \keyword{methods}

@@ -40,11 +40,11 @@ setConstructorS3("NegativeLogValueException", function(
   )
 })
 
-setMethodS3("as.character", "NegativeLogValueException", function(this) {
+setMethodS3("as.character", "NegativeLogValueException", function(this, ...) {
   paste(as.character.Exception(this), ": ", getValue(this), sep="");
 })
 
-setMethodS3("getValue", "NegativeLogValueException", function(this) {
+setMethodS3("getValue", "NegativeLogValueException", function(this, ...) {
   this$.value;
 })
 

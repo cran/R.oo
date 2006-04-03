@@ -59,6 +59,7 @@
 # @alias getAuthor
 # @alias getBundle
 # @alias getBundlePackages
+# @alias getChangeLog
 # @alias getClasses
 # @alias getClasses.default
 # @alias getContribUrl
@@ -83,6 +84,7 @@
 # @alias getUrl
 # @alias getVersion
 # @alias isLoaded
+# @alias showChangeLog
 # @alias showContents
 # @alias showDescriptionFile
 # @alias showHistory

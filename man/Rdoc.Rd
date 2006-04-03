@@ -3,10 +3,10 @@
 % 
 %  
 % 
-% on Mon Jul 18 15:08:19 2005.
+% on Mon Apr 03 17:20:45 2006.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
-% by Henrik Bengtsson, 2001-2004.
+% by Henrik Bengtsson, 2001-2006.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \name{Rdoc}
@@ -59,7 +59,7 @@ $, $<-, [[, [[<-, as.character, attach, attachLocally, clone, detach, equals, ex
 
 }
 
-\author{Henrik Bengtsson \url{http://www.braju.com/R/}}
+\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \examples{\dontrun{# Set default author
 author <- "Henrik Bengtsson, \\url{http://www.braju.com/R/}"
@@ -87,11 +87,6 @@ file.remove(rdFiles)
   R developers,
   \emph{Guidelines for Rd files},
   \url{http://developer.r-project.org/Rds.html},
-  2003
-
-  Gordon Smyth,
-  \emph{Writing .Rd Files For S4 Classes, Generic Functions and Methods},
-  \url{http://bioinf.wehi.edu.au/limma/Rdocs.html},
   2003
 }
 

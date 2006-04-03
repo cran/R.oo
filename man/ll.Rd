@@ -3,10 +3,10 @@
 % 
 %  
 % 
-% on Mon Jul 18 15:07:55 2005.
+% on Mon Apr 03 17:20:24 2006.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
-% by Henrik Bengtsson, 2001-2004.
+% by Henrik Bengtsson, 2001-2006.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \name{ll}
@@ -19,7 +19,7 @@
   Generates a list of informative properties of all members of an environment.
 }
 
-\usage{\method{ll}{default}(pattern=".*", ..., private=FALSE, properties=c("data.class", "dimension", "object.size"), sortBy=NULL, envir=parent.frame())}
+\usage{\method{ll}{default}(pattern=".*", ..., private=FALSE, properties=getOption("R.oo::ll/properties"), sortBy=NULL, envir=parent.frame())}
 
 \arguments{
   \item{pattern}{Regular expression pattern specifying which members to
@@ -28,19 +28,27 @@
    \code{functionName()} will be called on each member found. If the
    result matches the \code{value}, the member is returned, otherwise
    not.}
+  \item{private}{If \code{\link[base:logical]{TRUE}}, also private members, i.e. members with
+   a name starting with a \code{.} (period), will be listed, otherwise not.}
   \item{properties}{Names of properties to be returned. There must exist
    a \code{\link[base]{function}} with the same name, because it will be called. This way
    one can extract any type of property by defining new methods.}
   \item{sortBy}{Name or index of column (property) to be sorted by.
    If \code{\link[base]{NULL}}, the objects are listed in the order they are found.}
-  \item{private}{If \code{\link[base:logical]{TRUE}}, also private members, i.e. members with
-   a name starting with a \code{.} (period), will be listed, otherwise not.}
   \item{envir}{An \code{\link[base]{environment}}, a search path index or a name of a package
    to be scanned.}
 }
 
 \value{
  Returns a \code{\link[base]{data.frame}} containing information about all the members.
+}
+
+\section{Default properties returned}{
+ It is possible to set the default value of argument \code{properties}
+ by setting option \code{"R.oo::ll/properties"}, e.g.
+ \code{options("R.oo::ll/properties"=c("data.class", "dimension"))}.
+ If this option is not set when the package is loaded, it is set to
+ \code{c("data.class", "dimension", "object.size")}.
 }
 
 \examples{
@@ -74,7 +82,7 @@
   }
 }
 
-\author{Henrik Bengtsson \url{http://www.braju.com/R/}}
+\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
   \code{\link{ll.Object}}().

@@ -3,10 +3,10 @@
 % 
 %  
 % 
-% on Mon Jul 18 15:07:02 2005.
+% on Mon Apr 03 18:46:46 2006.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
-% by Henrik Bengtsson, 2001-2004.
+% by Henrik Bengtsson, 2001-2006.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \name{R.KEYWORDS}
@@ -19,7 +19,7 @@
  words in \R according to [1].
 }
 
-\author{Henrik Bengtsson \url{http://www.braju.com/R/}}
+\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \references{
  [1] R Language Definition, version 2.0.1 (2004-11-27).

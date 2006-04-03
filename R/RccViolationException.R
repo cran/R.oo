@@ -41,7 +41,7 @@
 # @author
 #
 # \seealso{
-#   See also @see "base::try" and @see "trycatch".
+#   See also @see "base::try" and \code{\link[base:conditions]{tryCatch}()}.
 #   For detailed information about exceptions see @see "Exception".
 #   The R Coding Conventions (RCC) can be found at
 #   \url{@eval "RccViolationException$getRccUrl()"}.

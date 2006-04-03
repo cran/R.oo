@@ -3,10 +3,10 @@
 % 
 %  
 % 
-% on Mon Jul 18 15:07:50 2005.
+% on Mon Apr 03 17:20:20 2006.
 % 
 % Generator was the Rdoc class, which is part of the R.oo package written
-% by Henrik Bengtsson, 2001-2004.
+% by Henrik Bengtsson, 2001-2006.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \name{getStackTrace.Exception}
@@ -40,12 +40,12 @@
 
 \seealso{
   \code{\link[R.oo:printStackTrace.Exception]{*printStackTrace}()}.
-  \code{\link[base]{dump.frames}}.
-  \code{\link[base]{tryCatch}}().
+  \code{\link[utils:debugger]{dump.frames}}().
+  \code{\link[base:conditions]{tryCatch}}().
   For more information see \code{\link{Exception}}.
 }
 
-\author{Henrik Bengtsson \url{http://www.braju.com/R/}}
+\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \keyword{programming}
 \keyword{methods}

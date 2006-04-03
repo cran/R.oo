@@ -7,11 +7,7 @@
 #  Throws an exception similar to stop(), but with support for exception
 #  classes. The first argument (\code{object}) is by default pasted together
 #  with other arguments (@...) and with seperator \code{sep=""}.
-#  In other words, instead of doing:
-#
-#    \code{stop(paste("Value out of range: ", value, ".", sep=""))}
-#
-#  it is shorter to write
+#  For instance, to throw an exception, write
 #
 #    \code{throw("Value out of range: ", value, ".")}.
 #
@@ -20,7 +16,7 @@
 #    \code{throw(Exception("Value out of range: ", value, "."))}.
 #
 #  Note that \code{throw()} can be defined for specific classes, which can
-#  then be caught (or not) using \link[base:conditions]{tryCatch}().
+#  then be caught (or not) using \code{\link[base:conditions]{tryCatch}}().
 # }
 #
 # @synopsis

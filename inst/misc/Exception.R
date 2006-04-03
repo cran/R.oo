@@ -23,12 +23,12 @@
 #  @allmethods
 # }
 #
-# @examples "../incl/Exception.Rex"
+# @examples "Exception.Rex"
 #
 # @author
 #
 # \seealso{
-#   See also \code{\link[base:conditions]{tryCatch}}() (and @see "base::try").
+#   See also @see "base::tryCatch" (and @see "base::try").
 # }
 #
 # \keyword{programming}
@@ -70,15 +70,11 @@ setConstructorS3("Exception", function(..., sep="", collapse=", ") {
 #
 # \title{Gets a character string representing of the Exception}
 #
+# @synopsis
+#
 # \description{
 #  @get "title". 
 #  By default the format is: "[{POSIX date string}] {class name}: {msg}".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
 # }
 #
 # \value{
@@ -97,7 +93,7 @@ setConstructorS3("Exception", function(..., sep="", collapse=", ") {
 # \keyword{methods}
 # \keyword{error}
 #*/###########################################################################
-setMethodS3("as.character", "Exception", function(this, ...) {
+setMethodS3("as.character", "Exception", function(this) {
   paste("[", getWhen(this), "] ", class(this)[1], ": ", getMessage(this), sep="");
 })
 
@@ -108,15 +104,11 @@ setMethodS3("as.character", "Exception", function(this, ...) {
 #
 # \title{Prints the Exception}
 #
+# @synopsis
+#
 # \description{
 #  @get "title". By default the \code{as.character()} representation plus
 #  the stack trace is printed.
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
 # }
 #
 # \value{Returns nothing.}
@@ -136,8 +128,8 @@ setMethodS3("as.character", "Exception", function(this, ...) {
 # \keyword{methods}
 # \keyword{error}
 #*/###########################################################################
-setMethodS3("print", "Exception", function(x, ...) {
-  cat(getStackTraceString(x));
+setMethodS3("print", "Exception", function(this) {
+  cat(getStackTraceString(this));
 })
 
 
@@ -148,14 +140,10 @@ setMethodS3("print", "Exception", function(x, ...) {
 #
 # \title{Gets the time when the Exception was created}
 #
-# \description{
-#  Gets the time, as a POSIX object, when the Exception was created.
-# }
-#
 # @synopsis
 #
-# \arguments{
-#   \item{...}{Not used.}
+# \description{
+#  Gets the time, as a POSIX object, when the Exception was created.
 # }
 #
 # \value{
@@ -174,7 +162,7 @@ setMethodS3("print", "Exception", function(x, ...) {
 # \keyword{methods}
 # \keyword{error}
 #*/###########################################################################
-setMethodS3("getWhen", "Exception", function(this, ...) {
+setMethodS3("getWhen", "Exception", function(this) {
   this$.when;
 })
 
@@ -187,14 +175,10 @@ setMethodS3("getWhen", "Exception", function(this, ...) {
 #
 # @title "Gets the message of the Exception"
 #
-# \description{
-#  @get "title".
-# }
-#
 # @synopsis
 #
-# \arguments{
-#   \item{...}{Not used.}
+# \description{
+#  @get "title".
 # }
 #
 # \value{
@@ -213,7 +197,7 @@ setMethodS3("getWhen", "Exception", function(this, ...) {
 # \keyword{methods}
 # \keyword{error}
 #*/###########################################################################
-setMethodS3("getMessage", "Exception", function(this, ...) {
+setMethodS3("getMessage", "Exception", function(this) {
   this$.msg;
 })
 
@@ -225,14 +209,10 @@ setMethodS3("getMessage", "Exception", function(this, ...) {
 #
 # \title{Throws an Exception that can be caught}
 #
-# \description{
-#  Throws an Exception that can be caught by \code{tryCatch()}.
-# }
-#
 # @synopsis
 #
-# \arguments{
-#   \item{...}{Not used.}
+# \description{
+#  Throws an Exception that can be caught by \code{tryCatch()}.
 # }
 #
 # \value{
@@ -245,14 +225,14 @@ setMethodS3("getMessage", "Exception", function(this, ...) {
 #
 # \seealso{
 #   @seeclass
-#   See also \code{\link[base:conditions]{tryCatch}}().
+#   See also @see "base::tryCatch".
 # }
 #
 # \keyword{programming}
 # \keyword{methods}
 # \keyword{error}
 #*/###########################################################################
-setMethodS3("throw", "Exception", function(this, ...) {
+setMethodS3("throw", "Exception", function(this) {
   Exception$.lastException <- this;
   message <- getStackTraceString(this);
 #  message <- as.character(this);
@@ -272,14 +252,10 @@ setMethodS3("throw", "Exception", function(this, ...) {
 #
 # \title{Static method to get the last Exception thrown}
 #
+# @usage
+#
 # \description{
 #  Static method to get the last Exception instanciated.
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{...}{Not used.}
 # }
 #
 # \value{
@@ -290,7 +266,7 @@ setMethodS3("throw", "Exception", function(this, ...) {
 #
 # \seealso{
 #   @seeclass
-#   See also \code{\link[base:conditions]{tryCatch}}().
+#   See also @see "base::tryCatch".
 # }
 #
 # @author
@@ -299,7 +275,7 @@ setMethodS3("throw", "Exception", function(this, ...) {
 # \keyword{methods}
 # \keyword{error}
 #*/###########################################################################
-setMethodS3("getLastException", "Exception", function(this, ...) {
+setMethodS3("getLastException", "Exception", function(this) {
   Exception$.lastException;
 }, static=TRUE);
 
@@ -312,14 +288,10 @@ setMethodS3("getLastException", "Exception", function(this, ...) {
 #
 # \title{Gets the stack trace saved when the exception was created}
 #
-# \description{
-#  @get "title".
-# }
-#
 # @synopsis
 #
-# \arguments{
-#   \item{...}{Not used.}
+# \description{
+#  @get "title".
 # }
 #
 # \value{
@@ -330,8 +302,8 @@ setMethodS3("getLastException", "Exception", function(this, ...) {
 #
 # \seealso{
 #   @seemethod "printStackTrace".
-#   \code{\link[utils:debugger]{dump.frames}}().
-#   \code{\link[base:conditions]{tryCatch}}().
+#   @see "base::dump.frames".
+#   @see "base::tryCatch".
 #   @seeclass
 # }
 #
@@ -341,10 +313,10 @@ setMethodS3("getLastException", "Exception", function(this, ...) {
 # \keyword{methods}
 # \keyword{error}
 #*/###########################################################################
-setMethodS3("getStackTrace", "Exception", function(this, ...) {
+setMethodS3("getStackTrace", "Exception", function(this) {
   this$.stackTrace;
 }) 
-setMethodS3("getCall", "Exception", function(this, ...) {
+setMethodS3("getCall", "Exception", function(this) {
   getStackTrace(this);
 }) 
 
@@ -356,14 +328,10 @@ setMethodS3("getCall", "Exception", function(this, ...) {
 #
 # \title{Gets the stack trace as a string}
 #
-# \description{
-#  @get "title".
-# }
-#
 # @synopsis
 #
-# \arguments{
-#   \item{...}{Not used.}
+# \description{
+#  @get "title".
 # }
 #
 # \value{
@@ -381,7 +349,7 @@ setMethodS3("getCall", "Exception", function(this, ...) {
 # \keyword{methods}
 # \keyword{error}
 #*/###########################################################################
-setMethodS3("getStackTraceString", "Exception", function(this, ...) {
+setMethodS3("getStackTraceString", "Exception", function(this) {
   calls <- names(this$.stackTrace);
   len <- length(calls);
   width <- floor(log(len, base=10))+1;
@@ -399,14 +367,10 @@ setMethodS3("getStackTraceString", "Exception", function(this, ...) {
 #
 # \title{Prints the stack trace saved when the exception was created}
 #
-# \description{
-#  @get "title".
-# }
-#
 # @synopsis
 #
-# \arguments{
-#   \item{...}{Not used.}
+# \description{
+#  @get "title".
 # }
 #
 # \value{
@@ -417,7 +381,7 @@ setMethodS3("getStackTraceString", "Exception", function(this, ...) {
 #
 # \seealso{
 #   @seemethod "getStackTrace".
-#   \code{\link[base:conditions]{tryCatch}}().
+#   @see "base::tryCatch".
 #   @seeclass
 # }
 #
@@ -427,7 +391,7 @@ setMethodS3("getStackTraceString", "Exception", function(this, ...) {
 # \keyword{methods}
 # \keyword{error}
 #*/###########################################################################
-setMethodS3("printStackTrace", "Exception", function(this, ...) {
+setMethodS3("printStackTrace", "Exception", function(this) {
   cat(getStackTraceString(this));
 }) 
 
@@ -438,10 +402,6 @@ setMethodS3("printStackTrace", "Exception", function(this, ...) {
 
 ############################################################################
 # HISTORY:
-# 2005-02-20
-# o Updated broken link to tryCatch().
-# 2005-02-15
-# o Added arguments '...' in order to match any generic functions.
 # 2005-02-10
 # o Moved showAndWait() from Exception to simpleError.
 # 2004-10-18

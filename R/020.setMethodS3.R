@@ -55,7 +55,7 @@
 # }
 #
 # \examples{
-#  @include "setMethodS3.Rex"
+#  @include "../incl/setMethodS3.Rex"
 #
 #  \dontrun{For a complete example see help(Object).}
 # }
@@ -65,7 +65,7 @@
 #   For a thorough example of how to use this method see @see "Object".
 #   For information about the R Coding Conventions, see
 #   @see "RccViolationException".
-#   For more information about \code{UseMethod()} see @see "base::methods".
+#   For more information about S3/UseMethod, see @see "base::UseMethod".
 # }
 #
 # @author
@@ -154,7 +154,7 @@ setMethodS3.default <- function(name, class="default", definition, private=FALSE
   # find it. *Not* checking the currently loading environment would *not* 
   # be harmful, but it would produce too many warnings.
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-  sys.source.def <- get("sys.source", mode="function", envir=NULL);
+  sys.source.def <- get("sys.source", mode="function", envir=baseenv());
   loadenv <- NULL;
   for (framePos in sys.parents()[-1]) {
     if (identical(sys.source.def, sys.function(framePos))) {
@@ -185,9 +185,10 @@ setMethodS3.default <- function(name, class="default", definition, private=FALSE
   }
 
 
-
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # 4. Append '...' if missing.
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   if (appendVarArgs) {
-    # Append '...' if missing.
     if (!hasVarArgs(definition)) {
       warning("Added missing argument '...' to make it more compatible with a generic function: ", methodName);
 #      definition <- appendVarArgs(definition);
@@ -201,6 +202,61 @@ setMethodS3.default <- function(name, class="default", definition, private=FALSE
     }
   }
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # 5. Validate replacement functions (since R CMD check will complain)
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  if (regexpr("<-$", name) != -1) {
+    f <- formals(definition);
+
+    fStr <- capture.output(args(definition))[[1]];
+    fStr <- sub("^[\t\n\f\r ]*", "", fStr);    # trim() is not available
+    fStr <- sub("[\t\n\f\r ]*$", "", fStr);    # when package loads!
+
+    if (names(f)[length(f)] != "value") {
+      throw("Last argument of a ", name, 
+                              "() method should be named 'value': ", fStr);
+    }
+  }
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # 5b. Validate arguments for 'picky' methods, according to the RCC.
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  if (enforceRCC) {
+    pickyMethods <- list(
+      "$"    = c(NA, "name"), 
+      "$<-"  = c(NA, "name", "value")
+    )
+
+    if (name %in% names(pickyMethods)) {
+      f <- formals(definition);
+  
+      fStr <- capture.output(args(definition))[[1]];
+      fStr <- sub("^[\t\n\f\r ]*", "", fStr);    # trim() is not available
+      fStr <- sub("[\t\n\f\r ]*$", "", fStr);    # when package loads!
+      
+      reqArgs <- pickyMethods[[name]];
+      nbrOfReqArgs <- length(reqArgs);
+      
+      # Check for correct number of arguments
+      if (length(f) != nbrOfReqArgs) {
+        throw(RccViolationException("There should be exactly ", 
+           nbrOfReqArgs, " arguments of a ", name, "() method: ", fStr));
+      }
+  
+      for (kk in 1:nbrOfReqArgs) {
+        if (!is.na(reqArgs[kk]) && (names(f)[kk] != reqArgs[kk])) {
+          throw(RccViolationException("Argument #", kk, " in a ", name, 
+                "() method, should be named '", reqArgs[kk], "': ", fStr));
+        }
+      }
+    }
+  } # if (enforceRCC)
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # 6. Assign/create the new method
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   if (is.null(fcnDef) || overwrite == TRUE) {
     eval(substitute({fcn <- definition; attr(fcn, "modifiers") <- modifiers},
   	 list=list(fcn=as.name(methodName), definition=definition,
@@ -208,8 +264,12 @@ setMethodS3.default <- function(name, class="default", definition, private=FALSE
   	 envir=envir);
   }
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # 7. Report that a method was redefined?
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   if (!is.null(fcnDef)) {
-    msg <- paste("Method already existed and was", if (overwrite != TRUE) " not", " overwritten: ", sep="");
+    msg <- paste("Method already existed and was", 
+                  if (overwrite != TRUE) " not", " overwritten: ", sep="");
     if (is.null(conflict))
       conflict <- "quiet";
     if (conflict == "quiet") {
@@ -219,6 +279,9 @@ setMethodS3.default <- function(name, class="default", definition, private=FALSE
       throw(msg, methodName)
   }
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # 8. Create a generic function?
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   if (createGeneric == TRUE)
     setGenericS3(name, envir=envir, enforceRCC=enforceRCC);
 }
@@ -226,10 +289,14 @@ setMethodS3.default <- function(name, class="default", definition, private=FALSE
 setGenericS3("setMethodS3");
 
 
-
-
 ############################################################################
 # HISTORY:
+# 2006-02-09
+# o Removed all usage of NULL environments.  get(envir=NULL) is replaced
+#   with get(envir=baseenv()).
+# 2005-11-23
+# o Added validation of arguments in replacement functions.
+# o Added RCC validation of arguments in 'picky' methods, e.g. $()".
 # 2005-06-14
 # o BUG FIX: Argument 'enforceRCC' was not passed to setGenericS3().
 # 2005-02-28

@@ -20,7 +20,7 @@
 #  @allmethods
 # }
 #
-# \examples{\dontrun{@include "Package.Rex"}}
+# \examples{\dontrun{@include "../incl/Package.Rex"}}
 #
 # @author
 #
@@ -1233,26 +1233,30 @@ setMethodS3("getBundlePackages", "Package", function(this, ...) {
 
 
 
+
 #########################################################################/**
-# @RdocMethod getHistory
+# @RdocMethod getChangeLog
+# @aliasmethod getHistory
 #
-# @title "Gets the history of this package"
+# @title "Gets the change log of this package"
 #
 # \description{
-#   @get "title", i.e. the \code{HISTORY} file, which should is expected
-#   to be located in the root directory of the package, i.e.
-#   @seemethod "getPath".
+#   @get "title", that is, (by default) the \code{ChangeLog} (or the
+#   \code{HISTORY}) file, which should is expected to be located in the 
+#   root directory of the package, i.e. @seemethod "getPath".
 # }
 #
 # @synopsis
 #
 # \arguments{
+#   \item{filenames}{A @character @vector of (non-case sensitive) filenames
+#     to be searched for.}
 #   \item{newline}{The @character string to collapse lines in the file.}
 #   \item{...}{Not used.}
 # }
 #
 # \value{
-#   Returns the complete contents of the \code{HISTORY} file as a
+#   Returns the complete contents of the change log file as a
 #   @character string. If not found, @NULL is returned.
 # }
 #
@@ -1262,34 +1266,55 @@ setMethodS3("getBundlePackages", "Package", function(this, ...) {
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("getHistory", "Package", function(this, newline="\n", ...) {
+setMethodS3("getChangeLog", "Package", function(this, filenames=c("ChangeLog", "HISTORY"), newline="\n", ...) {
+  # Argument 'filenames':
+  filenames <- as.character(filenames);
+  filenames <- tolower(filenames);
+
   path <- getPath(this);
   files <- list.files(path=path);
-  file <- files[tolower(files) == "history"];
-  if (length(file) == 0)
+
+  # Find change log files
+  idx <- match(filenames, tolower(files));
+  idx <- idx[!is.na(idx)];
+  files <- files[idx];
+
+  if (length(files) == 0)
     return(NULL);
+
+  # First file
+  file <- files[1];
+
   pathname <- file.path(path, file);
   lines <- readLines(pathname);
   lines <- paste(lines, collapse=newline);
+
   lines;
 })
 
 
+setMethodS3("getHistory", "Package", function(this, ...) {
+  getChangeLog(this, ...);
+})
+
 
 
 #########################################################################/**
-# @RdocMethod showHistory
+# @RdocMethod showChangeLog
+# @aliasmethod showHistory
 #
-# @title "Show the HISTORY file of this package"
+# @title "Show the change log of this package"
 #
 # \description{
-#   @get "title". See also @seemethod "getHistory".
-#   If the \code{HISTORY} file does not exist, an exception is thrown.
+#   @get "title".
+#   If the change log file does not exist, an exception is thrown.
 # }
 #
 # @synopsis
 #
 # \arguments{
+#   \item{filenames}{A @character @vector of (non-case sensitive) filenames
+#     to be searched for.}
 #   \item{...}{Not used.}
 # }
 #
@@ -1300,19 +1325,41 @@ setMethodS3("getHistory", "Package", function(this, newline="\n", ...) {
 # @author
 #
 # \seealso{
+#   @seemethod "getChangeLog".
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("showHistory", "Package", function(this, ...) {
+setMethodS3("showChangeLog", "Package", function(this, filenames=c("ChangeLog", "HISTORY"), ...) {
+  # Argument 'filenames':
+  filenames <- as.character(filenames);
+  filenames <- tolower(filenames);
+
   path <- getPath(this);
   files <- list.files(path=path);
-  file <- files[tolower(files) == "history"];
+
+  # Find change log files
+  idx <- match(filenames, tolower(files));
+  idx <- idx[!is.na(idx)];
+  files <- files[idx];
+
+  if (length(files) == 0)
+    return(NULL);
+
+  # First file
+  file <- files[1];
+
   if (length(file) == 0)
-    throw("HISTORY file for package ", getName(this), " does not exist.");
+    throw("ChangeLog file for package ", getName(this), " does not exist.");
 
   pathname <- file.path(path, file);
   file.show(pathname);
 })
+
+
+setMethodS3("showHistory", "Package", function(this, ...) {
+  showChangeLog(this, ...);
+})
+
 
 
 
@@ -1522,6 +1569,12 @@ setMethodS3("update", "Package", function(object, contribUrl=getContribUrl(this)
 
 ############################################################################
 # HISTORY:
+# 2006-03-14
+# o showHistory() was calling itself.
+# 2006-02-08
+# o Added getChangeLog() and showChangeLog(), which search for the ChangeLog
+#   file and then the HISTORY file.  get- and showHistory() are now just 
+#   wrappers for these new methods.
 # 2005-06-14
 # o Added argument 'replaceNewline' to getDescription().
 # o Now as.character() of Package reports the title, the license, and the

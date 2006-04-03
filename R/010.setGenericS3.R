@@ -118,7 +118,7 @@ setGenericS3.default <- function(name, envir=parent.frame(), ellipsesOnly=TRUE, 
   # find it. *Not* checking the currently loading environment would *not* 
   # be harmful, but it would produce too many warnings.
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-  sys.source.def <- get("sys.source", mode="function", envir=NULL);
+  sys.source.def <- get("sys.source", mode="function", envir=baseenv());
   loadenv <- NULL;
   for (framePos in sys.parents()[-1]) {
     if (identical(sys.source.def, sys.function(framePos))) {
@@ -295,6 +295,9 @@ setGenericS3("isGenericS4");
 
 ############################################################################
 # HISTORY:
+# 2006-02-09
+# o Removed all usage of NULL environments.  get(envir=NULL) is replaced
+#   with get(envir=baseenv()).
 # 2005-06-14
 # o Now setGenericS3() allows a few methods that starts with a non-letter
 #   as the first character. See code for details.

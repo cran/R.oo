@@ -1,6 +1,51 @@
 Package: R.oo
 =============
 
+Version: 1.1.6 [2006-04-03]
+o Now the Rdoc compiler recognizes replacement functions and 
+  creates the correct Rd \usage{} format for these.
+
+Version: 1.1.5 [2006-03-28]
+o Now argument 'properties' of ll() is given by the option 
+  "R.oo::ll/properties".  If not set when the package is loaded, 
+  it is set to a default value.  See help(ll) for more details. This
+  was suggested by Tim Beissbarth, German Cancer Research Center.
+o BUG FIX: showHistory() for the Package class was calling itself.
+o BUG FIX: Compiling Rdoc comments with invalid keyword tags would
+  generate an internal error.  Same for invalid visibility tags etc.
+
+Version: 1.1.4 [2006-02-18]
+o Now the Rdoc compiler also escapes Rd filenames for @see and
+  @seemethod tags.
+
+Version: 1.1.3 [2006-02-09]
+o Removed all usage of NULL environments since they are now
+  deprecated in R v2.3.0.
+o Added getChangeLog() and showChangeLog() to the Package class.  
+  The get- and showHistory(), which are to be made deprecated in
+  the future, are now wrappers for these two methods.
+o Added Rdoc tag @RdocPackage to generate <pkg>-package.Rd files.
+o Now the Rdoc compiler makes sure that the generated Rd files 
+  all starts with a letter or a digit.  If not, it adds a 
+  default prefix (currently "000").  If not, the new R v2.3.0
+  R CMD check may complaint about missing objects.
+o Now '...' is added explicitly to setMethodS3() in all Rd examples.
+
+Version: 1.1.2 [2006-01-06]
+o Added Rd links to classes listed under "Directly known subclasses:".
+
+Version: 1.1.1 [2005-11-23]
+o Added validation of arguments in replacement functions.
+o Added RCC validation of arguments in 'picky' methods, e.g. $()".
+o BUG FIX: The "$<-" function goes through alternatives where to save
+  the new value, e.g. set<Name>(), <name> field, static <name> field etc.
+  When a "match" found and the value was assigned, it did not return
+  (except for the set<Name>() match), but instead contiued search for
+  the rest.  One effect of this was that the new value was always assign
+  to the static field too.  The fix make the code run faster too. 
+  Thanks Edouard Duchesnay at Service Hospitalier Frédéric Joliot, 
+  Commissariat à l'Energie Atomique, France for spotting this.  
+
 Version: 1.1.0 [2005-07-18]
 o BUG FIX: Rdoc$compile() sometimes generated the error "invalid regular
   expression '\name{[^\}]*}'" (forgot to escape '{' and '}'). Fixed.
