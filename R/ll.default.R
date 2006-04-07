@@ -36,14 +36,14 @@
 #  by setting option \code{"R.oo::ll/properties"}, e.g.
 #  \code{options("R.oo::ll/properties"=c("data.class", "dimension"))}.
 #  If this option is not set when the package is loaded, it is set to
-#  \code{c("data.class", "dimension", "object.size")}.
+#  \code{c("data.class", "dimension", "objectSize")}.
 # }
 #
 # \examples{
 #   \dontrun{
 #    To list all objects in .GlobalEnv:
 #    > ll()
-#    		     member data.class dimension object.size
+#    		     member data.class dimension objectSize
 #    1                *tmp*     Person         1         428
 #    2  as.character.Person   function      NULL        1208
 #    3              country  character         1          44
@@ -67,6 +67,9 @@
 #
 #    To list all numeric and character object in the base package:
 #    ll(mode=c("numeric", "character"), envir="base")
+#
+#    To list all objects in the base package greater than 40kb:
+#    subset(ll(envir="base"), objectSize > 40000)
 #   }
 # }
 #
@@ -162,7 +165,7 @@ setMethodS3("ll", "default", function(pattern=".*", ..., private=FALSE, properti
     # Set default 'properties' argument for ll(), if missing
     key <- "R.oo::ll/properties";
     if (!key %in% names(options())) {
-      properties <- c("data.class", "dimension", "object.size");
+      properties <- c("data.class", "dimension", "objectSize");
       options(key=properties);
     }
   }
@@ -172,40 +175,47 @@ setMethodS3("ll", "default", function(pattern=".*", ..., private=FALSE, properti
   # Generate a data frame row by row where each row contains the name of the
   # member and the properties as character strings.
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Precreate a function return a row in the resulting data frame
+  # Precreate a function returning a row in the resulting data frame
   expr <- expression();
   for (property in properties) {
     e <- substitute({
       ..exp <- substitute(propertyFcn(object), 
               list=list(propertyFcn=as.name(property), object=..object));
       ..value <- eval(..exp, envir=globalenv());
-  	  if (is.null(..value))
-  	    ..value <- "NULL"
-  	  else if (is.vector(..value) && length(..value) > 1)
-  	    ..value <- sprintf("c(%s)", paste(..value, collapse=","))
-  	  else if (is.list(..value))
+  	  if (is.null(..value)) {
+  	    ..value <- "NULL";
+  	  } else if (is.vector(..value) && length(..value) > 1) {
+  	    ..value <- sprintf("c(%s)", paste(..value, collapse=","));
+  	  } else if (is.list(..value)) {
   	    ..value <- unlist(..value);
-  	  if (length(..value) > 0)
+      }
+  	  if (length(..value) > 0) {
   	    ..value <- ..value[1];
-  	  ..value <- as.character(..value);
+      }
     }, list=list(property=property));
-    expr <- substitute({expr; e; ..row <- c(..row, ..value);}, 
+    expr <- substitute({expr; e; ..row <- cbind(..row, ..value);}, 
                                              list=list(expr=expr,e=e));
   }
 
   df <- NULL;
   for (member in members) {
     rowExpr <- substitute({
-      ..row <- name; 
+      ..row <- list(name); 
       ..object <- get(name, envir=envir); 
       expr;
     }, list=list(name=member, member=as.name(member), expr=expr));
     dfRow <- eval(rowExpr);
-    df <- rbind(df, dfRow);
+    if (is.null(df)) {
+      df <- dfRow;
+    } else {
+      for (kk in seq_len(length(df))) {
+        df[[kk]] <- c(df[[kk]], dfRow[[kk]]);
+      }
+    }
   }
-  colnames(df) <- c("member", properties);
-  rownames(df) <- seq(length.out=nrow(df));
-
+  attributes(df) <- NULL;
+  names(df) <- c("member", properties);
+  df <- as.data.frame(df);
 
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Sort data frame?
@@ -239,6 +249,12 @@ setMethodS3("ll", "default", function(pattern=".*", ..., private=FALSE, properti
 
 ############################################################################
 # HISTORY:
+# 2007-03-24
+# o Now ll() returns a data frame with column of the "minimal" data type.
+#   This makes it possible to use subset() on the output as the new example
+#   illustrates.
+# 2007-03-23
+# o Now ll() uses objectSize() instead object.size().
 # 2005-06-12
 # o Now ll.default() does not assign variables in the lookup environment.
 # o Now ll.default() uses prefix '..' for all internal variable names, 
