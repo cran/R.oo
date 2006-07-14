@@ -1,12 +1,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  
+%  Package.R
 % 
-% on Mon Apr 03 17:20:37 2006.
-% 
-% Generator was the Rdoc class, which is part of the R.oo package written
-% by Henrik Bengtsson, 2001-2006.
+% by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \name{update.Package}
@@ -25,7 +22,7 @@
   especially for non-CRAN packages.
 }
 
-\usage{\method{update}{Package}(object, contribUrl=getContribUrl(this), force=FALSE, reload=TRUE, verbose=TRUE, ...)}
+\usage{\method{update}{Package}(object, contribUrl=c(getContribUrl(this), getDevelUrl(this)), force=FALSE, reload=TRUE, verbose=TRUE, ...)}
 
 \arguments{
   \item{contribUrl}{The URL from where the package can be installed and
@@ -38,7 +35,7 @@
 }
 
 \value{
-  Returns \code{\link[base:logical]{TRUE}} if the package was updated, otherwise \code{\link[base:logical]{FALSE}}.
+  Returns (invisibly) \code{\link[base:logical]{TRUE}} if the package was updated, otherwise \code{\link[base:logical]{FALSE}}.
 }
 
 \examples{\dontrun{update(R.oo)}}

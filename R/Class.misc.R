@@ -78,11 +78,9 @@ setMethodS3("getRdDeclaration", "Class", function(this, ...) {
 # @synopsis
 #
 # \arguments{
-#  \item{visibility}{A @character string specifying which methods to return.}
-#  \item{showDeprecated}{If @TRUE, deprecated methods are returned, 
-#        otherwise not.}
-#  \item{trial}{If @TRUE, trial methods are returned, otherwise not.}
-#   \item{...}{Not used.}
+#  \item{visibilities}{A @character string specifying what types of methods
+#     to return.}
+#  \item{...}{Not used.}
 # }
 #
 # \value{
@@ -97,7 +95,7 @@ setMethodS3("getRdDeclaration", "Class", function(this, ...) {
 #
 # @keyword documentation
 #*/###########################################################################
-setMethodS3("getRdMethods", "Class", function(class, visibility=c("public", "protected", "private"), showDeprecated=FALSE, trial=FALSE, ...) {
+setMethodS3("getRdMethods", "Class", function(class, visibilities=c("private", "protected", "public"), ...) {
   methods <- names(getMethods(class, private=TRUE)[[1]]);
   src <- "\\bold{Methods:}\\cr\n";
   
@@ -108,8 +106,8 @@ setMethodS3("getRdMethods", "Class", function(class, visibility=c("public", "pro
     if (!exists(fcnName, mode="function"))
       throw(RdocException("Method definition not found: ", fcnName));
     fcn <- get(fcnName, mode="function");
-    isDeprecated <- ("deprecated" %in% attr(fcn, "modifiers"));
-    if (showDeprecated || !isDeprecated) {
+    modifiers <- attr(fcn, "modifiers");
+    if (Rdoc$isVisible(modifiers, visibilities)) {
       helpName <- Rdoc$createName(getName(class), method, escape=TRUE);
       label <- method;
       title <- Rdoc$getRdTitle(class, method);
@@ -135,7 +133,7 @@ setMethodS3("getRdMethods", "Class", function(class, visibility=c("public", "pro
   
       tmpsrc <- paste(tmpsrc, item, "\n", sep="");
       count <- count + 1;
-    } # if(showDeprecated || !isDeprecated)
+    } # if(isVisible(...))
   }
   tmpsrc <- paste(tmpsrc, "}\n", sep=""); # end of \tabular{rll}
   
@@ -222,6 +220,8 @@ setMethodS3("getRdHierarchy", "Class", function(this, ...) {
 
 #########################################################################
 # HISTORY:
+# 2006-05-29
+# o Added support for visibility of getRdMethods().
 # 2005-02-15
 # o Added arguments '...' in order to match any generic functions.
 # 2004-10-22

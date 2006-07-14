@@ -1,23 +1,20 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  
+%  Rdoc.R
 % 
-% on Mon Apr 03 17:20:45 2006.
-% 
-% Generator was the Rdoc class, which is part of the R.oo package written
-% by Henrik Bengtsson, 2001-2006.
+% by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{Rdoc}
+ \name{Rdoc}
 \docType{class}
 \alias{Rdoc}
 
 
-\title{Class for converting Rdoc comments to Rd files}
+ \title{Class for converting Rdoc comments to Rd files}
 
-\description{
- Package:  R.oo \cr
+ \description{
+  Package:  R.oo \cr
 \bold{Class Rdoc}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -32,13 +29,13 @@ extends \link[R.oo]{Object}\cr
 
 
 
- Class for converting Rdoc comments to Rd files.
-}
+  Class for converting Rdoc comments to Rd files.
+ }
 
-\usage{Rdoc()}
+ \usage{Rdoc()}
 
-\section{Fields and Methods}{
- \bold{Methods:}\cr
+ \section{Fields and Methods}{
+  \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.oo:check.Rdoc]{check}} \tab Checks the compiled Rd files.\cr
  \tab \code{\link[R.oo:compile.Rdoc]{compile}} \tab Compile source code files containing Rdoc comments into Rd files.\cr
@@ -48,20 +45,20 @@ extends \link[R.oo]{Object}\cr
  \tab \code{\link[R.oo:getManPath.Rdoc]{getManPath}} \tab Gets the path to the directory where the Rd files will be saved.\cr
  \tab \code{\link[R.oo:getNameFormat.Rdoc]{getNameFormat}} \tab Gets the current name format.\cr
  \tab \code{\link[R.oo:isKeyword.Rdoc]{isKeyword}} \tab Checks if a word is a Rd keyword.\cr
+ \tab \code{\link[R.oo:isVisible.Rdoc]{isVisible}} \tab Checks if a member is visible given its modifiers.\cr
  \tab \code{\link[R.oo:setManPath.Rdoc]{setManPath}} \tab Sets the path to the directory where the Rd files should be saved.\cr
  \tab \code{\link[R.oo:setNameFormat.Rdoc]{setNameFormat}} \tab Sets the current name format.\cr
 }
 
 
 \bold{Methods inherited from Object}:\cr
-$, $<-, [[, [[<-, as.character, attach, attachLocally, clone, detach, equals, extend, finalize, getFields, getInstanciationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clone, detach, equals, extend, finalize, getEnvironment, getFields, getInstanciationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
 
+ }
 
-}
+ \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
-
-\examples{\dontrun{# Set default author
+ \examples{\dontrun{# Set default author
 author <- "Henrik Bengtsson, \\url{http://www.braju.com/R/}"
 
 # Show the file containing the Rdoc comments
@@ -83,12 +80,12 @@ file.show(rdFiles[1])
 file.remove(rdFiles)
 }}
 
-\references{
-  R developers,
-  \emph{Guidelines for Rd files},
-  \url{http://developer.r-project.org/Rds.html},
-  2003
-}
+ \references{
+   R developers,
+   \emph{Guidelines for Rd files},
+   \url{http://developer.r-project.org/Rds.html},
+   2003
+ }
 
 
 \keyword{classes}

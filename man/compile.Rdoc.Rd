@@ -1,12 +1,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  
+%  Rdoc.R
 % 
-% on Mon Apr 03 17:20:46 2006.
-% 
-% Generator was the Rdoc class, which is part of the R.oo package written
-% by Henrik Bengtsson, 2001-2006.
+% by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \name{compile.Rdoc}
@@ -26,8 +23,8 @@
  this method.}
 }
 
-\synopsis{compile.Rdoc(this, filename=".*[.]R$", destPath=getManPath(this), showDeprecated=FALSE, verbose=FALSE, source=FALSE, check=TRUE, debug=FALSE, ...)}
-\usage{Rdoc$compile(filename=".*[.]R$", destPath=getManPath(this), showDeprecated=FALSE, verbose=FALSE, source=FALSE, check=TRUE, debug=FALSE, ...)}
+\synopsis{compile.Rdoc(this, filename=".*[.]R$", destPath=getManPath(this), showDeprecated=FALSE, addTimestamp=TRUE, verbose=FALSE, source=FALSE, check=TRUE, debug=FALSE, ...)}
+\usage{Rdoc$compile(filename=".*[.]R$", destPath=getManPath(this), showDeprecated=FALSE, addTimestamp=TRUE, verbose=FALSE, source=FALSE, check=TRUE, debug=FALSE, ...)}
 
 \arguments{
   \item{filename}{The pathname or filename pattern of the Rdoc files to be
@@ -35,6 +32,9 @@
   \item{destPath}{The path where the generated Rd files should be saved.}
   \item{showDeprecated}{If \code{\link[base:logical]{TRUE}}, Rd files are generated for deprecated
     objects too, otherwise not.}
+  \item{addTimestamp}{If \code{\link[base:logical]{TRUE}}, a date and time stamp is added to the
+    Rd header comments.  This timestamp might be confusing for version
+    control systems, which is why it can be turned off with \code{\link[base:logical]{FALSE}}.}
   \item{source}{If \code{\link[base:logical]{TRUE}}, the Rdoc files will be \code{source()}'ed first.
     This work of course only for Rdoc files that are R source files.}
   \item{verbose}{If \code{\link[base:logical]{TRUE}}, detailed compilation information is printed.}

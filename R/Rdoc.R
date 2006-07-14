@@ -5,7 +5,7 @@
 #
 # \description{
 #  @classhierarchy
-#
+#  
 #  @get "title".
 # }
 #
@@ -472,6 +472,9 @@ setMethodS3("escapeRdFilename", "Rdoc", function(static, filename, ...) {
 #   \item{destPath}{The path where the generated Rd files should be saved.}
 #   \item{showDeprecated}{If @TRUE, Rd files are generated for deprecated
 #     objects too, otherwise not.}
+#   \item{addTimestamp}{If @TRUE, a date and time stamp is added to the 
+#     Rd header comments.  This timestamp might be confusing for version 
+#     control systems, which is why it can be turned off with @FALSE.}
 #   \item{source}{If @TRUE, the Rdoc files will be \code{source()}'ed first.
 #     This work of course only for Rdoc files that are R source files.}
 #   \item{verbose}{If @TRUE, detailed compilation information is printed.}
@@ -491,7 +494,7 @@ setMethodS3("escapeRdFilename", "Rdoc", function(static, filename, ...) {
 #
 # @keyword documentation
 #*/###########################################################################
-setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getManPath(this), showDeprecated=FALSE, verbose=FALSE, source=FALSE, check=TRUE, debug=FALSE, ...) {
+setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getManPath(this), showDeprecated=FALSE, addTimestamp=TRUE, verbose=FALSE, source=FALSE, check=TRUE, debug=FALSE, ...) {
   isCapitalized <- function(str) {
     first <- substring(str,1,1);
     (first == toupper(first))
@@ -663,7 +666,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
   # w r i t e R d ( )
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   sourcefile <- NA;
-  writeRd <- function(rds, path=getManPath(this), verbose=FALSE, debug=FALSE) {
+  writeRd <- function(rds, path=getManPath(this), addTimestamp=TRUE, verbose=FALSE, debug=FALSE) {
     for (rd in rds) {
       name <- attr(rd, "name");
       if (!is.null(path)) {
@@ -676,17 +679,17 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       if (verbose) {
         cat("Generating ", filename, "...", sep="");
       }
-      sourcefile <<- attr(rd, "sourcefile");
+      sourcefile <<- sourcefile <- attr(rd, "sourcefile");
   
       cat("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n", file=filename, append=FALSE);
       cat("% Do not modify this file since it was automatically generated from:\n", file=filename, sep="", append=TRUE);
       cat("% \n", sep="", file=filename, append=TRUE);
       cat("%  ", sourcefile, "\n", sep="", file=filename, append=TRUE);
       cat("% \n", sep="", file=filename, append=TRUE);
-      cat("% on ", date(), ".\n", sep="", file=filename, append=TRUE);
-      cat("% \n", sep="", file=filename, append=TRUE);
-      cat("% Generator was the Rdoc class, which is part of the R.oo package written\n", file=filename, append=TRUE);
-      cat("% by Henrik Bengtsson, 2001-2006.\n", file=filename, append=TRUE);
+      if (addTimestamp) {
+        cat("% on ", date(), ".\n% \n", sep="", file=filename, append=TRUE);
+      }
+      cat("% by the Rdoc compiler part of the R.oo package.\n", file=filename, append=TRUE);
       cat("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n", file=filename, append=TRUE);
       cat(rd, file=filename, sep="\n", append=TRUE);
     }  
@@ -1347,10 +1350,18 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagAllMethods <- function(bfr) {
-      methods <- getRdMethods(clazz, visibility=visibility);
+      bfr <- getTagValue(bfr);
+      visibilities <- attr(bfr, "value");
+      # Ad hoc patch for parser /060530.
+      addEnd <- (identical(visibilities, "}"))  
+      visibilities <- gsub(" ", "", visibilities);
+      visibilities <- unlist(strsplit(visibilities, split="|", fixed=TRUE));
+      methods <- getRdMethods(clazz, visibilities=visibilities);
       line <- paste(methods, "\n\n", sep="");
       methods <- Rdoc$methodsInheritedFrom(clazz, visibility, showDeprecated=showDeprecated, sort=sort);
       line <- paste(line, methods, sep="");
+      if (addEnd)
+        line <- paste(line, "}", sep="");
       rd <<- paste(rd, line, sep="");
       bfr;
     }
@@ -1457,7 +1468,6 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
     names <- names(tags);
     attr(tags, "beginsWith") <- paste("^@", names, sep="");
   
-
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Make a best guess what the package is that is created by looking
@@ -1473,7 +1483,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
     class <- NULL;
     clazz <- NULL;
     Rdoc$source <- sourcefile <<- NULL;
-  
+
     rds <- list();
     for (rdoc in rdocs) {
       # Remember the name of the source file in case of an error...
@@ -1636,7 +1646,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
         attr(rd, "visibility") <- as.character(visibility);
         attr(rd, "isDeprecated") <- isDeprecated;
         attr(rd, "name") <- as.character(name);
-        attr(rd, "sourcefile") <- attr(rdoc, "sourcefile");
+        attr(rd, "sourcefile") <- sourcefile;
 
         if (check) {
           # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -1707,7 +1717,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
 
     rdocs <- extractRdocs(file, verbose=verbose, debug=debug);
     rd <- compileRdoc(rdocs, showDeprecated=showDeprecated, verbose=verbose, debug=debug);
-    writeRd(rd, path=destPath, verbose=verbose, debug=debug);
+    writeRd(rd, path=destPath, addTimestamp=addTimestamp, verbose=verbose, debug=debug);
     if (verbose)
       cat("\n");
   }
@@ -1973,7 +1983,7 @@ setMethodS3("getUsage", "Rdoc", function(static, method, class=NULL, ...) {
     method <- gsub("<-$", "", method);
     nargs <- length(args);
     valueArg <- args[nargs];
-    args <- args[-args];
+    args <- args[-nargs];
   }
 
   if (isConstructor) {
@@ -2189,7 +2199,7 @@ setMethodS3("getRdTitle", "Rdoc", function(this, class, method, ...) {
     # Search for \title{...} in the Rd source
     titlePos <- regexpr("\\title\\{[^\\}]*}", src);
     if (titlePos == -1) {
-      warning(paste("Could not find a \title{} definition in the Rd file for ", method, " in ", getName(class), ". Will search in loaded packages.", sep=""));
+      warning(paste("Could not find a \\title{} definition in the Rd file for ", method, " in ", getName(class), ". Will search in loaded packages.", sep=""));
       "";
     } else {
       title <- trim(substring(src, titlePos+6, titlePos+attr(titlePos, "match.length")-2));
@@ -2332,8 +2342,78 @@ setMethodS3("check", "Rdoc", function(this, manPath=getManPath(this), verbose=FA
 })
 
 
+
+###########################################################################/**
+# @RdocMethod isVisible
+#
+# @title "Checks if a member is visible given its modifiers"
+#
+# \description{
+#   @get "title".
+# }
+#
+# @synopsis
+#
+# \arguments{
+#  \item{modifiers}{A @character string of modifiers.}
+#  \item{visibilities}{A @character string of visibility flags.}
+#  \item{...}{Not used.}
+# }
+#
+# \value{
+#  Returns @TRUE if the modifiers are equal or higher than the visibility
+#  flags, otherwise @FALSE.
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#
+# @keyword documentation
+#*/###########################################################################
+setMethodS3("isVisible", "Rdoc", function(static, modifiers, visibilities, ...) {
+  if (("deprecated" %in% modifiers) && (!"deprecated" %in% visibilities))
+    return(FALSE);
+
+  if (("trial" %in% modifiers) && (!"trial" %in% visibilities))
+    return(FALSE);
+
+  levels <- c("private", "protected", "public");
+  modifiers <- intersect(modifiers, levels);
+  if (length(modifiers) == 0)
+    return(TRUE);
+
+  visibilities <- intersect(visibilities, levels);
+  if (length(visibilities) == 0)
+    return(TRUE);
+
+  modifiers <- factor(modifiers, levels=levels);
+  visibilities <- factor(visibilities, levels=levels);
+
+  any(as.integer(visibilities) <= as.integer(modifiers));
+}, static=TRUE, protected=TRUE) # isVisible()
+
+
+
 #########################################################################
 # HISTORY:
+# 2006-05-29
+# o Added protected static method isVisible().
+# o Added argument to @allmethods to specify visibility etc.
+# 2006-04-10
+# o Replace the generated Rd comment header to exclude my name and the
+#   date of the R.oo package, e.g. "2001-2006".  This was done to help
+#   any diff.
+# o BUG FIX: Rdoc$compile() did no longer write the name of the source
+#   file in the header.
+# o BUG FIX: The code for formatting replacement methods contained a bug
+#   that generated an error.
+# o Replaced "\t" with "\\t" in warning "Could not find a \title{}".
+# o Added argument 'addTimestamp=TRUE' to Rdoc$compile().  This makes it
+#   possible to turn of the timestamp, because timestamps makes diff,
+#   say the one in Subversion, think there is a real different.
 # 2006-04-03
 # o Now replacement methods are recognized and treated specially, e.g.
 #   \method{[}{MyClass}(i, j) <- value.

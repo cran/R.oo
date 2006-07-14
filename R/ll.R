@@ -78,7 +78,8 @@
 #
 # \keyword{utilities}
 #*/###########################################################################
-setMethodS3("ll", "ANY", function(pattern=".*", ..., private=FALSE, properties=getOption("R.oo::ll/properties"), sortBy=NULL, envir=parent.frame()) {
+setMethodS3("ll", "default", function(pattern=".*", ..., private=FALSE, properties=getOption("R.oo::ll/properties"), sortBy=NULL, envir=parent.frame()) {
+  # Argument 'envir':
   if (is.numeric(envir)) {
     envir <- as.environment(envir);
   } else if (is.character(envir)) {
@@ -93,7 +94,10 @@ setMethodS3("ll", "ANY", function(pattern=".*", ..., private=FALSE, properties=g
   if (length(members) == 0)
     return(data.frame());
 
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Keep members whose names match the pattern
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (!is.null(pattern)) {
     matches <- regexpr(pattern, members);
     members <- members[matches != -1];
@@ -101,32 +105,43 @@ setMethodS3("ll", "ANY", function(pattern=".*", ..., private=FALSE, properties=g
       return(data.frame());
   }
 
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Filter out members that to not match the search criteria according to "...".
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   args <- list(...);
   if (length(args) > 0) {
     # Precreate a function to filter out members to be returned
     names <- names(args);
     expr <- NULL;
-    for (k in seq(length=length(args))) {
-      value <- args[[k]];
+    for (kk in seq(length=length(args))) {
+      value <- args[[kk]];
       if (is.null(value)) {
-        e <- substitute(is.null(fcn(object)), list=list(fcn=as.name(names[k])));
+        e <- substitute(is.null(fcn(..object)), list=list(fcn=as.name(names[kk])));
       } else {
-        e <- substitute(fcn(object) %in% value, 
-                        list=list(fcn=as.name(names[k]), value=value));
+        e <- substitute(fcn(..object) %in% value, 
+                        list=list(fcn=as.name(names[kk]), value=value));
       }
       if (is.null(expr)) {
         expr <- e;
       } else {
         expr <- substitute(expr && e, list=list(expr=expr, e=e));
       }
-    }
-    expr <- substitute(filter <- function(name) { 
-      eval(substitute(expr, list=list(object=as.name(name))), envir=envir) 
-    }, list=list(expr=expr, envir=envir));
+    } # for (kk ...)
 
+#    expr <- substitute(filter <- function(name) { 
+#      eval(substitute(expr, list=list(..object=as.name(name))), envir=envir) 
+#    }, list=list(expr=expr, envir=envir));
     # Now, create the filter() function
-    eval(expr);
+#    eval(expr);
+
+    # Replaces the above construct.
+    filter <- eval(substitute({
+      function(name) { 
+        ..object <- get(name, envir=envir);
+        eval(expr, envir=envir)
+      }
+    }, list(expr=expr)));
 
     # Filter out members
     keep <- c();
@@ -147,48 +162,54 @@ setMethodS3("ll", "ANY", function(pattern=".*", ..., private=FALSE, properties=g
     # Set default 'properties' argument for ll(), if missing
     key <- "R.oo::ll/properties";
     if (!key %in% names(options())) {
-str(2);
       properties <- c("data.class", "dimension", "object.size");
       options(key=properties);
     }
   }
 
 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Generate a data frame row by row where each row contains the name of the
   # member and the properties as character strings.
-
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Precreate a function return a row in the resulting data frame
   expr <- expression();
   for (property in properties) {
     e <- substitute({
-          exp <- substitute(propertyFcn(object), 
-             list=list(propertyFcn=as.name(property), object=object));
-          value <- eval(exp, envir=globalenv());
-	  if (is.null(value))
-	    value <- "NULL"
-	  else if (is.vector(value) && length(value) > 1)
-	    value <- sprintf("c(%s)", paste(value, collapse=","))
-	  else if (is.list(value))
-	    value <- unlist(value);
-	  if (length(value) > 0)
-	    value <- value[1];
-	  value <- as.character(value);
-
+      ..exp <- substitute(propertyFcn(object), 
+              list=list(propertyFcn=as.name(property), object=..object));
+      ..value <- eval(..exp, envir=globalenv());
+  	  if (is.null(..value))
+  	    ..value <- "NULL"
+  	  else if (is.vector(..value) && length(..value) > 1)
+  	    ..value <- sprintf("c(%s)", paste(..value, collapse=","))
+  	  else if (is.list(..value))
+  	    ..value <- unlist(..value);
+  	  if (length(..value) > 0)
+  	    ..value <- ..value[1];
+  	  ..value <- as.character(..value);
     }, list=list(property=property));
-    expr <- substitute({expr; e; row <- c(row, value);}, 
+    expr <- substitute({expr; e; ..row <- c(..row, ..value);}, 
                                              list=list(expr=expr,e=e));
   }
 
   df <- NULL;
   for (member in members) {
-    rowExpr <- substitute({row <- name; object <- member; expr;}, 
-             list=list(name=member, member=as.name(member), expr=expr));
-    dfRow <- eval(rowExpr, envir=envir);
-    df <- rbind(df,dfRow);
+    rowExpr <- substitute({
+      ..row <- name; 
+      ..object <- get(name, envir=envir); 
+      expr;
+    }, list=list(name=member, member=as.name(member), expr=expr));
+    dfRow <- eval(rowExpr);
+    df <- rbind(df, dfRow);
   }
   colnames(df) <- c("member", properties);
   rownames(df) <- seq(length.out=nrow(df));
 
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Sort data frame?
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   if (!is.null(sortBy)) {
     if (is.numeric(sortBy))
       pos <- sortBy
@@ -218,6 +239,11 @@ str(2);
 
 ############################################################################
 # HISTORY:
+# 2005-06-12
+# o Now ll.default() does not assign variables in the lookup environment.
+# o Now ll.default() uses prefix '..' for all internal variable names, 
+#   because they are added to the environment investigated.  This strategy
+#   should be replaced by a better one, but at least for now it works.
 # 2005-03-28
 # o Now argument 'properties' of ll() is given by the option 
 #   "R.oo::ll/properties".  If not set when the package is loaded, it is

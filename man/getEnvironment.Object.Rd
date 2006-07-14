@@ -1,42 +1,44 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  060.Class.R
+%  050.Object.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getStaticInstance.Class}
-\alias{getStaticInstance.Class}
-\alias{Class.getStaticInstance}
-\alias{getStaticInstance.Class}
-\alias{getStaticInstance,Class-method}
+\name{getEnvironment.Object}
+\alias{getEnvironment.Object}
+\alias{Object.getEnvironment}
+\alias{getEnvironment.Object}
+\alias{getEnvironment,Object-method}
 
 
-\title{Gets the static instance of this class}
+\title{Gets the environment of this object}
 
 \description{
-  Gets the static instance of this class.
+ Gets the environment of this object.
+ This is the environment where the members of the Object are stored.
 }
 
-\usage{\method{getStaticInstance}{Class}(this, ...)}
+\usage{\method{getEnvironment}{Object}(fun, ...)}
 
 \arguments{
   \item{...}{Not used.}
 }
 
 \value{
-  Returns a reference to an \code{\link{Object}}.
+  Returns an \code{\link[base]{environment}}.
 }
 
 \examples{
-  obj <- getStaticInstance(Object)
+  ll(R.oo)
+  ll(envir=getEnvironment(R.oo))
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
-  For more information see \code{\link{Class}}.
+  For more information see \code{\link{Object}}.
 }
 
 
