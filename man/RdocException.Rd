@@ -1,23 +1,20 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  
+%  RdocException.R
 % 
-% on Mon Apr 03 17:20:49 2006.
-% 
-% Generator was the Rdoc class, which is part of the R.oo package written
-% by Henrik Bengtsson, 2001-2006.
+% by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{RdocException}
+ \name{RdocException}
 \docType{class}
 \alias{RdocException}
 
 
-\title{RdocException are thrown by the Rdoc compiler}
+ \title{RdocException are thrown by the Rdoc compiler}
 
-\description{
- Package:  R.oo \cr
+ \description{
+  Package:  R.oo \cr
 \bold{Class RdocException}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -42,19 +39,19 @@ extends \link[R.oo]{Exception}\cr
 
 
 
- RdocException are thrown by the Rdoc compiler when it fails to generate a Rd file from an Rdoc comment.
-}
+  RdocException are thrown by the Rdoc compiler when it fails to generate a Rd file from an Rdoc comment.
+ }
 
-\usage{RdocException(..., source=NULL)}
+ \usage{RdocException(..., source=NULL)}
 
-\arguments{
-  \item{...}{Any arguments accepted by \code{\link[R.oo]{Exception}}}.
-  \item{source}{Object specifying the source where the Rdoc error occured.
-    This is commonly a filename \code{\link[base]{character}} string.}.
-}
+ \arguments{
+   \item{...}{Any arguments accepted by \code{\link[R.oo]{Exception}}}.
+   \item{source}{Object specifying the source where the Rdoc error occured.
+     This is commonly a filename \code{\link[base]{character}} string.}.
+ }
 
-\section{Fields and Methods}{
- \bold{Methods:}\cr
+ \section{Fields and Methods}{
+  \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.oo:as.character.RdocException]{as.character}} \tab Gets a character string representing of the RdocException.\cr
  \tab \code{\link[R.oo:getSource.RdocException]{getSource}} \tab Gets the source of the exception.\cr
@@ -77,18 +74,17 @@ as.character, conditionCall, conditionMessage, print
 
 
 \bold{Methods inherited from Object}:\cr
-$, $<-, [[, [[<-, as.character, attach, attachLocally, clone, detach, equals, extend, finalize, getFields, getInstanciationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clone, detach, equals, extend, finalize, getEnvironment, getFields, getInstanciationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
 
+ }
 
-}
+ \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+ \seealso{
+   For detailed information about exceptions see \code{\link[R.oo]{Exception}}.
+ }
 
-\seealso{
-  For detailed information about exceptions see \code{\link[R.oo]{Exception}}.
-}
-
-\keyword{programming}
-\keyword{methods}
-\keyword{error}
+ \keyword{programming}
+ \keyword{methods}
+ \keyword{error}
 \keyword{classes}

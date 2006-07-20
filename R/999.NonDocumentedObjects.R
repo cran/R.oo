@@ -15,6 +15,7 @@
 # @alias getStaticInstance
 # @alias getSuperclasses
 # @alias isAbstract
+# @alias isBeingCreated
 # @alias isDeprecated
 # @alias isPrivate
 # @alias isProtected
@@ -113,6 +114,7 @@
 # @alias getUsage
 # @alias hierarchy
 # @alias isKeyword
+# @alias isVisible
 # @alias methodsInheritedFrom
 # @alias setManPath
 # @alias setNameFormat
@@ -125,6 +127,8 @@
 # @alias appendVarArgs.function
 # @alias hasVarArgs
 # @alias hasVarArgs.function
+# @alias environment
+# @alias environment.default
 #
 # % Trial functions
 # @alias callSuperMethodS3

@@ -5,7 +5,7 @@
 #
 # \description{
 #  @classhierarchy
-#
+#  
 #  Creates a Package that can be thrown and caught. The \code{Package} 
 #  class is the root class of all other \code{Package} classes.
 # }
@@ -120,6 +120,9 @@ setMethodS3("as.character", "Package", function(this, ...) {
     s <- paste(s, "  License: ", license, ".", sep="");
 
   s <- paste(s, "  Description: ", getDescription(this), sep="");
+
+  s <- paste(s, "  Type showChangeLog(", getName(this), 
+       ") for package history, and ?", getName(this), " for help.", sep="");
 
   s;
 })
@@ -1475,7 +1478,7 @@ setMethodS3("showHowToCite", "Package", function(this, ...) {
 # }
 #
 # \value{
-#   Returns @TRUE if the package was updated, otherwise @FALSE.
+#   Returns (invisibly) @TRUE if the package was updated, otherwise @FALSE.
 # }
 #
 # \examples{\dontrun{update(R.oo)}}
@@ -1487,7 +1490,7 @@ setMethodS3("showHowToCite", "Package", function(this, ...) {
 #   @seeclass
 # }
 #*/#########################################################################
-setMethodS3("update", "Package", function(object, contribUrl=getContribUrl(this), force=FALSE, reload=TRUE, verbose=TRUE, ...) {
+setMethodS3("update", "Package", function(object, contribUrl=c(getContribUrl(this), getDevelUrl(this)), force=FALSE, reload=TRUE, verbose=TRUE, ...) {
   this <- object;  # Because generic method update() exists in 'stats'.
 
   msg <- paste("Checking for updates of package ", getName(this), sep="");
@@ -1536,25 +1539,28 @@ setMethodS3("update", "Package", function(object, contribUrl=getContribUrl(this)
       cat(msg);
     contribUrl <- gsub("/$", "", contribUrl);
     tmpfile <- tempfile();
-    on.exit(unlink(tmpfile));
+    on.exit(unlink(tmpfile), add=TRUE);
     for (url in contribUrl) {
-      trycatch({
-  	if (force) {
-  	  install.packages(pkgs, contriburl=url);
+print(url);
+      tryCatch({
+        if (force) {
+          install.packages(pkgs, contriburl=url);
           found <- TRUE;
-  	  updated <- TRUE;
+          updated <- TRUE;
         } else {
-  	  old <- old.packages(contriburl=url);
-  	  found <- TRUE;
-  	  if (pkgs %in% old) {
-  	    update.packages(contriburl=url);
-  	    updated <- TRUE;
-  	    break;
-  	  }
+          old <- old.packages(contriburl=url);
+          found <- TRUE;
+          if (pkgs %in% old) {
+            update.packages(contriburl=url);
+            updated <- TRUE;
+            break;
+          }
         } # if (force)
-      }, "ANY" = {
+      }, warning=function(warn) {
+      }, error=function(ex) {
+         print(error);
       })
-    }
+    } # for (url ...)
     
     if (!found) {
       require(R.oo);  # In case it was unloaded!
@@ -1563,12 +1569,19 @@ setMethodS3("update", "Package", function(object, contribUrl=getContribUrl(this)
   }
   attr(updated, "contriburl") <- contribUrl;
 
-
-  updated;
+  invisible(updated);
 })
 
 ############################################################################
 # HISTORY:
+# 2006-07-13
+# o Now update() returns invisibly.
+# o BUG FIX: update(R.oo) would throw an error and package was detached.
+#   This was because it used trycatch() of R.oo(!).  Now, tryCatch() is
+#   used instead.  However, it was also that the automatic reloading of
+#   a package that was going to be updated failed for non-CRAN packages,
+#   because missing 'add=TRUE' on second on.exit().
+# o Added Note to do "showChangeLog(<pkg>)..." for package history.
 # 2006-03-14
 # o showHistory() was calling itself.
 # 2006-02-08

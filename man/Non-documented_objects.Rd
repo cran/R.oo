@@ -1,12 +1,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  
+%  999.NonDocumentedObjects.R
 % 
-% on Mon Apr 03 17:20:05 2006.
-% 
-% Generator was the Rdoc class, which is part of the R.oo package written
-% by Henrik Bengtsson, 2001-2006.
+% by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \name{Non-documented objects}
@@ -28,6 +25,7 @@
 \alias{getStaticInstance}
 \alias{getSuperclasses}
 \alias{isAbstract}
+\alias{isBeingCreated}
 \alias{isDeprecated}
 \alias{isPrivate}
 \alias{isProtected}
@@ -126,6 +124,7 @@
 \alias{getUsage}
 \alias{hierarchy}
 \alias{isKeyword}
+\alias{isVisible}
 \alias{methodsInheritedFrom}
 \alias{setManPath}
 \alias{setNameFormat}
@@ -138,6 +137,8 @@
 \alias{appendVarArgs.function}
 \alias{hasVarArgs}
 \alias{hasVarArgs.function}
+\alias{environment}
+\alias{environment.default}
 
 % Trial functions
 \alias{callSuperMethodS3}

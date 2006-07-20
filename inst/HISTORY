@@ -1,7 +1,34 @@
 Package: R.oo
 =============
 
+Version: 1.2.0 [2006-07-14]
+o BUG FIX: update(R.oo) would throw an error and the package was 
+  detached.  
+
+Version: 1.1.9 [2006-06-14]
+o Added method getEnvironment() to class Object, which will return
+  the environment where the Object's members are stored.
+o Now ll() does not assign variables in the lookup environment, which
+  means it will work with sealed environments too.
+
+Version: 1.1.8 [2006-05-30]
+o Added isBeingCreated() to Class in order to check if the constructor
+  was called to create the static instance or just any instance.
+o Removed setClassS3() which has been deprecated since 2003(!).
+o Now the Rdoc tag @allmethods takes an optional argument specifying
+  if private, protected or public methods should be listed.
+
+Version: 1.1.7 [2006-05-22]
+o Added argument 'addTimestamp=TRUE' to Rdoc$compile().  This makes it
+  possible to turn of the timestamp, because timestamps makes diff,
+  say the one in Subversion, think there is a real different.
+o BUG FIX: Rdoc$compile() did not write the name of the source file 
+  in the header (anymore).
+o BUG FIX: The code for automatic formatting of replacement methods
+  generated an error.
+
 Version: 1.1.6 [2006-04-03]
+o This version was commited to CRAN.
 o Now the Rdoc compiler recognizes replacement functions and 
   creates the correct Rd \usage{} format for these.
 

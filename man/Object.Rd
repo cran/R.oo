@@ -1,12 +1,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  
+%  050.Object.R
 % 
-% on Mon Apr 03 17:19:48 2006.
-% 
-% Generator was the Rdoc class, which is part of the R.oo package written
-% by Henrik Bengtsson, 2001-2006.
+% by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
  \name{Object}
@@ -53,6 +50,7 @@
  \tab \code{\link[R.oo:equals.Object]{equals}} \tab Compares an object with another.\cr
  \tab \code{\link[R.oo:extend.Object]{extend}} \tab Extends another class.\cr
  \tab \code{\link[R.oo:finalize.Object]{finalize}} \tab Finalizer methods called when object is clean out.\cr
+ \tab \code{\link[R.oo:getEnvironment.Object]{getEnvironment}} \tab Gets the environment of this object.\cr
  \tab \code{\link[R.oo:getFields.Object]{getFields}} \tab Returns the field names of an Object.\cr
  \tab \code{\link[R.oo:getInstanciationTime.Object]{getInstanciationTime}} \tab Gets the time when the object was instanciated.\cr
  \tab \code{\link[R.oo:getStaticInstance.Object]{getStaticInstance}} \tab Gets the static instance of this objects class.\cr
@@ -64,7 +62,6 @@
  \tab \code{\link[R.oo:print.Object]{print}} \tab Prints an Object.\cr
  \tab \code{\link[R.oo:save.Object]{save}} \tab Saves an Object to a file or a connection.\cr
 }
-
 
 
  }

@@ -1,23 +1,20 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  
+%  060.Class.R
 % 
-% on Mon Apr 03 17:20:03 2006.
-% 
-% Generator was the Rdoc class, which is part of the R.oo package written
-% by Henrik Bengtsson, 2001-2006.
+% by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{Class}
+ \name{Class}
 \docType{class}
 \alias{Class}
 
 
-\title{The Class class describes an Object class}
+ \title{The Class class describes an Object class}
 
-\description{
- Package:  R.oo \cr
+ \description{
+  Package:  R.oo \cr
 \bold{Class Class}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -32,20 +29,20 @@ extends \link[R.oo]{Object}\cr
 
 
 
- The Class class describes an Object class.
- First of all, this class is most commonly used \emph{internally} and
- neither the end user nor the programmer need to no about the class Class.
-}
+  The Class class describes an Object class.
+  First of all, this class is most commonly used \emph{internally} and
+  neither the end user nor the programmer need to no about the class Class.
+ }
 
-\usage{Class(name=NULL, constructor=NULL)}
+ \usage{Class(name=NULL, constructor=NULL)}
 
-\arguments{
-  \item{name}{Name of the class.}
-  \item{constructor}{Constructor (\code{\link[base]{function}}) of any Object class.}
-}
+ \arguments{
+   \item{name}{Name of the class.}
+   \item{constructor}{Constructor (\code{\link[base]{function}}) of any Object class.}
+ }
 
-\section{Fields and Methods}{
- \bold{Methods:}\cr
+ \section{Fields and Methods}{
+  \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.oo:DOLLAR.Class]{$}} \tab Makes the fields and methods of an Class accessable via the \$ and the [[ operator.\cr
  \tab \code{\link[R.oo:DOLLARLT_-.Class]{$<-}} \tab Makes the fields and methods of an Class assignable via the \$<- and the [[<- operator.\cr
@@ -61,6 +58,7 @@ extends \link[R.oo]{Object}\cr
  \tab \code{\link[R.oo:getStaticInstance.Class]{getStaticInstance}} \tab Gets the static instance of this class.\cr
  \tab \code{\link[R.oo:getSuperclasses.Class]{getSuperclasses}} \tab Gets the super classes of this class.\cr
  \tab \code{\link[R.oo:isAbstract.Class]{isAbstract}} \tab Checks if a class is abstract or not.\cr
+ \tab \code{\link[R.oo:isBeingCreated.Class]{isBeingCreated}} \tab Checks if a class is currently being initiated initiated.\cr
  \tab \code{\link[R.oo:isDeprecated.Class]{isDeprecated}} \tab Checks if a class is deprecated or not.\cr
  \tab \code{\link[R.oo:isPrivate.Class]{isPrivate}} \tab Checks if a class is defined private or not.\cr
  \tab \code{\link[R.oo:isProtected.Class]{isProtected}} \tab Checks if a class is defined protected or not.\cr
@@ -72,20 +70,19 @@ extends \link[R.oo]{Object}\cr
 
 
 \bold{Methods inherited from Object}:\cr
-$, $<-, [[, [[<-, as.character, attach, attachLocally, clone, detach, equals, extend, finalize, getFields, getInstanciationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clone, detach, equals, extend, finalize, getEnvironment, getFields, getInstanciationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
 
+ }
 
-}
+ \details{
+   The class Class describes the Object class or one of its subclasses.
+   All classes and constructors created by \code{setConstructorS3()} will
+   be of class Class. Its methods provide ways of accessing static fields
+   and static methods. Its \emph{print()} method will print detailed
+   information about the class and its fields and methods.
+ }
 
-\details{
-  The class Class describes the Object class or one of its subclasses.
-  All classes and constructors created by \code{setConstructorS3()} will
-  be of class Class. Its methods provide ways of accessing static fields
-  and static methods. Its \emph{print()} method will print detailed
-  information about the class and its fields and methods.
-}
-
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+ \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 
 

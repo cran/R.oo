@@ -5,7 +5,7 @@
 #
 # \description{
 #  @classhierarchy
-#
+#  
 #  @get "title" when it fails to generate a Rd file from an Rdoc comment.
 # }
 #

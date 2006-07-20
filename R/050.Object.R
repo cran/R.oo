@@ -1235,20 +1235,21 @@ setMethodS3("extend", "Object", function(this, ...className, ...) {
     assign(name, fields[[k]], envir=attr(this, ".env"));
   }
 
+  # Set class
   class(this) <- unique(c(...className, class(this)));
-# As of R v1.7.x the following generates a warning if ...className is 
-# a vector: /HB 2003-07-07
-#  if (...className != "Class") {  
-  if (!is.element("Class", ...className)) {
-    static <- getStaticInstance(this);
-    if (!is.null(static))
-      staticCode(static);
-  }
 
   # Note, we have to register the finalizer here and not in Object(), 
   # because here the reference variable 'this' will have the correct
   # class attribute, which it does not in Object().
   reg.finalizer(attr(this, ".env"), function(env) finalize(this));
+
+
+  # Finally, create the static instance?
+  if (!is.element("Class", ...className)) {
+    static <- getStaticInstance(this);
+    if (!is.null(static))
+      staticCode(static);
+  }
 
   this;
 }) # extend()
@@ -1325,13 +1326,15 @@ setMethodS3("$", "Object", function(this, name) {
   envir <- attr(this, ".env");
   cacheName <- paste("...$.lookup", name, sep=".");
   if (!is.null(envir) && exists(cacheName, envir=envir, inherit=FALSE)) {
-    lookup <- get(cacheName, envir=envir);
+    envirCache <- envir;
+    lookup <- get(cacheName, envir=envirCache);
     if (identical(attr(lookup, "memberAccessorOrder"), memberAccessorOrder)) {
       if (lookup == 1) {
         # Still to be figured out how to do! /HB 2003-01-18
 #        memberAccessorOrder <- attr(lookup, "possibilities");
       } else if (lookup == 2) {
-        return( get(name, envir=envir) );
+        envir2 <- envir;
+        return( get(name, envir=envir2) );
       } else if (lookup == 3) {
         return( attr(this, name) );
       } else if (lookup == 4) {
@@ -1393,7 +1396,8 @@ setMethodS3("$", "Object", function(this, name) {
         lookup <- memberAccessor;
         attr(lookup, "memberAccessorOrder") <- memberAccessorOrder;
         assign(cacheName, lookup, envir=envir);
-        return(get(name, envir=envir));
+        envirStatic <- envir;
+        return(get(name, envir=envirStatic));
       }
     } else if (memberAccessor == 3) {
   
@@ -1598,11 +1602,13 @@ setMethodS3("$<-", "Object", function(this, name, value) {
 
 setMethodS3("[[", "Object", function(this, name) {
   UseMethod("$");
+#   "$"(this, name);
 }, createGeneric=FALSE) # "[["()
 
 
 setMethodS3("[[<-", "Object", function(this, name, value) {
   UseMethod("$<-");
+#   "$<-"(this, name, value);
 }, createGeneric=FALSE) # "[[<-"()
 
 
@@ -1705,9 +1711,94 @@ setMethodS3("callSuperMethodS3", "ANY", function(this, methodName, ..., nbrOfCla
 
 
 
+###########################################################################/**
+# @RdocMethod newInstance
+#
+# @title "Creates a new instance of the same class as this object"
+#
+# \description{
+#  @get "title". 
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns a reference to an instance of @see "Object" or a subclass thereof.
+# }
+#
+# @author
+#
+# \seealso{
+#   @see "newInstance.Class".
+#   @seeclass
+# }
+#
+# @keyword programming
+# @keyword methods
+#*/###########################################################################
+setMethodS3("newInstance", "Object", function(this, ...) {
+  # Creates a new instance of the same class
+  clazz <- Class$forName(class(this)[1]);
+  newInstance(clazz, ...);
+}, private=TRUE)
+
+
+
+
+###########################################################################/**
+# @RdocMethod getEnvironment
+#
+# @title "Gets the environment of this object"
+#
+# \description{
+#  @get "title".  
+#  This is the environment where the members of the Object are stored.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns an @environment.
+# }
+#
+# \examples{
+#   ll(R.oo)
+#   ll(envir=getEnvironment(R.oo))
+# }
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#
+# @keyword programming
+# @keyword methods
+#*/###########################################################################
+setMethodS3("getEnvironment", "Object", function(fun, ...) {
+  # To please R CMD check
+  this <- fun;
+
+  attr(this, ".env");
+}, protected=TRUE)
+
+
 
 ############################################################################
 # HISTORY:
+# 2006-06-14
+# o Added getEnvironment().
+# 2006-05-15
+# o Added private newInstance(), because it  is quite commonly used.
+#   Might become protected one day.
 # 2005-11-28
 # o Added assertion code to example of static fields (?Object).
 # 2005-11-23

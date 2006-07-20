@@ -68,7 +68,7 @@
 # \keyword{programming}
 # \keyword{methods}
 #*/###########################################################################
-setMethodS3("setConstructorS3", "ANY", function(name, definition,
+setMethodS3("setConstructorS3", "default", function(name, definition,
     private=FALSE, protected=FALSE, static=FALSE, abstract=FALSE, trial=FALSE,
                deprecated=FALSE, envir=parent.frame(), enforceRCC=TRUE, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -134,6 +134,8 @@ setMethodS3("setConstructorS3", "ANY", function(name, definition,
 
 ############################################################################
 # HISTORY:
+# 2006-05-30
+# o Renamed class from "ANY" to "default".
 # 2005-02-15
 # o Added arguments '...' in order to match any generic functions.
 # 2004-03-03

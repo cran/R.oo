@@ -5,7 +5,7 @@
 #
 # \description{
 #  @classhierarchy
-#
+#  
 #  @get "title" that are likely to be due to implementation errors done by
 #  the author of a specific package and not because the user made an error.
 #  Errors that are due to unexpected input to functions etc falls under

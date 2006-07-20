@@ -1,23 +1,20 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  
+%  Package.R
 % 
-% on Mon Apr 03 17:20:36 2006.
-% 
-% Generator was the Rdoc class, which is part of the R.oo package written
-% by Henrik Bengtsson, 2001-2006.
+% by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{Package}
+ \name{Package}
 \docType{class}
 \alias{Package}
 
 
-\title{The Package class provides methods for accessing package information}
+ \title{The Package class provides methods for accessing package information}
 
-\description{
- Package:  R.oo \cr
+ \description{
+  Package:  R.oo \cr
 \bold{Class Package}\cr
 
 \code{\link[R.oo]{Object}}\cr
@@ -32,18 +29,18 @@ extends \link[R.oo]{Object}\cr
 
 
 
- Creates a Package that can be thrown and caught. The \code{Package}
- class is the root class of all other \code{Package} classes.
-}
+  Creates a Package that can be thrown and caught. The \code{Package}
+  class is the root class of all other \code{Package} classes.
+ }
 
-\usage{Package(name=NULL)}
+ \usage{Package(name=NULL)}
 
-\arguments{
-  \item{name}{Name of the package.}
-}
+ \arguments{
+   \item{name}{Name of the package.}
+ }
 
-\section{Fields and Methods}{
- \bold{Methods:}\cr
+ \section{Fields and Methods}{
+  \bold{Methods:}\cr
 \tabular{rll}{
  \tab \code{\link[R.oo:as.character.Package]{as.character}} \tab Gets a string representation of this package.\cr
  \tab \code{\link[R.oo:getAuthor.Package]{getAuthor}} \tab Gets the Author of this package.\cr
@@ -83,12 +80,11 @@ extends \link[R.oo]{Object}\cr
 
 
 \bold{Methods inherited from Object}:\cr
-$, $<-, [[, [[<-, as.character, attach, attachLocally, clone, detach, equals, extend, finalize, getFields, getInstanciationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clone, detach, equals, extend, finalize, getEnvironment, getFields, getInstanciationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
 
+ }
 
-}
-
-\examples{\dontrun{# By defining .First.lib() as follows in zzz.R for a package, an
+ \examples{\dontrun{# By defining .First.lib() as follows in zzz.R for a package, an
 # instance of class Package with the same name as the package will
 # be made available on the search path. More over, the code below
 # will also inform the user that the package has been loaded:
@@ -125,10 +121,10 @@ update(R.oo)
 
 }}
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+ \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
-\keyword{programming}
-\keyword{methods}
+ \keyword{programming}
+ \keyword{methods}
 \keyword{internal}
 \keyword{methods}
 \keyword{classes}

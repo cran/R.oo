@@ -1,42 +1,39 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  060.Class.R
+%  050.Object.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getStaticInstance.Class}
-\alias{getStaticInstance.Class}
-\alias{Class.getStaticInstance}
-\alias{getStaticInstance.Class}
-\alias{getStaticInstance,Class-method}
+\name{newInstance.Object}
+\alias{newInstance.Object}
+\alias{Object.newInstance}
+\alias{newInstance.Object}
+\alias{newInstance,Object-method}
 
 
-\title{Gets the static instance of this class}
+\title{Creates a new instance of the same class as this object}
 
 \description{
-  Gets the static instance of this class.
+ Creates a new instance of the same class as this object.
 }
 
-\usage{\method{getStaticInstance}{Class}(this, ...)}
+\usage{\method{newInstance}{Object}(this, ...)}
 
 \arguments{
   \item{...}{Not used.}
 }
 
 \value{
-  Returns a reference to an \code{\link{Object}}.
-}
-
-\examples{
-  obj <- getStaticInstance(Object)
+  Returns a reference to an instance of \code{\link{Object}} or a subclass thereof.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
-  For more information see \code{\link{Class}}.
+  \code{\link{newInstance.Class}}().
+  For more information see \code{\link{Object}}.
 }
 
 

@@ -5,7 +5,7 @@
 #
 # \description{
 #  @classhierarchy
-#
+#  
 #  @get "title".
 #  First of all, this class is most commonly used \emph{internally} and 
 #  neither the end user nor the programmer need to no about the class Class.
@@ -19,7 +19,7 @@
 # }
 #
 # \section{Fields and Methods}{
-#  @allmethods
+#  @allmethods 
 # }
 #
 # \details{
@@ -800,8 +800,60 @@ setMethodS3("getStaticInstance", "Class", function(this, ...) {
 
 
 
+###########################################################################/**
+# @RdocMethod isBeingCreated
+#
+# @title "Checks if a class is currently being initiated initiated"
+#
+# \description{
+#   @get "title".  
+#   When extending a class for the first time, which is
+#   typically done in a constructor, a static instance of the class is
+#   created by calling the constructor without parameters.
+#   This method provides a way to detect that second call inside the
+#   constructor.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns @TRUE if a static instance exists, otherwise @FALSE.
+# }
+#
+# @examples "../incl/isBeingCreated.Class.Rex"
+#
+# @author
+#
+# \seealso{
+#   @seeclass
+# }
+#
+# @keyword programming
+# @keyword methods
+#*/###########################################################################
+setMethodS3("isBeingCreated", "Class", function(this, ...) {
+  # First, make sure you have a reference to the actual Class object.
+  if (!is.function(this)) {
+    this <- get(data.class(this), mode="function")
+    if (!inherits(this, "Class"))
+      throw("Not a Class object: ", class(this)[1]);
+  }
 
+  # If the static instance of this class is missing create one.
+  envir <- attr(this, ".env");
+  staticInstance <- get(".staticInstance", envir=envir);
+  if (!is.null(staticInstance))
+    return(FALSE);
 
+  if (!exists(".isCreatingStaticInstance", envir=envir))
+    return(FALSE);
+
+  get(".isCreatingStaticInstance", envir=envir);
+})
 
 
 
@@ -944,13 +996,13 @@ setMethodS3("getMethods", "Class", function(this, private=FALSE, deprecated=TRUE
     for (k in seq(result)) {
       # For each method...
       if (length(result[[k]]) > 0) {
-  	resultOne <- c();
-  	for (l in seq(result[[k]])) {
-  	  fcn <- get(result[[k]][l], mode="function");
-  	  if (!is.element("private", attr(fcn, "modifiers")))
-  	    resultOne <- c(resultOne, result[[k]][l]);
-  	}
-  	result[[k]] <- resultOne;
+        resultOne <- c();
+      	for (l in seq(result[[k]])) {
+      	  fcn <- get(result[[k]][l], mode="function");
+      	  if (!is.element("private", attr(fcn, "modifiers")))
+      	    resultOne <- c(resultOne, result[[k]][l]);
+      	}
+      	result[[k]] <- resultOne;
       }
     }
   } #   if (private)
@@ -960,14 +1012,14 @@ setMethodS3("getMethods", "Class", function(this, private=FALSE, deprecated=TRUE
     # For each class...
     for (k in seq(result)) {
       if (length(result[[k]]) > 0) {
-  	resultOne <- c();
+        resultOne <- c();
         # For each method...
-  	for (l in seq(result[[k]])) {
-  	  fcn <- get(result[[k]][l], mode="function");
-  	  if (!is.element("deprecated", attr(fcn, "modifiers")))
-  	    resultOne <- c(resultOne, result[[k]][l]);
-  	}
-  	result[[k]] <- resultOne;
+      	for (l in seq(result[[k]])) {
+      	  fcn <- get(result[[k]][l], mode="function");
+      	  if (!is.element("deprecated", attr(fcn, "modifiers")))
+      	    resultOne <- c(resultOne, result[[k]][l]);
+      	}
+      	result[[k]] <- resultOne;
       }
     }
   } #   if (private)
@@ -1387,6 +1439,9 @@ setMethodS3("[[<-", "Class", function(this, name, value) {
 
 ############################################################################
 # HISTORY:
+# 2006-05-30
+# o Added isBeingCreated() to Class.  This was done after a request from
+#   Omar Lakkis, University of Sussex.
 # 2006-04-01
 # o Added argument 'envir' to all exists() and get() calls in the search
 #   function getKnownSubclasses() (and inherits=FALSE).  This will improve

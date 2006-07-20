@@ -1,12 +1,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  
+%  Class.misc.R
 % 
-% on Mon Apr 03 17:20:12 2006.
-% 
-% Generator was the Rdoc class, which is part of the R.oo package written
-% by Henrik Bengtsson, 2001-2006.
+% by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \name{getRdMethods.Class}
@@ -22,14 +19,12 @@
   Gets the methods of a class in Rd format.
 }
 
-\usage{\method{getRdMethods}{Class}(class, visibility=c("public", "protected", "private"), showDeprecated=FALSE, trial=FALSE, ...)}
+\usage{\method{getRdMethods}{Class}(class, visibilities=c("private", "protected", "public"), ...)}
 
 \arguments{
- \item{visibility}{A \code{\link[base]{character}} string specifying which methods to return.}
- \item{showDeprecated}{If \code{\link[base:logical]{TRUE}}, deprecated methods are returned,
-       otherwise not.}
- \item{trial}{If \code{\link[base:logical]{TRUE}}, trial methods are returned, otherwise not.}
-  \item{...}{Not used.}
+ \item{visibilities}{A \code{\link[base]{character}} string specifying what types of methods
+    to return.}
+ \item{...}{Not used.}
 }
 
 \value{
