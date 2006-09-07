@@ -58,6 +58,4 @@ as.data.frame
  \keyword{programming}
  \keyword{methods}
  \keyword{internal}
-\keyword{internal}
-\keyword{methods}
 \keyword{classes}

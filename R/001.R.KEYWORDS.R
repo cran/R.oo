@@ -11,7 +11,8 @@
 # @author
 #
 # \references{
-#  [1] R Language Definition, version 2.0.1 (2004-11-27).
+#  [1] Section "Reserved words", R Language Definition, version 2.4.0 
+#      (2006-07-25) DRAFT.
 # }
 #
 # @keyword programming
@@ -20,8 +21,8 @@
 R.KEYWORDS <- c("break", "else", "for", "function", "if", "in", "next", 
                 "repeat", "while", "TRUE", "FALSE", "Inf", "NULL", "NA", 
                 "NaN", "...")
-
-
+  
+     
 ############################################################################
 # HISTORY:
 # 2005-02-10

@@ -45,11 +45,13 @@
  \tab \code{\link[R.oo:as.character.Object]{as.character}} \tab Gets a character string representing the object.\cr
  \tab \code{\link[R.oo:attach.Object]{attach}} \tab Attaches an Object to the \R search path.\cr
  \tab \code{\link[R.oo:attachLocally.Object]{attachLocally}} \tab Attaches an Object locally to an environment.\cr
+ \tab \code{\link[R.oo:clearCache.Object]{clearCache}} \tab Clear fields that are defined to have cached values.\cr
  \tab \code{\link[R.oo:clone.Object]{clone}} \tab Clones an Object.\cr
  \tab \code{\link[R.oo:detach.Object]{detach}} \tab Detach an Object from the \R search path.\cr
  \tab \code{\link[R.oo:equals.Object]{equals}} \tab Compares an object with another.\cr
  \tab \code{\link[R.oo:extend.Object]{extend}} \tab Extends another class.\cr
  \tab \code{\link[R.oo:finalize.Object]{finalize}} \tab Finalizer methods called when object is clean out.\cr
+ \tab \code{\link[R.oo:gc.Object]{gc}} \tab Clear cached fields and calls the garbage collector.\cr
  \tab \code{\link[R.oo:getEnvironment.Object]{getEnvironment}} \tab Gets the environment of this object.\cr
  \tab \code{\link[R.oo:getFields.Object]{getFields}} \tab Returns the field names of an Object.\cr
  \tab \code{\link[R.oo:getInstanciationTime.Object]{getInstanciationTime}} \tab Gets the time when the object was instanciated.\cr

@@ -19,7 +19,8 @@
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \references{
- [1] R Language Definition, version 2.0.1 (2004-11-27).
+ [1] Section "Reserved words", R Language Definition, version 2.4.0
+     (2006-07-25) DRAFT.
 }
 
 

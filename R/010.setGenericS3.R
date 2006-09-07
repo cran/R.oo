@@ -50,7 +50,6 @@
 # \seealso{
 #   To define a method for a class see @see "setMethodS3".
 #   For a thorough example of how to use this method see @see "Object".
-#   For more information about \code{UseMethod()} see @see "base::methods".
 # }
 #
 # @author
@@ -213,86 +212,6 @@ setGenericS3.default("setGenericS3");  # Creates itself ;)
 
 
 
-###########################################################################/**
-# @RdocDefault isGenericS3
-#
-# @title "Checks if a function is a S3/UseMethod generic function"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{fcn}{A @function.}
-#   \item{...}{Not used.}
-# }
-#
-# \details{
-#   A function is considered to be a generic S3/UseMethod function if its
-#   body, that is the source code, contains the regular pattern 
-#   \code{"UseMethod[(]"}.
-# }
-#
-# \value{
-#  Returns @TRUE if a generic S3/UseMethod function, otherwise @FALSE.
-# }
-#
-# @author
-#
-# \keyword{programming}
-# \keyword{methods}
-#*/###########################################################################
-isGenericS3.default <- function(fcn, ...) {
-  body <- as.character(body(fcn));
-  return(length(grep("UseMethod[(]", body)) > 0)
-}
-
-setGenericS3("isGenericS3");
-
-
-
-###########################################################################/**
-# @RdocDefault isGenericS4
-#
-# @title "Checks if a function is a S4 generic function"
-#
-# \description{
-#  @get "title".
-# }
-#
-# @synopsis
-#
-# \arguments{
-#   \item{fcn}{A @function.}
-#   \item{...}{Not used.}
-# }
-#
-# \details{
-#   A function is considered to be a generic S4 function if its
-#   body, that is the source code, contains the regular pattern 
-#   \code{"standardGeneric"}.
-# }
-#
-# \value{
-#  Returns @TRUE if a generic S4 function, otherwise @FALSE.
-# }
-#
-# @author
-#
-# \keyword{programming}
-# \keyword{methods}
-#*/###########################################################################
-isGenericS4.default <- function(fcn, ...) {
-  body <- as.character(body(fcn));
-  return(length(grep("standardGeneric", body)) > 0)
-}
-
-setGenericS3("isGenericS4");
-
-
-
 ############################################################################
 # HISTORY:
 # 2006-02-09
@@ -303,8 +222,6 @@ setGenericS3("isGenericS4");
 #   as the first character. See code for details.
 # 2005-02-15
 # o Added arguments '...' in order to match any generic functions.
-# 2004-10-18
-# o Added Rdoc comments for isGenericS3() and isGenericS4().
 # 2004-06-27
 # o Added known generic function 'as.vector()'.
 # 2003-07-07

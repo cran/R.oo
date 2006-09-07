@@ -882,6 +882,8 @@ setMethodS3("load", "Object", function(static, file, path=NULL, ...) {
 # @author
 #
 # \seealso{
+#   To clear fields that are declared \code{cached}, 
+#   see @seemethod "clearCache".
 #   @see "base::object.size".
 #   @seeclass
 # }
@@ -1188,6 +1190,8 @@ setMethodS3("staticCode", "Object", function(static, ...) {
 # \arguments{
 #   \item{...className}{The name of new class.}
 #   \item{...}{Named values representing the fields of the new instance.}
+#   \item{...fields}{An optional named @list of fields.  This makes it possible
+#     to specify a set of fields using a @list object.}
 # }
 #
 # \value{
@@ -1201,6 +1205,14 @@ setMethodS3("staticCode", "Object", function(static, ...) {
 #   argument one would run into strange errors. For instance, try
 #   \code{extend(Object(), "MyClass", ...c=0)}.
 # }
+#
+# \section{Field modifiers}{
+#   It is possible to specify modifiers to some of the fields.  Currently it
+#   is only the \code{cached} modifier that is recognized.  A field that is
+#   cached will be assigned @NULL when @seemethod "clearCache" 
+#   (or @seemethod "gc") is called.  To specify a modifier, append a comma
+#   separated list of modifiers followed by a colon, e.g. "cached:foo".
+# }
 # 
 # \examples{\dontrun{For a complete example see help(Object).}}
 #
@@ -1213,8 +1225,42 @@ setMethodS3("staticCode", "Object", function(static, ...) {
 # \keyword{programming}
 # \keyword{methods}
 #*/###########################################################################
-setMethodS3("extend", "Object", function(this, ...className, ...) {
-  fields <- list(...);
+setMethodS3("extend", "Object", function(this, ...className, ..., ...fields=NULL) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Local functions
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  parseModifiers <- function(args, ...) {
+    names <- names(args);
+  
+    pattern <- "([a-z ]*):(.*)$";
+    modifiers <- rep("", length(names));
+    idx <- grep(pattern, names);
+    modifiers[idx] <- gsub(pattern, "\\1", names[idx]);
+    modifiers <- strsplit(modifiers, split=" ");
+    modifiers <- lapply(modifiers, gsub, pattern=" *", replacement="");
+  
+    # Get the real names
+    names[idx] <- gsub("[a-z ]*:", "", names[idx]);
+    names(args) <- names;
+  
+    # Set modifier attributes
+    mods <- list();
+    for (type in c("cached")) {
+      mods[[type]] <- names[modifiers == type];
+    }
+    attr(args, "modifiers") <- mods;
+
+    args;
+  } # parseModifiers()
+  
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Main
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  fields <- c(list(...), ...fields);
+
+  # Identify and renamed fields that have modifiers in their names
+  fields <- parseModifiers(fields);
+
   names <- names(fields);
   for (k in seq(fields)) {
     name <- names[k];
@@ -1250,6 +1296,9 @@ setMethodS3("extend", "Object", function(this, ...className, ...) {
     if (!is.null(static))
       staticCode(static);
   }
+
+  # Record which fields are cached
+  assign("...modifiers", attr(fields, "modifiers"), envir=attr(this, ".env"));
 
   this;
 }) # extend()
@@ -1792,8 +1841,95 @@ setMethodS3("getEnvironment", "Object", function(fun, ...) {
 
 
 
+###########################################################################/**
+# @RdocMethod clearCache
+#
+# @title "Clear fields that are defined to have cached values"
+#
+# \description{
+#  @get "title" by assigning @NULL to these fields.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns itself (invisible).
+# }
+#
+# @author
+#
+# \seealso{
+#   To clear the cached fields and run the garbage collector 
+#   see @seemethod "gc".
+#   @seeclass
+# }
+#
+# @keyword programming
+# @keyword methods
+#*/###########################################################################
+setMethodS3("clearCache", "Object", function(this, ...) {
+  for (field in this$...modifiers$cached) {
+    assign(field, NULL, envir=attr(this, ".env"));
+  }
+  invisible(this);
+});
+
+
+
+###########################################################################/**
+# @RdocMethod gc
+#
+# @title "Clear cached fields and calls the garbage collector"
+#
+# \description{
+#  @get "title".  Cached fields are set to @NULL when cleared.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns what @see "base::gc" returns.
+# }
+#
+# @examples "../incl/gc.Object.Rex"
+#
+# @author
+#
+# \seealso{
+#   To clear the fields without calling the garbage collector, 
+#   see @seemethod "clearCache".
+#   @seeclass
+# }
+#
+# @keyword programming
+# @keyword methods
+#*/###########################################################################
+setMethodS3("gc", "Object", function(this, ...) {
+  clearCache(this);
+  gc();
+});
+
+
 ############################################################################
 # HISTORY:
+# 2006-08-11
+# o Added support for specifying field modifiers in the name of the fields,
+#   e.g. "cached:foo" is specifies that the field "foo" is a cached field.
+#   Currently the only supported modifier is "cached".  The modifiers are
+#   stored in the private list "...modifiers" in all created objects.
+# o Added argument ...fields so that it is possible to specify fields also
+#   via named list object.
+# o Added clearCache() which assigns NULL to all fields that have modifier
+#   "cached".  The gc() method is just a conveniency method for calling
+#   clearCache() and global gc() afterwards.
 # 2006-06-14
 # o Added getEnvironment().
 # 2006-05-15
