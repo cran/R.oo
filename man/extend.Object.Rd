@@ -25,11 +25,13 @@
    The method should be used by the constructor of a class and nowhere else.
  }
 
- \usage{\method{extend}{Object}(this, ...className, ...)}
+ \usage{\method{extend}{Object}(this, ...className, ..., ...fields=NULL)}
 
  \arguments{
    \item{...className}{The name of new class.}
    \item{...}{Named values representing the fields of the new instance.}
+   \item{...fields}{An optional named \code{\link[base]{list}} of fields.  This makes it possible
+     to specify a set of fields using a \code{\link[base]{list}} object.}
  }
 
  \value{
@@ -42,6 +44,14 @@
    this arguments and one at the same time does not specify the name of this
    argument one would run into strange errors. For instance, try
    \code{extend(Object(), "MyClass", ...c=0)}.
+ }
+
+ \section{Field modifiers}{
+   It is possible to specify modifiers to some of the fields.  Currently it
+   is only the \code{cached} modifier that is recognized.  A field that is
+   cached will be assigned \code{\link[base]{NULL}} when \code{\link[R.oo:clearCache.Object]{*clearCache}()}
+   (or \code{\link[R.oo:gc.Object]{*gc}()}) is called.  To specify a modifier, append a comma
+   separated list of modifiers followed by a colon, e.g. "cached:foo".
  }
 
  \examples{\dontrun{For a complete example see help(Object).}}

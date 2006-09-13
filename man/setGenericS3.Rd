@@ -59,7 +59,6 @@
 \seealso{
   To define a method for a class see \code{\link{setMethodS3}}().
   For a thorough example of how to use this method see \code{\link{Object}}.
-  For more information about \code{UseMethod()} see \code{\link[base]{methods}}.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}

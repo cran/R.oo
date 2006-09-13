@@ -1,6 +1,28 @@
 Package: R.oo
 =============
 
+Version: 1.2.3 [2006-09-07]
+o Added package 'utils' as a package this one depends on.  This
+  is required for package without a namespace in the upcoming 
+  R v2.4.0 release.
+o Removed deprecated method getClass() for class Object but also
+  BasicObject.  These were deprecated on 2002-12-15.
+
+Version: 1.2.2 [2006-08-11]
+o Added support for give modifiers to fields in classes extending
+  the Object class. Currently it is only the "cached" modifier that
+  is recognized. To specify that a field, say, "foo" is "cached", 
+  list it as "cached:foo".  Fields that are "cached" will be assigned
+  to NULL when clearCache() of the object is called.  For conviency
+  there is also a gc() method for all Object:s.  See ?gc.Object for
+  an example.
+
+o Made the package smaller by removing the DSC-2003 logo from
+  the R.oo paper, which shrunk from 324kb to 220kb.  The rest
+  of the files in the source distribution is about 80kb when 
+  gzipped, i.e. still the paper is three times larger than the
+  rest of the package.
+
 Version: 1.2.0 [2006-07-14]
 o BUG FIX: update(R.oo) would throw an error and the package was 
   detached.  

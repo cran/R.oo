@@ -48,9 +48,11 @@
 \alias{attach.default}
 \alias{attachLocally}
 \alias{clone}
+\alias{clearCache}
 \alias{detach}
 \alias{detach.default}
 \alias{finalize}
+\alias{gc}
 \alias{getClass}
 \alias{getClass.Object}
 \alias{getClass.default}
@@ -141,6 +143,7 @@
 \alias{environment.default}
 
 % Trial functions
+\alias{gc.default}
 \alias{callSuperMethodS3}
 \alias{callSuperMethodS3.default}
 

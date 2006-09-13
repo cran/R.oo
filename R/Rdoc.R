@@ -1099,6 +1099,11 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       } else {
         line <- NULL;
       }
+      # \synopsis{} is made deprecated by R v2.4.0 and will be defunct 
+      # around R v3.0.0 (see HISTORY below). HOWEVER, static methods 
+      # such as Object$load() still need \synopsis{} to please the
+      # R CMD check.  /HB 2006-09-12
+      # line <- NULL;  # TO DO
       line <- paste(line, "\\usage{", usage, "}", sep="");
       rd <<- paste(rd, line, sep="");
       bfr;
@@ -1648,20 +1653,18 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
         attr(rd, "name") <- as.character(name);
         attr(rd, "sourcefile") <- sourcefile;
 
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+        # Check Rd code?
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
         if (check) {
-          # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-          # Check Rd code
-          # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
           tryCatch({
             rdParse <- tools::Rd_parse(text=rd);
             if (length(rdParse$rest) > 0) {
               throw(RdocException("Unknown top-level text in generated Rd code for Rdoc comment '", attr(rd, "name"), "' (in '", attr(rd, "sourcefile"), "') (typically due to too many or a missing bracket): ", paste(rdParse$rest, collapse=", ", sep="")));
             }
-            },
-            error = function(e) {
+          }, error = function(e) {
               throw(RdocException("Syntax error in generated Rd code for Rdoc comment '", attr(rd, "name"), "' (in '", attr(rd, "sourcefile"), "') was detected by tools:Rd_parse(): ", as.character(e)));
-            }
-          )
+          })
         } # if (check)
 
         rds <- c(rds, list(rd));
@@ -2399,6 +2402,13 @@ setMethodS3("isVisible", "Rdoc", function(static, modifiers, visibilities, ...) 
 
 #########################################################################
 # HISTORY:
+# 2006-09-12
+# o Prepared the Rdoc compiler to no longer generating the \synopsis{} 
+#   statement for the @synopsis tag, which was the case for static 
+#   methods.  I got an early note from Kurt Hornik saying all R base and
+#   recommended package will have \synopsis{} removed in favor of the 
+#   \usage{} statement by the release of R v2.4.0.  The Rd tag will be
+#   deprecated around R v3.0.0 or so. 
 # 2006-05-29
 # o Added protected static method isVisible().
 # o Added argument to @allmethods to specify visibility etc.

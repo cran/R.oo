@@ -4,6 +4,7 @@
 attach <- appendVarArgs(attach)
 detach <- appendVarArgs(detach)
 environment <- appendVarArgs(environment)
+gc <- appendVarArgs(gc)
 getClass <- appendVarArgs(getClass)
 getClasses <- appendVarArgs(getClasses)
 getMethods <- appendVarArgs(getMethods)
