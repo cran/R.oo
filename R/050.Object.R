@@ -97,7 +97,10 @@ setConstructorS3("Object", Object);
 # \keyword{programming}
 # \keyword{methods}
 #*/###########################################################################
-setMethodS3("as.character", "Object", function(this, ...) {
+setMethodS3("as.character", "Object", function(x, ...) {
+  # To please R CMD check
+  this <- x;
+
   intToHex <- function(x, width=NULL) {
     y <- as.integer(x)
     class(y) <- "hexmode"
@@ -129,7 +132,14 @@ setMethodS3("as.character", "Object", function(this, ...) {
     ans
   }
 
-  paste(class(this)[1], ": 0x", intToHex(getInternalAddress(this), width=8), sep="");
+  addr <- getInternalAddress(this);
+  hex <- c(addr %/% 2^32, addr %% 2^32);
+  hex[2] <- intToHex(hex[2], width=8);
+  hex[1] <- intToHex(hex[1]);
+  if (nchar(hex[1]) %% 2 == 1)
+    hex[1] <- paste("0", hex[1], sep="");
+  hex <- paste(hex, collapse="");
+  paste(class(this)[1], ": 0x", addr, sep="");
 }) # as.character()
 
 
@@ -347,9 +357,16 @@ setMethodS3("equals", "Object", function(this, other, ...) {
 #   MyClass: 0x01BE602C is about to be removed from the memory!
 #   MyClass: 0x01BFF634 is about to be removed from the memory!
 #   MyClass: 0x01C13584 is about to be removed from the memory!
-#   MyClass: 0x01C578B0 is about to be removed from the memory!
 #            used (Mb) gc trigger (Mb)
 #   Ncells 229903  6.2     467875 12.5
+#   Vcells  53725  0.5     786432  6.0
+#   }
+#
+#   rm(o)
+#   \dontrun{
+#   MyClass: 0x01C578B0 is about to be removed from the memory!
+#            used (Mb) gc trigger (Mb)
+#   Ncells 229903  6.1     467875 12.3
 #   Vcells  53725  0.5     786432  6.0
 #   }
 # }
@@ -401,7 +418,7 @@ setMethodS3("finalize", "Object", function(this, ...) {
 # }
 #
 # \value{
-#   Returns an @integer.
+#   Returns a @double.
 # }
 #
 # \examples{
@@ -445,7 +462,8 @@ setMethodS3("hashCode", "Object", function(this, ...) {
 # }
 #
 # \value{
-#   Returns an @integer.
+#   Returns a @double (\eqn{2^64} bytes, cf an @integer 
+#   addresses \eqn{2^32} bytes).
 # }
 #
 # \examples{
@@ -463,12 +481,16 @@ setMethodS3("hashCode", "Object", function(this, ...) {
 # \keyword{methods}
 #*/###########################################################################
 setMethodS3("getInternalAddress", "Object", function(this, ...) {
-  hexStringToInt <- function(hex) {
+  hexStringToDouble <- function(hex) {
     hexDigits <- unlist(strsplit("0123456789ABCDEF", ""));
     digits16 <- unlist(strsplit(toupper(hex), ""));
     digits10 <- match(digits16, hexDigits) - 1;
     bases10 <- rev(16^(seq(along=digits10)-1));
-    as.integer(sum(digits10 * bases10));
+    sum(digits10 * bases10);
+  }
+
+  hexStringToInt <- function(hex) {
+    as.integer(hexStringToDouble(hex));
   }
 
   con <- textConnection(".R.oo.getInternalAddress.pointer", open="w");
@@ -485,7 +507,7 @@ setMethodS3("getInternalAddress", "Object", function(this, ...) {
   pointer <- gsub("0x", "", pointer);
   pointer <- gsub("(.*environment:[ ]*)([0-9a-f]*)(.*)", "\\2", pointer[1]);
   
-  hexStringToInt(pointer); 
+  hexStringToDouble(pointer); 
 }, private=TRUE) # getInternalAddress()
 
 
@@ -1093,9 +1115,9 @@ setMethodS3("hasField", "Object", function(this, field, ...) {
 #   \dontrun{
 #   gives:
 #
-#     member class    mode  typeof length  dim bytes
-#   1      x  NULL numeric integer    100 NULL   428
-#   2      y  NULL numeric integer    100 NULL   428
+#     member data.class dimension objectSize
+#   1      x    numeric       100        424
+#   2      y    numeric       100        424
 #   }
 # }
 #
@@ -1736,7 +1758,7 @@ setMethodS3("novirtual", "Object", function(this, ...) {
 
 
 
-setMethodS3("callSuperMethodS3", "ANY", function(this, methodName, ..., nbrOfClassesAbove=1) {
+setMethodS3("callSuperMethodS3", "default", function(this, methodName, ..., nbrOfClassesAbove=1) {
   if (nbrOfClassesAbove < 0)
     throw("Argument 'nbrOfClassesAbove' is negative.");
 
@@ -1920,6 +1942,12 @@ setMethodS3("gc", "Object", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2006-10-03
+# o Updated as.character() to display hexadecimal addresses longer than
+#   2^32 bytes.
+# o BUG FIX: Since getInternalAddress() coerced the address to an integer,
+#   addresses about 2^32 bytes = 4GB got address NA. Now 
+#   getInternalAddress() and the default hashCode() return a double.
 # 2006-08-11
 # o Added support for specifying field modifiers in the name of the fields,
 #   e.g. "cached:foo" is specifies that the field "foo" is a cached field.
