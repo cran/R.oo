@@ -41,7 +41,6 @@
 \alias{getStackTraceString}
 \alias{getWhen}
 \alias{printStackTrace}
-\alias{showAndWait}
 
 % The Object class
 \alias{attach}
@@ -76,7 +75,6 @@
 \alias{getClasses.default}
 \alias{getContribUrl}
 \alias{getContents}
-\alias{getData}
 \alias{getDataPath}
 \alias{getDate}
 \alias{getDescription}
