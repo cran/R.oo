@@ -1,6 +1,6 @@
 Package: R.oo
-Version: 1.4.1
-Date: 2008-01-10
+Version: 1.4.2
+Date: 2008-03-06
 Title: R object-oriented programming with or without references
 Author: Henrik Bengtsson <henrikb@braju.com>
 Maintainer: Henrik Bengtsson <henrikb@braju.com>
@@ -12,4 +12,4 @@ License: LGPL (>= 2.1)
 URL: http://www.braju.com/R/
 DevelURL: http://www.braju.com/R/
 LazyLoad: TRUE
-Packaged: Thu Jan 10 13:29:51 2008; hb
+Packaged: Thu Mar  6 12:13:23 2008; hb
