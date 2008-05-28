@@ -2,6 +2,7 @@
 # @RdocDocumentation "Non-documented objects"
 #
 # % The BasicObject class
+# @alias getInstanciationTime.default
 # @alias isReferable
 #
 # % The Class class
@@ -47,6 +48,8 @@
 # @alias getClass.default
 # @alias getFields
 # @alias getInstanciationTime
+# @alias getInstanciationTime.default
+# @alias getInstantiationTime
 # @alias getInternalAddress
 # @alias hasField
 # @alias load
@@ -78,6 +81,7 @@
 # @alias getLicense
 # @alias getMaintainer
 # @alias getManPath
+# @alias getNews
 # @alias getPath
 # @alias getPosition
 # @alias getTitle
@@ -89,6 +93,7 @@
 # @alias showDescriptionFile
 # @alias showHistory
 # @alias showHowToCite
+# @alias showNews
 # @alias unload
 #
 # % The RccViolationException class

@@ -63,6 +63,7 @@ extends \link[R.oo]{Object}\cr
  \tab \code{\link[R.oo:getLicense.Package]{getLicense}} \tab Gets the License of this package.\cr
  \tab \code{\link[R.oo:getMaintainer.Package]{getMaintainer}} \tab Gets the Maintainer of this package.\cr
  \tab \code{\link[R.oo:getName.Package]{getName}} \tab Gets the name of this package.\cr
+ \tab \code{getNews} \tab  -\cr
  \tab \code{\link[R.oo:getPath.Package]{getPath}} \tab Gets the library (system) path to this package.\cr
  \tab \code{\link[R.oo:getPosition.Package]{getPosition}} \tab Gets the search path position of the package.\cr
  \tab \code{\link[R.oo:getTitle.Package]{getTitle}} \tab Gets the Title of this package.\cr
@@ -76,13 +77,14 @@ extends \link[R.oo]{Object}\cr
  \tab \code{\link[R.oo:showDescriptionFile.Package]{showDescriptionFile}} \tab Show the DESCRIPTION file of this package.\cr
  \tab \code{showHistory} \tab  -\cr
  \tab \code{\link[R.oo:showHowToCite.Package]{showHowToCite}} \tab Show the HOWTOCITE file of this package.\cr
+ \tab \code{showNews} \tab  -\cr
  \tab \code{\link[R.oo:unload.Package]{unload}} \tab Unloads a package.\cr
  \tab \code{\link[R.oo:update.Package]{update}} \tab Updates the package is a newer version is available.\cr
 }
 
 
  \bold{Methods inherited from Object}:\cr
-$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstanciationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
 
  }
 
