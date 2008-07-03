@@ -147,9 +147,10 @@ setMethodS3("as.character", "Object", function(x, ...) {
 
 
 ###########################################################################/**
-# @RdocMethod getInstanciationTime
+# @RdocMethod getInstantiationTime
+# @aliasmethod getInstanciationTime
 #
-# @title "Gets the time when the object was instanciated"
+# @title "Gets the time when the object was instantiated"
 #
 # \description{
 #  @get "title" (created) as a POSIXt object.
@@ -167,7 +168,7 @@ setMethodS3("as.character", "Object", function(x, ...) {
 #
 # \examples{
 #   obj <- Object()
-#   print(getInstanciationTime(obj))
+#   print(getInstantiationTime(obj))
 # }
 #
 # \seealso{
@@ -180,10 +181,16 @@ setMethodS3("as.character", "Object", function(x, ...) {
 # \keyword{programming}
 # \keyword{methods}
 #*/###########################################################################
-setMethodS3("getInstanciationTime", "Object", function(this, ...) {
-  attr(this, "...instanciationTime");
-}) # getInstanciationTime()
+setMethodS3("getInstantiationTime", "Object", function(this, ...) {
+  time <- attr(this, "...instantiationTime");
+  if (is.null(time))
+    time <- attr(this, "...instanciationTime");
+  time;
+})
 
+setMethodS3("getInstanciationTime", "default", function(...) {
+  getInstantiationTime(...);  
+}, private=TRUE, deprecated=TRUE)
 
 
 
@@ -462,8 +469,8 @@ setMethodS3("hashCode", "Object", function(this, ...) {
 # }
 #
 # \value{
-#   Returns a @double (\eqn{2^64} bytes, cf an @integer 
-#   addresses \eqn{2^32} bytes).
+#   Returns a @double (can hold 64-bit addresses, whereas an @integer can
+#   only hold 32-bit addresses).
 # }
 #
 # \examples{
@@ -474,6 +481,7 @@ setMethodS3("hashCode", "Object", function(this, ...) {
 # @author
 #
 # \seealso{
+#   \code{\link[getName.environment]{getName()}}.
 #   @seeclass
 # }
 #
@@ -493,22 +501,11 @@ setMethodS3("getInternalAddress", "Object", function(this, ...) {
     as.integer(hexStringToDouble(hex));
   }
 
-  .R.oo.getInternalAddress.pointer <- NULL;  # To please R CMD check R v2.6.0
-  con <- textConnection(".R.oo.getInternalAddress.pointer", open="w");
-  on.exit({
-    close(con);
-    rm(.R.oo.getInternalAddress.pointer, envir=.GlobalEnv);
-  });
-  sink(con);
-  print.default(attr(this, ".env"));
-  sink();
-  pointer <- .R.oo.getInternalAddress.pointer;
-
-  # Regular expression on three parts; keep only the second part.
+  pointer <- getName(attr(this, ".env"));
   pointer <- gsub("0x", "", pointer);
-  pointer <- gsub("(.*environment:[ ]*)([0-9a-f]*)(.*)", "\\2", pointer[1]);
-  
-  hexStringToDouble(pointer); 
+  pointer <- hexStringToDouble(pointer);
+
+  pointer;
 }, private=TRUE) # getInternalAddress()
 
 
@@ -1980,6 +1977,11 @@ setMethodS3("gc", "Object", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2008-05-28
+# o SPELL CORRECTION: Used '...instanciation' instead of 'instantiation'.
+# 2008-03-25
+# o BUG FIX: getInternalAddress() would return NA.  Now it uses the new
+#   getName() for environments.
 # 2008-01-10
 # o Made the registered finalizer calling finalize() more error prone.
 # 2007-08-29
