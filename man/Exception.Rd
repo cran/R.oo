@@ -73,7 +73,7 @@ as.character, throw
 as.character, conditionCall, conditionMessage, print
 
  \bold{Methods inherited from Object}:\cr
-$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, save
+$, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
 
 
 }
@@ -157,7 +157,7 @@ cat("The logarithm of ", x, " is ", l, ".\n\n", sep="")
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
-  See also \code{\link[base:conditions]{tryCatch}}() (and \code{\link[base]{try}}()).
+  See also \code{\link[base:conditions]{tryCatch}()} (and \code{\link[base]{try}}()).
 }
 
 \keyword{programming}
