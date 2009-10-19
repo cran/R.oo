@@ -1,37 +1,38 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Do not modify this file since it was automatically generated from:
 % 
-%  getConstructorS3.R
+%  Interface.R
 % 
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getConstructorS3}
-\alias{getConstructorS3.default}
-\alias{getConstructorS3}
+\name{print.Interface}
+\alias{print.Interface}
+\alias{Interface.print}
+\alias{print.Interface}
+\alias{print,Interface-method}
 
-\title{Get a constructor method}
+
+\title{Prints an Interface}
 
 \description{
- Get a constructor method.
+ For all objects of class \code{\link{Interface}}, this method will print the
+ value of \code{as.character()} of the object.
 }
 
-\usage{\method{getConstructorS3}{default}(name, ...)}
+\usage{\method{print}{Interface}(x, ...)}
 
 \arguments{
-  \item{name}{The name of the constructor function.}
   \item{...}{Not used.}
-}
-
-\seealso{
-  \code{\link{setConstructorS3}}().
-  \code{\link[R.methodsS3]{getMethodS3}}.
-  \code{\link[R.methodsS3]{isGenericS3}}.
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
-
+\seealso{
+  For more information see \code{\link{Interface}}.
+}
 
 \keyword{programming}
+\keyword{methods}
+\keyword{internal}
 \keyword{methods}
