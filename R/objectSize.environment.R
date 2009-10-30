@@ -1,17 +1,18 @@
 ###########################################################################/**
-# @RdocDefault objectSize
+# @set "class=environment"
+# @RdocMethod objectSize
 #
-# @title "Gets the size of the object in bytes"
+# @title "Gets the size of an environment in bytes"
 #
 # \description{
 #   @get "title".  
-#   This method is just a wrapper for @see "utils::object.size".
 # }
 #
 # @synopsis
 #
 # \arguments{
-#   \item{...}{Arguments passed to @see "utils::object.size".}
+#   \item{envir}{An @see "base::environment".}
+#   \item{...}{Arguments passed to @see "base::ls".}
 # }
 #
 # \value{
@@ -27,8 +28,13 @@
 # \keyword{attribute}
 # \keyword{utilities}
 #*/###########################################################################
-setMethodS3("objectSize", "default", function(...) {
-  object.size(...);
+setMethodS3("objectSize", "environment", function(envir, ...) {
+  names <- ls(envir=envir, all.names=TRUE, ...);
+  size <- 0;
+  for (name in names) {
+    size <- size + objectSize(envir[[name]]);
+  }
+  size;
 })
 
 
@@ -36,7 +42,6 @@ setMethodS3("objectSize", "default", function(...) {
 
 ############################################################################
 # HISTORY:
-# 2005-03-23
-# o Created for completeness. Now objectSize() can be used for all kind
-#   of objects.
+# 2009-10-26
+# o Added objectSize() for environments.
 ############################################################################
