@@ -1,6 +1,26 @@
 Package: R.oo
 =============
 
+Version: 1.8.0 [2011-04-03]
+o ROBUSTNESS: Now finalizers for Object:s are registered to be called 
+  also when the R session is quit, if the "R.oo::Object/finalizeOnExit"
+  option is TRUE.  If FALSE (default), as before, the finalizers were
+  only executed when Object:s were cleaned up by the garbage collector.
+o Turned of the default instantiation timestamp for Object and 
+  BasicObject.  The main reason is that it makes it very complicated
+  to calculate reproducible checksums.  However, for backward
+  compatibility, it is possible to turn on the timestamp by setting
+  option "R.oo::Object/instantiationTime".  For BasicObject there is
+  option "R.oo::BasicObject/instantiationTime".
+o Added protected getFieldModifiers() and getFieldModifier().
+o Added argument 'recursive' to clearCache() for recursively traversing
+  all elements are clearing the cache of all detected Object:s.
+o Now clearCache() also calls clearLookupCache().
+o Added protected clearLookupCache() for clearing internal objects 
+  stored in the Object and that are used for faster field lookups.
+o CLEANUP: Dropped deprecated getInstanciationTime().
+
+
 Version: 1.7.5 [2011-02-01]
 o ROBUSTNESS: Now using 'inherits' (not 'inherit') in all calls to
   get() and exists().

@@ -148,7 +148,6 @@ setMethodS3("as.character", "Object", function(x, ...) {
 
 ###########################################################################/**
 # @RdocMethod getInstantiationTime
-# @aliasmethod getInstanciationTime
 #
 # @title "Gets the time when the object was instantiated"
 #
@@ -166,9 +165,16 @@ setMethodS3("as.character", "Object", function(x, ...) {
 #   Returns a POSIXt object, which extends class POSIXct.
 # }
 #
+# \details{
+#   The instantiation time stamp is set when the object is created, and
+#   only of option \code{"R.oo::BasicObject/instantiationTime"} is @TRUE.
+# }
+#
 # \examples{
+#   oopts <- options("R.oo::Object/instantiationTime"=TRUE)
 #   obj <- Object()
 #   print(getInstantiationTime(obj))
+#   options(oopts)
 # }
 #
 # \seealso{
@@ -183,14 +189,13 @@ setMethodS3("as.character", "Object", function(x, ...) {
 #*/###########################################################################
 setMethodS3("getInstantiationTime", "Object", function(this, ...) {
   time <- attr(this, "...instantiationTime");
-  if (is.null(time))
-    time <- attr(this, "...instanciationTime");
-  time;
-})
+  if (!is.null(time)) return(time);
 
-setMethodS3("getInstanciationTime", "default", function(...) {
-  getInstantiationTime(...);  
-}, private=TRUE, deprecated=TRUE)
+  # Backward compatibility (due to a SPELLING ERROR in an earlier version)
+  time <- attr(this, "...instanciationTime");
+
+  NULL;
+})
 
 
 
@@ -1339,10 +1344,11 @@ setMethodS3("extend", "Object", function(this, ...className, ..., ...fields=NULL
   # Set class
   class(this) <- unique(c(...className, class(this)));
 
-  # Note, we have to register the finalizer here and not in Object(), 
+  # Note, we have to re-register the finalizer here and not in Object(), 
   # because here the reference variable 'this' will have the correct
   # class attribute, which it does not in Object().
-  reg.finalizer(attr(this, ".env"), function(env) {
+  # NOTE: The finalizer() depends on the 'this' object. # /HB 2011-04-02
+  finalizer <- function(env) {
     # Note, R.oo might be detached when this is called!  If so, reload
     # it, this will be our best chance to run the correct finalizer(),
     # which might be in a subclass of a different package that is still
@@ -1378,7 +1384,9 @@ setMethodS3("extend", "Object", function(this, ...className, ..., ...fields=NULL
       # (4) Remove the dummy finalize():er again.
       detach("dummy:R.oo");
     }
-  });
+  } # finalizer()
+  reg.finalizer(attr(this, ".env"), finalizer, 
+                onexit=getOption("R.oo::Object/finalizeOnExit", FALSE));
 
 
   # Finally, create the static instance?
@@ -1933,12 +1941,14 @@ setMethodS3("getEnvironment", "Object", function(fun, ...) {
 
 
 ###########################################################################/**
-# @RdocMethod clearCache
+# @RdocMethod clearLookupCache
 #
-# @title "Clear fields that are defined to have cached values"
+# @title "Clear internal fields used for faster lookup"
 #
 # \description{
-#  @get "title" by assigning @NULL to these fields.
+#  @get "title" by removing these fields.
+#  This method is called whenever @seemethod "gc" is called on the
+#  object.
 # }
 #
 # @synopsis
@@ -1954,6 +1964,46 @@ setMethodS3("getEnvironment", "Object", function(fun, ...) {
 # @author
 #
 # \seealso{
+#   @seeclass
+# }
+#
+# @keyword programming
+# @keyword methods
+#*/###########################################################################
+setMethodS3("clearLookupCache", "Object", function(this, ...) {
+  env <- this$.env;
+  names <- ls(envir=env, pattern="^...\\$.lookup", all.names=TRUE);
+  rm(list=names, envir=env);
+  invisible(this);
+}, protected=TRUE)
+
+
+###########################################################################/**
+# @RdocMethod clearCache
+#
+# @title "Clear fields that are defined to have cached values"
+#
+# \description{
+#  @get "title" by assigning @NULL to these fields.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{recursive}{If @TRUE, the same method is called also on all
+#      fields that are @see "Object":s. Circular dependencies can exists.}
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns itself (invisible).
+# }
+#
+# @examples "../incl/gc.clearCache.Rex"
+#
+# @author
+#
+# \seealso{
 #   To clear the cached fields and run the garbage collector 
 #   see @seemethod "gc".
 #   @seeclass
@@ -1962,12 +2012,77 @@ setMethodS3("getEnvironment", "Object", function(fun, ...) {
 # @keyword programming
 # @keyword methods
 #*/###########################################################################
-setMethodS3("clearCache", "Object", function(this, ...) {
-  for (field in this$...modifiers$cached) {
-    assign(field, NULL, envir=attr(this, ".env"));
+setMethodS3("clearCache", "Object", function(this, recursive=TRUE, ...) {
+  env <- attr(this, ".env");
+
+  fields <- getFieldModifier(this, "cached");
+  for (field in fields) {
+    # Or remove them?
+    assign(field, NULL, envir=env);
   }
+
+  this <- clearLookupCache(this);
+
+  if (recursive) {
+    # Make sure that this object has not already been called 
+    # earlier in the same clear-cache request.  
+    if (!exists("...clearCache", envir=env)) {
+      assign("...clearCache", TRUE, envir=env);
+      on.exit(rm("...clearCache", envir=env));
+      fields <- getFields(this, private=TRUE);
+      for (field in fields) {
+        object <- get(field, envir=env);
+        if (inherits(object, "Object")) {
+          clearCache(object, recursive=TRUE);
+        }
+      }
+    }
+  }
+
   invisible(this);
-});
+})
+
+
+
+###########################################################################/**
+# @RdocMethod getFieldModifiers
+# @aliasmethod getFieldModifier
+#
+# @title "Gets all types of field modifiers"
+#
+# \description{
+#  @get "title", if any.
+# }
+#
+# @synopsis
+#
+# \arguments{
+#   \item{...}{Not used.}
+# }
+#
+# \value{
+#   Returns a named @list.
+# }
+#
+# @author
+#
+# @keyword programming
+# @keyword methods
+#*/###########################################################################
+setMethodS3("getFieldModifiers", "Object", function(this, ...) {
+  env <- attr(this, ".env");
+
+  if (!exists("...modifiers", envir=env))
+    return(list());
+
+  get("...modifiers", envir=env);
+}, protected=TRUE)
+
+
+setMethodS3("getFieldModifier", "Object", function(this, name, ...) {
+  getFieldModifiers(this, ...)[[name]];
+}, protected=TRUE)
+
 
 
 
@@ -2004,7 +2119,7 @@ setMethodS3("clearCache", "Object", function(this, ...) {
 # @keyword methods
 #*/###########################################################################
 setMethodS3("gc", "Object", function(this, ...) {
-  clearCache(this);
+  clearCache(this, ...);
   gc();
 });
 
@@ -2090,7 +2205,7 @@ setMethodS3("registerFinalizer", "Object", function(this, ...) {
   # that is, not the "final" class. However, we still do it so
   # that pure Object:s will be finalized too.  This will be
   # overridden if extend(<Object>) is called.
-  reg.finalizer(attr(this, ".env"), localFinalizer);
+  reg.finalizer(attr(this, ".env"), localFinalizer, onexit=FALSE);
 
   invisible(this);
 }, protected=TRUE) # registerFinalizer()
@@ -2098,6 +2213,25 @@ setMethodS3("registerFinalizer", "Object", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2011-04-03
+# o Added option "R.oo::Object/finalizeOnExit".
+# o Added argument 'recursive' to clearCache() for recursively traversing
+#   all elements are clearing the cache of all detected Object:s.
+# 2011-04-02
+# o Added protected getFieldModifiers() and getFieldModifier().
+# o Added clearLookupCache() for clearing internal objects stored in
+#   the Object and that are used for faster field lookups.
+# o Now finalizers for Object:s are registered to be called also when
+#   R is quit.  Previously, they were only executed when an Object
+#   was cleaned up by the garbage collector.
+# o CLEANUP: Dropped deprecated getInstanciationTime().
+# 2011-03-11
+# o Added explicit 'onexit=FALSE' to all reg.finalizer():s so it is clear
+#   that they are not finalized when quitting R.
+#   Why? Because in the future we may want to change this to onexit=TRUE,
+#   but for now I don't fully understand the implications of doing so,
+#   e.g. at what stage of the quitting process is the finalizer called
+#   and what environments/objects/packages are available at that time?
 # 2011-02-01
 # o ROBUSTNESS: Now using 'inherits' (not 'inherit') in all calls to
 #   get() and exists().
