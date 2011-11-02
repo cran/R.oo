@@ -1,4 +1,4 @@
-767e0bbb3f13fd602334c47cb26548ba *DESCRIPTION
+998a2ffdaf91f91895f53a85c47da5e9 *DESCRIPTION
 f64d8b3debc5a7b8454309dac846eafe *NAMESPACE
 ab66e355f96b825c2ea4fe2da7e35723 *R/000.R
 9b19bc2c2a933f54bdfca89d19b65022 *R/006.fixVarArgs.R
@@ -14,7 +14,7 @@ ac2a64a8acc583933e730ef0a1e65857 *R/Class.misc.R
 214610ece73a259568373cca7737bf7e *R/Exception.R
 15b1452458553a5d8565860dc0f974ab *R/Interface.R
 01d341b0cee422a4a5582c6b95fb2328 *R/InternalErrorException.R
-a33afb386b306dd97143cb55e68747f0 *R/Package.R
+56e50cb65756333be70f53114a4ae0a2 *R/Package.R
 327624ab8b790427f23a0b7c7fe84876 *R/RccViolationException.R
 a63f958595fec177e68c45f94a58de10 *R/Rdoc.R
 09ac99e0e381e6f3b0b5de75840b6110 *R/RdocException.R
@@ -47,7 +47,7 @@ ab84dd3daf484e2d76f4558a6f06ade4 *incl/gc.Object.Rex
 c816ce2b2a985fb3c3c311a0274d049a *incl/isBeingCreated.Class.Rex
 33174aba2b08e2f9cd20bd1aecb0d802 *inst/CITATION
 0c500ca5027f38378a8b3f3f51f6db0a *inst/HOWTOCITE
-ae8b3e281e8e3e077c483b722764d94d *inst/NEWS
+d800fdda5129be5c417dd8f55b26684c *inst/NEWS
 6958ed0722d07b6ca46fafca8aabd608 *inst/doc/Bengtsson.pdf
 0f69446bf87d203d9aa7ae96b6711b97 *inst/misc/ASCII.R
 be5e10acdaefd2ff6cc016f2a0ffb689 *inst/misc/Exception.R
