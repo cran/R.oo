@@ -35,6 +35,7 @@
 \alias{newInstance}
 
 % The Exception class
+\alias{getCalls}
 \alias{getCall}
 \alias{getLastException}
 \alias{getMessage}
@@ -140,10 +141,6 @@
 
 % The RdocException class
 \alias{getSource}
-
-% Utility functions
-\alias{environment}
-\alias{environment.default}
 
 % Trial functions
 \alias{gc.default}

@@ -55,6 +55,7 @@ extends simpleError\cr
 \tabular{rll}{
  \tab \code{\link[R.oo:as.character.Exception]{as.character}} \tab Gets a character string representing of the Exception.\cr
  \tab \code{getCall} \tab  -\cr
+ \tab \code{\link[R.oo:getCalls.Exception]{getCalls}} \tab Gets the active calls saved when the exception was created.\cr
  \tab \code{\link[R.oo:getLastException.Exception]{getLastException}} \tab Static method to get the last Exception thrown.\cr
  \tab \code{\link[R.oo:getMessage.Exception]{getMessage}} \tab Gets the message of the Exception.\cr
  \tab \code{\link[R.oo:getStackTrace.Exception]{getStackTrace}} \tab Gets the stack trace saved when the exception was created.\cr
@@ -70,7 +71,7 @@ extends simpleError\cr
 as.character, throw
 
  \bold{Methods inherited from condition}:\cr
-as.character, conditionCall, conditionMessage, print
+abort, as.character, conditionCall, conditionMessage, print
 
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save

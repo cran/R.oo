@@ -1,9 +1,9 @@
 # Detach the 'R.oo' attached in file 030.ObjectClassFunctions.R
-detach("R.oo")
+detach("R.oo");
 
 # Allows conflicts. For more information, see library() and
 # conflicts() in [R] base.
-.conflicts.OK <- TRUE 
+.conflicts.OK <- TRUE;
 
 ## .First.lib <- function(libname, pkgname) {
 .onAttach <- function(libname, pkgname) {
@@ -12,7 +12,7 @@ detach("R.oo")
 
   # Remove temporary extend.default() created by the extend() 
   # defined in 030.ObjectClassFunctions.R.
-#  remove("extend.default", pos=pos);
+#  rm("extend.default", pos=pos);
 
   # Set default 'properties' argument for ll(), if missing
   key <- paste(pkgname, "::ll/properties", sep="");

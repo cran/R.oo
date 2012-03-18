@@ -760,13 +760,9 @@ setMethodS3("load", "Package", function(this, ...) {
 #   Returns nothing.
 # }
 #
-# \examples{
-#   pkg <- Package("boot")
-#   load(pkg)
-#   print(isLoaded(pkg))
-#   unload(pkg)
-#   print(isLoaded(pkg))
-# }
+# \examples{\dontrun{
+# @include "../incl/Package.unload.Rex"
+# }}
 #
 # @author
 #
@@ -881,7 +877,7 @@ setMethodS3("getClasses", "Package", function(this, ...) {
     }
   }
   classes;
-});
+}, dontWarn="base")
 
 
 
@@ -1610,6 +1606,12 @@ setMethodS3("update", "Package", function(object, contribUrl=c(getContribUrl(thi
 
 ############################################################################
 # HISTORY:
+# 2012-03-08
+# o Now package no longer warnings about renaming existing functions
+#   getMethods() and getClasses() of 'base' to default methods during
+#   installation, iff R.methodsS3 (>= 1.2.3).
+# 2011-12-23
+# o Now Package() loads the 'utils' package, if needed.
 # 2010-11-01
 # o CLEANUP/FIX: Dropped package.description() from getDescriptionFile()
 #   for Package, which was used for pre-R v1.9.0 compatibility reasons.

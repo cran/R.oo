@@ -25,6 +25,7 @@
 # @alias newInstance
 #
 # % The Exception class
+# @alias getCalls
 # @alias getCall
 # @alias getLastException
 # @alias getMessage
@@ -131,10 +132,6 @@
 # % The RdocException class
 # @alias getSource
 #
-# % Utility functions
-# @alias environment
-# @alias environment.default
-#
 # % Trial functions
 # @alias gc.default
 # @alias callSuperMethodS3
@@ -165,7 +162,8 @@
 
 ############################################################################
 # HISTORY:
+# 2012-02-29
+# o CLEANUP: Dropped aliases for non-existing environment[.default]().
 # 2005-02-10
 # o Created to please R CMD check.
 ############################################################################
-

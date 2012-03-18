@@ -1285,6 +1285,7 @@ setMethodS3("staticCode", "Object", function(static, ...) {
 # \keyword{programming}
 # \keyword{methods}
 #*/###########################################################################
+rm("extend", pos="R.oo"); # To avoid warning about renaming existing extend()
 setMethodS3("extend", "Object", function(this, ...className, ..., ...fields=NULL) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
@@ -2098,7 +2099,7 @@ setMethodS3("getFieldModifier", "Object", function(this, name, ...) {
 # @synopsis
 #
 # \arguments{
-#   \item{...}{Not used.}
+#   \item{...}{Passed to @see "base::gc" returns.}
 # }
 #
 # \value{
@@ -2119,9 +2120,9 @@ setMethodS3("getFieldModifier", "Object", function(this, name, ...) {
 # @keyword methods
 #*/###########################################################################
 setMethodS3("gc", "Object", function(this, ...) {
-  clearCache(this, ...);
+  clearCache(this);
   gc();
-});
+})
 
 
 ###########################################################################/**
@@ -2213,6 +2214,12 @@ setMethodS3("registerFinalizer", "Object", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2012-03-06
+# o Now the defintion of extend() for Object no longer generates a warning
+#   about renaming existing extend().
+# 2012-02-29
+# o Now gc() for Object no longer pass '...' to clearCache(), instead
+#   the defaults of clearCache() is used.
 # 2011-04-03
 # o Added option "R.oo::Object/finalizeOnExit".
 # o Added argument 'recursive' to clearCache() for recursively traversing

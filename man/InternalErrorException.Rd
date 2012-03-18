@@ -63,13 +63,13 @@ extends \link[R.oo]{Exception}\cr
 
 
  \bold{Methods inherited from Exception}:\cr
-as.character, getCall, getLastException, getMessage, getStackTrace, getWhen, print, printStackTrace, throw
+as.character, getCall, getCalls, getLastException, getMessage, getStackTrace, getWhen, print, printStackTrace, throw
 
  \bold{Methods inherited from error}:\cr
 as.character, throw
 
  \bold{Methods inherited from condition}:\cr
-as.character, conditionCall, conditionMessage, print
+abort, as.character, conditionCall, conditionMessage, print
 
  \bold{Methods inherited from Object}:\cr
 $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCache, clone, detach, equals, extend, finalize, gc, getEnvironment, getFieldModifier, getFieldModifiers, getFields, getInstantiationTime, getStaticInstance, hasField, hashCode, ll, load, objectSize, print, registerFinalizer, save
