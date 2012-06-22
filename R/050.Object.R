@@ -339,9 +339,15 @@ setMethodS3("equals", "Object", function(this, other, ...) {
 # @title "Finalizer methods called when object is clean out"
 #
 # \description{
-#  \bold{The finalizer method should never be called explicitly!}.
-#  Finalizer methods called just before the object is about to be deleted
-#  by the garbage collector.
+#  Finalizer methods are called just the moment before the object is 
+#  about to be deleted by the garbage collector.
+#
+#  \bold{If creating a custom \code{finalize()} method for a subclass
+#        in a package, then it needs to be exported in the NAMESPACE of
+#        that package.  If not, it will not be found nor called and
+#        there will be no error message.}
+#
+#  \bold{A finalizer method should never be called explicitly!}
 # }
 #
 # @synopsis
@@ -1872,7 +1878,8 @@ setMethodS3("callSuperMethodS3", "default", function(this, methodName, ..., nbrO
 # @synopsis
 #
 # \arguments{
-#   \item{...}{Not used.}
+#   \item{...}{Arguments passed to the constructor of the corresponding
+#     @see "Object" class.}
 # }
 #
 # \value{
@@ -1883,6 +1890,7 @@ setMethodS3("callSuperMethodS3", "default", function(this, methodName, ..., nbrO
 #
 # \seealso{
 #   @see "newInstance.Class".
+#   @see "newInstance.BasicObject".
 #   @seeclass
 # }
 #
@@ -2214,6 +2222,9 @@ setMethodS3("registerFinalizer", "Object", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2012-06-22
+# o Added an Rdoc paragraph to finalize() that custom finalize() methods
+#   must be exported.
 # 2012-03-06
 # o Now the defintion of extend() for Object no longer generates a warning
 #   about renaming existing extend().

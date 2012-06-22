@@ -153,13 +153,32 @@ setMethodS3("setNameFormat", "Rdoc", function(static, nameFormat, ...) {
 # @keyword documentation
 #*/###########################################################################
 setMethodS3("getKeywords", "Rdoc", function(this, fullInfo=FALSE, ...) {
-  rhome <- Sys.getenv("R_HOME");
-  if (is.null(rhome))
-    throw("Can not determine the directory R_HOME.");
-  file <- file.path(rhome, "/doc/KEYWORDS.db");
-  if (!file.exists(file))
-    throw("The KEYWORDS.db file was not found: ", file);
-  keywords <- readLines(file, warn=FALSE);
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Locate the KEYWORDS.db file
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  path <- Sys.getenv("R_DOC_DIR");
+  if (is.null(path) || nchar(path) == 0) {
+    # Backward compatibility
+    path <- file.path(Sys.getenv("R_HOME"), "doc");
+    tryCatch({
+      path <- R.home("doc");
+    }, error = function(ex) {});
+
+    if (!file.exists(path)) {
+      throw("Cannot determine the R doc directory. R_DOC_DIR was not set and R_HOME/doc/ does not exist: ", path);
+    }
+  }
+
+  pathname <- file.path(path, "KEYWORDS.db");
+  if (!file.exists(pathname)) {
+    throw("The KEYWORDS.db file was not found: ", pathname);
+  }
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Read keywords
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  keywords <- readLines(pathname, warn=FALSE);
   keywords <- strsplit(keywords, ":");
   names <- lapply(keywords, FUN=function(x) x[1]);
   names <- unlist(names);
@@ -173,6 +192,7 @@ setMethodS3("getKeywords", "Rdoc", function(this, fullInfo=FALSE, ...) {
   keywords <- keywords[len > 1];
   desc <- desc[len > 1];
   names(keywords) <- desc;
+
   keywords;
 }, static=TRUE);
 
@@ -808,6 +828,13 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       bfr;
     } # getTagValue()
     
+
+    isObjectDeprecated <- function(name, ...) {
+      obj <- getObject(this, name=name, ...);
+      mods <- attr(obj, "modifiers");
+      is.element("deprecated", mods);
+    } # isObjectDeprecated()
+
   
     
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -862,7 +889,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       bfr <- getTagValue(bfr);
       method <- attr(bfr, "value");
       objectName <<- paste(method, ".", class, sep="");
-      isDeprecated <<- eval(substitute(is.element("deprecated", attr(object, "modifiers")), list(object=as.name(objectName))));
+      isDeprecated <<- isObjectDeprecated(objectName);
       name <- createName.Rdoc(NULL, class, method, escape=FALSE);
       alias <- name;
       name <<- name <- escapeName(name);
@@ -894,7 +921,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       bfr <- getTagValue(bfr);
       default <- attr(bfr, "value");
       objectName <<- default;
-      isDeprecated <<- eval(substitute(is.element("deprecated", attr(object, "modifiers")), list(object=as.name(objectName))));
+      isDeprecated <<- isObjectDeprecated(objectName);
       name <- default;
       name <<- name <- escapeName(name);
       line <- paste("\\name{", name, "}\n", sep="");
@@ -911,7 +938,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       bfr <- getTagValue(bfr);
       generic <- attr(bfr, "value");
       objectName <<- generic;
-      isDeprecated <<- eval(substitute(is.element("deprecated", attr(object, "modifiers")), list(object=as.name(objectName))));
+      isDeprecated <<- isObjectDeprecated(objectName);
       name <- generic;
       name <<- name <- escapeName(name);
       line <- paste("\\name{", name, "}\n", sep="");
@@ -928,7 +955,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       bfr <- getTagValue(bfr);
       fcn <- attr(bfr, "value");
       objectName <<- fcn;
-      isDeprecated <<- eval(substitute(is.element("deprecated", attr(object, "modifiers")), list(object=as.name(objectName))));
+      isDeprecated <<- isObjectDeprecated(objectName);
       name <- fcn;
       name <<- name <- escapeName(name);
       line <- paste("\\name{", name, "}\n", sep="");
@@ -944,7 +971,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       bfr <- getTagValue(bfr);
       object <- attr(bfr, "value");
       objectName <<- object;
-      isDeprecated <<- eval(substitute(is.element("deprecated", attr(object, "modifiers")), list(object=as.name(objectName))));
+      isDeprecated <<- isObjectDeprecated(objectName);
       name <- object;
       name <<- name <- escapeName(name);
       line <- paste("\\name{", name, "}\n", sep="");
@@ -1288,7 +1315,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
         pkg <- NULL;
         obj <- pkgObject[1];
         if (exists(obj, mode="function")) {
-          expr <-substitute(inherits(fcn, "Class"), list(fcn=as.name(obj)));
+          expr <- substitute(inherits(fcn, "Class"), list(fcn=as.name(obj)));
           if (!eval(expr))
             fcn <- "()";
         }
@@ -1954,6 +1981,30 @@ setMethodS3("methodsInheritedFrom", "Rdoc", function(this, class, visibility=c("
 
 
 
+setMethodS3("getObject", "Rdoc", function(static, name, mode="any", package=static$package, ...) {
+  # Search for object in: 
+  #  (i) the package names iff found, then 
+  # (ii) then the search path.
+
+  # Try to infer the package's namespace.
+  ns <- NULL;
+  if (is.character(package)) {
+    tryCatch({
+      ns <- getNamespace(package);
+    }, error = function(ex) {});
+  }
+
+  if (is.environment(ns) && exists(name, mode=mode, envir=ns)) {
+    obj <- get(name, mode=mode, envir=ns);
+  } else if (exists(name, mode=mode)) {
+    obj <- get(name, mode=mode);
+  } else {
+    throw("Failed to locate object of mode \"", mode, "\": ", name);
+  }
+
+  obj;
+}, private=TRUE, static=TRUE);
+
 
 
 ###########################################################################/**
@@ -1970,6 +2021,7 @@ setMethodS3("methodsInheritedFrom", "Rdoc", function(this, class, visibility=c("
 # \arguments{
 #   \item{method}{A method name (@character string).}
 #   \item{class}{An optional class name (@character string).}
+#   \item{package}{An optional package name (@character string).}
 #   \item{...}{Not used.}
 # }
 #
@@ -1986,14 +2038,24 @@ setMethodS3("methodsInheritedFrom", "Rdoc", function(this, class, visibility=c("
 # @keyword documentation
 #*/###########################################################################
 setMethodS3("getUsage", "Rdoc", function(static, method, class=NULL, ...) {
-  if (!is.null(class))
-    fcnName <- paste(method, class, sep=".")
-  else
+  if (!is.null(class)) {
+    fcnName <- paste(method, class, sep=".");
+  } else {
     fcnName <- method;
-  if (!exists(fcnName, mode="function")) {
+  }
+
+  fcn <- NULL;
+  tryCatch({
+    fcn <- getObject(static, name=fcnName, mode="function");
+  }, error = function(ex) {
+    cat("Failed...\n");
+    print(ex);
+    cat("Failed...done\n");
+  });
+  if (!is.function(fcn)) {
     throw(RdocException("Could not get usage. Function was not found: ", fcnName, "()", source=Rdoc$source));
   }
-  fcn <- get(fcnName, mode="function");
+
   isStatic <- is.element("static", attr(fcn, "modifiers"));
   isConstructor <- inherits(fcn, "Class");
   args <- Rdoc$argsToString(fcn);
@@ -2036,6 +2098,7 @@ setMethodS3("getUsage", "Rdoc", function(static, method, class=NULL, ...) {
     if (isReplacement)
       usage <- paste(usage, " <- ", valueArg, sep="");
   }
+
   usage;
 }, private=TRUE, static=TRUE);
 
@@ -2455,6 +2518,15 @@ setMethodS3("isVisible", "Rdoc", function(static, modifiers, visibilities, ...) 
 
 #########################################################################
 # HISTORY:
+# 2012-06-11
+# o BUG FIX/GENERALIZATION: Rdoc$getKeywords() now uses system
+#   environment variable R_DOC_DIR for locating the internal
+#   KEYWORDS.db.  Thanks to Charles Hogg at NIST for suggesting this.
+# 2012-04-17
+# o Now Rdoc$getUsage() searches also the package namespace for 
+#   the function definition.  This is done, before searching the
+#   global environment.
+# o Added private static getObject().
 # 2011-07-27
 # o CLEANUP: Replaced a (!is.null(foo) > 0) with (!is.null(foo)).
 # 2010-09-22

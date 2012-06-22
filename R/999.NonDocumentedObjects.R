@@ -45,9 +45,6 @@
 # @alias detach.default
 # @alias finalize
 # @alias gc
-# @alias getClass
-# @alias getClass.Object
-# @alias getClass.default
 # @alias getFields
 # @alias getInstanciationTime
 # @alias getInstanciationTime.default
@@ -116,6 +113,8 @@
 # @alias getClassS4Usage
 # @alias getKeywords
 # @alias getNameFormat
+# @alias getObject
+# @alias getObject.Rdoc
 # @alias getPackageNameOf
 # @alias getRdDeclaration
 # @alias getRdHierarchy

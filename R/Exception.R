@@ -340,7 +340,6 @@ setMethodS3("throw", "Exception", function(this, ...) {
 
 
 
-
 ###########################################################################/**
 # @RdocMethod getLastException
 #
@@ -635,6 +634,10 @@ setMethodS3("printStackTrace", "Exception", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2012-06-17
+# o BUG FIX/GENERALIZATION: throw() for Exception would give an error on
+#   R < 2.14.0, where no generic getCall() exists.  Now it works for
+#   all versions of R.
 # 2012-03-18
 # o Now it is possible to set the default value of argument 'cleanup'
 #   of getStackTrace() for Exception via an option.

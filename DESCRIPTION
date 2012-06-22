@@ -1,12 +1,12 @@
 Package: R.oo
-Version: 1.9.3
-Date: 2012-03-18
+Version: 1.9.8
+Date: 2012-06-22
 Title: R object-oriented programming with or without references
 Author: Henrik Bengtsson <henrikb@braju.com>
 Maintainer: Henrik Bengtsson <henrikb@braju.com>
-Depends: R (>= 2.4.0), R.methodsS3 (>= 1.2.2)
+Depends: R (>= 2.4.0), R.methodsS3 (>= 1.4.1)
+Imports: methods, utils, R.methodsS3 (>= 1.4.1)
 Suggests: tools
-Imports: methods, utils, R.methodsS3 (>= 1.2.2)
 Description: Methods and classes for object-oriented programming in R
         with or without references.  Large effort has been made on
         making definition of methods as simple as possible with a
@@ -18,6 +18,6 @@ License: LGPL (>= 2.1)
 URL: http://www.braju.com/R/
 DevelURL: http://www.braju.com/R/
 LazyLoad: TRUE
-Packaged: 2012-03-18 18:20:59 UTC; hb
+Packaged: 2012-06-27 22:13:53 UTC; hb
 Repository: CRAN
-Date/Publication: 2012-03-18 18:48:27
+Date/Publication: 2012-06-28 05:42:39
