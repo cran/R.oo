@@ -1,6 +1,42 @@
 Package: R.oo
 =============
 
+Version: 1.9.8 [2012-06-22]
+o GENERALIZATION: Added newInstance() for BasicObject.
+o ROBUSTNESS: Now constructor BasicObject() is guaranteed to
+  return an object with non-duplicated class attribute elements.
+
+
+Version: 1.9.7 [2012-06-20]
+o CLEANUP: Dropped non-used adjusted getClass() generic function,
+  which means that now there is one less function masking the
+  'methods' package.
+o BUG FIX/GENERALIZATION: throw() for Exception would give an error on
+  R < 2.14.0, where no generic getCall() exists.  Now it works for
+  all versions of R.
+
+
+Version: 1.9.6 [2012-06-11]
+o BUG FIX/GENERALIZATION: Rdoc$getKeywords() now uses system
+  environment variable R_DOC_DIR for locating the internal
+  KEYWORDS.db.  Thanks to Charles Hogg at NIST for suggesting this.
+
+
+Version: 1.9.5 [2012-04-20]
+o Added argument 'export' to setConstructorS3().
+o Now Rdoc$getUsage() searches also the package namespace for 
+  the function/method definition.  This is done, before looking
+  in the global search path.
+o CLEANUP: setConstructorS3() no longer sets attribute "formals".  It
+  has been deprecated since April 2003.
+
+
+Version: 1.9.4 [2012-04-05]
+o Now package imports and exports getCall() from the 'stats' package
+  so that generic function getCall() is available for Exception:s 
+  also when 'stats' is not loaded, e.g. during executing .Rprofile.
+
+
 Version: 1.9.3 [2012-03-18]
 o Now it is possible to set the default value of argument 'cleanup'
   of getStackTrace() for Exception via an option.
