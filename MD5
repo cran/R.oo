@@ -1,4 +1,4 @@
-81bb5a69ce0a8f7f3d2a199efe8bbe54 *DESCRIPTION
+a19e383e8dbb1d1c93bb4bbc1db54355 *DESCRIPTION
 6b721bd88a455318374248af74ce8987 *NAMESPACE
 ab66e355f96b825c2ea4fe2da7e35723 *R/000.R
 389c03b0857e131e41d75b23e9bdb76b *R/006.fixVarArgs.R
@@ -11,14 +11,14 @@ ac963c8a29ccd3a36715d1abe995507f *R/999.NonDocumentedObjects.R
 89fecf7b24ad93133d3a027dec233d5b *R/ASCII.R
 82b7426666845afcebf92c1bbc7bc5f7 *R/BasicObject.R
 ac2a64a8acc583933e730ef0a1e65857 *R/Class.misc.R
-77b839a370386b554ff2e3079cb5340f *R/Exception.R
+090ba77f536e1f2cee8860ac9fb340c9 *R/Exception.R
 15b1452458553a5d8565860dc0f974ab *R/Interface.R
 01d341b0cee422a4a5582c6b95fb2328 *R/InternalErrorException.R
-14ec28be2d87061da0862c416b6dc032 *R/Package.R
+4d5bdc701395b4bf3a57fb1d76f40259 *R/Package.R
 327624ab8b790427f23a0b7c7fe84876 *R/RccViolationException.R
 ace96baf57ec34a414adce8acd6f7070 *R/Rdoc.R
 09ac99e0e381e6f3b0b5de75840b6110 *R/RdocException.R
-063fe1b8e74c7a37fe9c67545250ffa7 *R/abort.R
+c43f3cbcdfc7340771678b77b4d3deac *R/abort.R
 9662f61b51532c24ce3165014cb5bc3c *R/classRepresentation.misc.R
 1729779140a204aef55fa12d01b6ca3f *R/dimension.default.R
 c9506716d1386453fc2eac4eb82cbe14 *R/equals.default.R
@@ -42,7 +42,7 @@ cae2eea76c3706cd64858787de89c56f *R/getConstructorS3.R
 a2a192a8edcabce6f3075d93d5fb3181 *incl/Person.Rex
 9bcc844ab16837952aa0d548e8a6d2ec *incl/Rdoc.Rex
 6946d14223655a655d56da68bcdb7441 *incl/StaticFields.Rex
-a676b9368111399929885443d3dddb2a *incl/abort.Rex
+9e74ab7e309d2d83a9974f00c399b1a5 *incl/abort.Rex
 3e3975383062d902bcd456ab3cab75d6 *incl/attachLocally.Object.Rex
 dd070436dfea646d66d505b14a0fb7d2 *incl/extend.default.Rex
 ab84dd3daf484e2d76f4558a6f06ade4 *incl/gc.Object.Rex
@@ -50,7 +50,7 @@ ab84dd3daf484e2d76f4558a6f06ade4 *incl/gc.Object.Rex
 c816ce2b2a985fb3c3c311a0274d049a *incl/isBeingCreated.Class.Rex
 33174aba2b08e2f9cd20bd1aecb0d802 *inst/CITATION
 0c500ca5027f38378a8b3f3f51f6db0a *inst/HOWTOCITE
-0ca66373de65ebbb16a32d38cce05369 *inst/NEWS
+7af46d1d184e4760bdbf039cca7ed49c *inst/NEWS
 6958ed0722d07b6ca46fafca8aabd608 *inst/doc/Bengtsson.pdf
 0f69446bf87d203d9aa7ae96b6711b97 *inst/misc/ASCII.R
 be5e10acdaefd2ff6cc016f2a0ffb689 *inst/misc/Exception.R
@@ -73,7 +73,7 @@ c533d6ea74093cabb25190550170841a *man/Non-documented_objects.Rd
 26d6be6c3284d50f04bcb0089befd49c *man/RccViolationException.Rd
 6f831ed070035209753c637fd00e1c4c *man/Rdoc.Rd
 b9cf507d5404a61c8b62030bd54ab68b *man/RdocException.Rd
-8b19d1aa4997cc9826805a5346bcc51d *man/abort.Rd
+40430395bd4dcc23a08d5f464b7ee953 *man/abort.Rd
 8a528cb0132574f62398f5cf65219ef5 *man/argsToString.Class.Rd
 9056f4392ea122c967ad40e23629c2f1 *man/argsToString.Rdoc.Rd
 9950b03bc205e1f461a234d5dbe96972 *man/as.character.BasicObject.Rd
