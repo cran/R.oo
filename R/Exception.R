@@ -57,8 +57,11 @@ setConstructorS3("Exception", function(..., sep="", collapse=", ") {
 
   fcnName <- function(call) {
     code <- deparse(call[1]);
-    if (regexpr("^function\\(", code) != -1) return("");
-    gsub("\\(.*", "", code);
+#    code <- grep("^function\\(", code, value=TRUE);
+    if (length(code) == 0) return("");
+    code <- code[1];
+    code <- gsub("\\(.*", "", code);
+    code;
   } # fcnName()
 
   fcnBody <- function(fcn) {
@@ -335,7 +338,7 @@ setMethodS3("throw", "Exception", function(this, ...) {
   # caught by the above signalling.  This is based on the assumption 
   # that it is not possible to continue after the above signal,
   # iff it is caught. /HB 2012-03-05
-  cond <- simpleCondition("");
+  cond <- simpleCondition(getMessage(this));
   class(cond) <- "condition";
   stop(cond);
 }, overwrite=TRUE, conflict="quiet")
@@ -636,6 +639,16 @@ setMethodS3("printStackTrace", "Exception", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2012-10-14
+# o Now throw() for Exception outputs the error message both above and
+#   below the stack trace, which is particularly useful when the stack
+#   trace is long.
+# 2012-09-14
+# o ROBUSTNESS/BUG FIX: The Exception constructor could generate warning
+#   'In if (regexpr("^function\\(", code) != -1) return("") : the 
+#   condition has length > 1 and only the first element will be used'
+#   occuring in its local fcnName() function.  Now code no longer assumes
+#   that 'code' is of length 1.
 # 2012-09-10
 # o Updated throw() for Exception to "abort" after signalling the condition
 #   by calling stop() with an empty condition.  This is not perfect,

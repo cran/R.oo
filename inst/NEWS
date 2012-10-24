@@ -1,6 +1,33 @@
 Package: R.oo
 =============
 
+Version: 1.10.1 [2012-10-16]
+o ROBUSTNESS/BUG FIX: No longer passing '...' to NextMethod(), cf.
+  R-devel thread 'Do *not* pass '...' to NextMethod() - it'll do it 
+  for you; missing documentation, a bug or just me?' on Oct 16, 2012.
+
+
+Version: 1.10.0 [2012-10-14]
+o GENERALIZATION: Now <Class>$<staticFcn>(...) calls the corresponding
+  generic function <staticFcn>(static, ...), where 'static' is the
+  static object of Class <Class>.  This allows for using NextMethod()
+  in static functions.  Calls to <Object>$<staticFcn>(...) and
+  <BasicObject>$<staticFcn>(...) were adjusted analogously.
+o Now throw() for Exception outputs the error message both above and
+  below the stack trace, which is particularly useful when the stack
+  trace is long.
+o BUG FIX: The stacktrace details collected by Exception dropped
+  the names of the functions.
+
+
+Version: 1.9.10 [2012-09-14]
+o ROBUSTNESS/BUG FIX: The Exception constructor could generate warning
+  'In if (regexpr("^function\\(", code) != -1) return("") : the 
+  condition has length > 1 and only the first element will be used'
+  occuring in its local fcnName() function.  Now code no longer assumes
+  that 'code' is of length 1.
+
+
 Version: 1.9.9 [2012-09-11]
 o Now throw() for Exception aborts (after signalling and outputting
   the message) by calling stop().  Ideally it should utilize abort(),

@@ -1,6 +1,6 @@
 Package: R.oo
-Version: 1.9.9
-Date: 2012-09-11
+Version: 1.10.1
+Date: 2012-10-16
 Title: R object-oriented programming with or without references
 Author: Henrik Bengtsson <henrikb@braju.com>
 Maintainer: Henrik Bengtsson <henrikb@braju.com>
@@ -16,6 +16,6 @@ Description: Methods and classes for object-oriented programming in R
         defines standard S3 classes without any tricks.
 License: LGPL (>= 2.1)
 LazyLoad: TRUE
-Packaged: 2012-09-12 18:23:57 UTC; hb
+Packaged: 2012-10-17 08:33:18 UTC; hb
 Repository: CRAN
-Date/Publication: 2012-09-12 18:57:01
+Date/Publication: 2012-10-24 06:43:35
