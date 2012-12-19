@@ -6,24 +6,24 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{showDescriptionFile.Package}
-\alias{showDescriptionFile.Package}
-\alias{Package.showDescriptionFile}
-\alias{showDescriptionFile.Package}
-\alias{showDescriptionFile,Package-method}
+\name{startupMessage.Package}
+\alias{startupMessage.Package}
+\alias{Package.startupMessage}
+\alias{startupMessage.Package}
+\alias{startupMessage,Package-method}
 
 
-\title{Show the DESCRIPTION file of this package}
+\title{Generates a 'package successfully loaded' package startup message}
 
 \description{
-  Show the DESCRIPTION file of this package.
-  If the \code{DESCRIPTION} file does not exist, an exception is thrown.
+  Generates a 'package successfully loaded' package startup message.
 }
 
-\usage{\method{showDescriptionFile}{Package}(this, ...)}
+\usage{\method{startupMessage}{Package}(this, ...)}
 
 \arguments{
-  \item{...}{Not used.}
+  \item{...}{Additional arguments passed to
+             \code{\link[base]{packageStartupMessage}}().}
 }
 
 \value{
@@ -33,6 +33,8 @@
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
 
 \seealso{
+  \code{\link[base]{packageStartupMessage}}().
+
   For more information see \code{\link{Package}}.
 }
 \keyword{internal}
