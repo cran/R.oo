@@ -438,20 +438,26 @@ setMethodS3("hasField", "BasicObject", function(this, field, ...) {
 # \keyword{methods}
 #*/###########################################################################
 setMethodS3("attach", "BasicObject", function(this, private=FALSE, pos=2, ...) {
+  # To please R CMD check
+  attachX <- base::attach;
+
   attachName <- as.character.BasicObject(this);
   if (is.element(attachName, search())) {
     warning(paste("Object is already attached:", attachName));
     return(invisible(FALSE));
   }
 
-  if (is.list(this))
-    attach(unclass(this), name=attachName, pos=pos)
-  else
-    attach(list(), name=attachName, pos=pos);
+  if (is.list(this)) {
+    attachX(unclass(this), name=attachName, pos=pos);
+  } else {
+    attachX(list(), name=attachName, pos=pos);
+  }
   members <- names(attributes(this));
   
-  for (member in members)
+  for (member in members) {
     assign(member, attr(this, member), pos=pos);
+  }
+
   return(invisible(TRUE));
 }) # attach() 
 
@@ -498,7 +504,7 @@ setMethodS3("detach", "BasicObject", function(this, ...) {
   }
 
   pos <- which(search() == attachName);
-  detach(pos=pos);
+  if (length(pos) == 1L) detach(pos=pos);
 
   return(invisible(TRUE));
 }) # detach()
@@ -511,6 +517,7 @@ setMethodS3("detach", "BasicObject", function(this, ...) {
 # @title "Extends another class"
 #
 # \description{
+#   via a mechanism known as "parasitic inheritance".
 #   Simply speaking this method "extends another class". What is actually
 #   happening is that it creates an instance of class name \code{...className},
 #   by taking another BasicObject instance and add \code{...className} to 
@@ -543,24 +550,25 @@ setMethodS3("detach", "BasicObject", function(this, ...) {
 setMethodS3("extend", "BasicObject", function(this, ...className, ...) {
   fields <- list(...);
   names <- names(fields);
-  for (k in seq(fields)) {
-    name <- names[k];
+  for (ii in seq(fields)) {
+    name <- names[ii];
     if (is.null(name) || nchar(name) == 0) {
       callNames <- names(sys.call());
       callNames <- callNames[nchar(callNames) > 0];
       matchNames <- paste("^", callNames, sep="");
-      for (k in seq(matchNames)) {
-        if (regexpr(matchNames[k], "...className") != -1) {
+      for (jj in seq(matchNames)) {
+        if (regexpr(matchNames[jj], "...className") != -1) {
           className <- sys.call()[[3]];
           throw("Could not set field of class (probably called ", className, 
                 ") because the field name is a prefix to the argument name ",
-                "\"...className\": ", callNames[k]);
+                "\"...className\": ", callNames[jj]);
         }
-      }
-      throw("Missing name of field #", k, " in class definition: ", ...className);
+      } # for (jj ...)
+
+      throw("Missing name of field #", ii, " in class definition: ", ...className);
     }
-    attr(this, name) <- fields[[k]];
-  }
+    attr(this, name) <- fields[[ii]];
+  } # for (ii ...)
 
   class(this) <- c(...className, class(this));
   this;
@@ -841,6 +849,8 @@ setMethodS3("[[<-", "BasicObject", function(this, name, value) {
 
 ############################################################################
 # HISTORY:
+# 2012-12-18
+# o R CMD check for R devel no longer gives a NOTE about attach().
 # 2012-10-14
 # o Now <BasicObject>$<staticFcn>(...) calls <staticFcn>(<BasicObject>, ...). 
 # 2012-06-22

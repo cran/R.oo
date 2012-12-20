@@ -1,6 +1,47 @@
 Package: R.oo
 =============
 
+Version: 1.11.4 [2012-12-19]
+o Added startupMessage() for Package.
+
+
+Version: 1.11.3 [2012-12-18]
+o R CMD check for R devel no longer gives a NOTE on attach().
+
+
+Version: 1.11.2 [2012-11-29]
+o Made getKnownSubclasses() for Class a bit faster.
+
+
+Version: 1.11.1 [2012-11-28]
+o LIMITATION: Registered finalizer for pure Object:s (i.e. excluding
+  those which are of a subclass of Object) will no longer be called
+  if the R.oo package has been detached.  This should be a very 
+  unlikely scenario.
+o BUG FIX: extend() for Object dropped existing field modifiers.
+
+
+Version: 1.11.0 [2012-11-23]
+o GENERALIZATION: Preparing for better support for Object/Class
+  in import-only namespaces, i.e. without packages being loaded.
+o Now getStaticInstance() for Class sets the environment for the 
+  returned Object to that of the Class.
+
+
+Version: 1.10.3 [2012-11-18]
+o ROBUSTNESS: Now nearly all S3 methods are declared properly in 
+  the namespace.  
+o Updated the URL returned by RccViolationException$getRccUrl().
+
+
+Version: 1.10.2 [2012-11-07]
+o BUG FIX: obj$<method>(...) would throw an error iff the Object 'obj'
+  was saved/instanciated by R.oo (< 1.10.0).  Code is now backward
+  compatible with this case.  Thanks Roger Day at University of
+  Pittsburgh Cancer Institute and Dan Tenenbaum (BioC core) for
+  reporting on this.
+
+
 Version: 1.10.1 [2012-10-16]
 o ROBUSTNESS/BUG FIX: No longer passing '...' to NextMethod(), cf.
   R-devel thread 'Do *not* pass '...' to NextMethod() - it'll do it 

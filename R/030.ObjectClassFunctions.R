@@ -2,7 +2,10 @@
 # This source code file contains constructor and function definitions that
 # are used for loading this package only.
 ############################################################################
-attach(list(
+# To please R CMD check
+attachX <- base::attach;
+
+attachX(list(
   Object = function(core=NA) {
     # Create a new environment and wrap it up as a private field of a list.
     this <- core;
@@ -29,14 +32,14 @@ attach(list(
         finalize(this);
       } else {
         suppressMessages({
-          isRooLoaded <- require("R.oo", quietly=TRUE);
+##          isRooLoaded <- require("R.oo", quietly=TRUE);
         })
 
         # For unknown reasons R.oo might not have been loaded.
         if (isRooLoaded) {
           finalize(this);
         } else {
-          warning("Failed to temporarily reload 'R.oo' and finalize().");
+##          warning("Failed to temporarily reload 'R.oo' and finalize().");
         }
 
         # NOTE! Before detach R.oo again, we have to make sure the Object:s
@@ -46,18 +49,28 @@ attach(list(
         # R.oo, call garbage collect to clean out all R.oo's objects, and
         # then remove the dummy finalize() function.
         # (1) Put a dummy finalize() function on the search path.
-        attach(list(finalize = function(...) { }), name="dummy:R.oo",
+        # To please R CMD check
+        attachX <- base::attach;
+        attachX(list(finalize = function(...) { }), name="dummy:R.oo",
                                                       warn.conflicts=FALSE);
+
         # (2) Detach R.oo
-        detach("package:R.oo");
+        if (is.element("package:R.oo", search())) {
+          detach("package:R.oo");
+        }
+
         # (3) Force all R.oo's Object:s to be finalize():ed.
         gc();
+
         # (4) Remove the dummy finalize():er again.
-        detach("dummy:R.oo");
+        if (is.element("dummy:R.oo", search())) {
+          detach("dummy:R.oo");
+        }
       }
     } # finalizer()
-    reg.finalizer(attr(this, ".env"), finalizer, 
-                  onexit=getOption("R.oo::Object/finalizeOnExit", FALSE));
+
+    onexit <- getOption("R.oo::Object/finalizeOnExit", FALSE);
+    reg.finalizer(attr(this, ".env"), finalizer, onexit=onexit);
 
     this;
   },
@@ -88,10 +101,18 @@ attach(list(
   }
 ), name="R.oo");
 
+# Cleanup
+rm(attachX);
 
 
 ############################################################################
 # HISTORY:
+# 2012-12-18
+# o R CMD check for R devel no longer gives a NOTE about attach().
+# 2012-11-28
+# o LIMITATION: Registered finalizer for pure Object:s (i.e. excluding
+#   those which are of a subclass of Object) will no longer be called
+#   if the R.oo package has been detached.
 # 2011-04-02
 # o Added option "R.oo::Object/finalizeOnExit".
 # o Added option "R.oo::Object/instantiationTime", which controls

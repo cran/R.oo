@@ -35,8 +35,8 @@
 }
 
 \examples{
-  l <- getMethods(Exception)
-  print(l)
+  names <- getMethods(Exception)
+  print(names)
 }
 
 \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}

@@ -654,6 +654,9 @@ setMethodS3("attachLocally", "Object", function(this, private=FALSE, fields=NULL
 # \keyword{methods}
 #*/###########################################################################
 setMethodS3("attach", "Object", function(this, private=FALSE, pos=2, ...) {
+  # To please R CMD check
+  attachX <- base::attach;
+
   attachName <- as.character.Object(this);
   if (is.element(attachName, search())) {
     warning(paste("Object is already attached:", attachName));
@@ -661,10 +664,13 @@ setMethodS3("attach", "Object", function(this, private=FALSE, pos=2, ...) {
   }
 
   envir <- attr(this, ".env");
-  attach(list(), name=attachName, pos=pos);
+  attachX(list(), name=attachName, pos=pos);
+
   members <- ls(envir=envir, all.names=private);
-  for (member in members)
+  for (member in members) {
     assign(member, get(member, envir=envir), pos=pos);
+  }
+
   return(invisible(TRUE));
 }) # attach()
 
@@ -713,7 +719,7 @@ setMethodS3("detach", "Object", function(this, ...) {
   }
 
   pos <- which(search() == attachName);
-  detach(pos=pos);
+  if (length(pos) == 1L) detach(pos=pos);
 
   return(invisible(TRUE));
 }) # detach()
@@ -1006,8 +1012,10 @@ setMethodS3("objectSize", "Object", function(this, ...) {
 # \keyword{methods}
 #*/###########################################################################
 setMethodS3("getStaticInstance", "Object", function(this, ...) {
-  class <- get(class(this)[1]);
-  getStaticInstance(class);
+  className <- class(this)[1];
+  # WAS: clazz <- get(className);
+  clazz <- .getClassByName(className);
+  getStaticInstance(clazz);
 }, protected=TRUE) # getStaticInstance()
 
 
@@ -1242,6 +1250,7 @@ setMethodS3("staticCode", "Object", function(static, ...) {
 # @title "Extends another class"
 #
 # \description{
+#   via a mechanism known as "parasitic inheritance".
 #   Simply speaking this method "extends another class". What is actually
 #   happening is that it creates an instance of class name \code{...className},
 #   by taking another Object instance and add \code{...className} to the class
@@ -1291,7 +1300,9 @@ setMethodS3("staticCode", "Object", function(static, ...) {
 # \keyword{programming}
 # \keyword{methods}
 #*/###########################################################################
-rm("extend", pos="R.oo"); # To avoid warning about renaming existing extend()
+if (is.element("R.oo", search())) {
+  rm("extend", pos="R.oo"); # To avoid warning about renaming existing extend()
+}
 setMethodS3("extend", "Object", function(this, ...className, ..., ...fields=NULL) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
@@ -1319,34 +1330,37 @@ setMethodS3("extend", "Object", function(this, ...className, ..., ...fields=NULL
 
     args;
   } # parseModifiers()
-  
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Main
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # The environment of 'this' Object
+  this.env <- attr(this, ".env");
+
   fields <- c(list(...), ...fields);
 
   # Identify and renamed fields that have modifiers in their names
   fields <- parseModifiers(fields);
 
   names <- names(fields);
-  for (k in seq(fields)) {
-    name <- names[k];
+  for (ii in seq(fields)) {
+    name <- names[ii];
     if (is.null(name) || nchar(name) == 0) {
       callNames <- names(sys.call());
       callNames <- callNames[nchar(callNames) > 0];
       matchNames <- paste("^", callNames, sep="");
-      for (k in seq(matchNames)) {
-        if (regexpr(matchNames[k], "...className") != -1) {
+      for (jj in seq(matchNames)) {
+        if (regexpr(matchNames[jj], "...className") != -1) {
           className <- sys.call()[[3]];
           throw("Could not set field of class (probably called ", className, 
                 ") because the field name is a prefix to the argument name ",
-                "\"...className\": ", callNames[k]);
+                "\"...className\": ", callNames[jj]);
         }
-      }
-      throw("Missing name of field #", k, " in class definition: ", ...className);
+      } # for (jj ...)
+      throw("Missing name of field #", ii, " in class definition: ", ...className);
     }
-    assign(name, fields[[k]], envir=attr(this, ".env"));
-  }
+    assign(name, fields[[ii]], envir=this.env);
+  } # for (ii ...)
 
   # Set class
   class(this) <- unique(c(...className, class(this)));
@@ -1382,18 +1396,27 @@ setMethodS3("extend", "Object", function(this, ...className, ..., ...fields=NULL
       # R.oo, call garbage collect to clean out all R.oo's objects, and
       # then remove the dummy finalize() function.
       # (1) Put a dummy finalize() function on the search path.
-      attach(list(finalize = function(...) { }), name="dummy:R.oo",
+      # To please R CMD check
+      attachX <- base::attach;
+      attachX(list(finalize = function(...) { }), name="dummy:R.oo",
                                                     warn.conflicts=FALSE);
       # (2) Detach R.oo
-      detach("package:R.oo");
+      if (is.element("package:R.oo", search())) {
+        detach("package:R.oo");
+      }
+
       # (3) Force all R.oo's Object:s to be finalize():ed.
       gc();
+
       # (4) Remove the dummy finalize():er again.
-      detach("dummy:R.oo");
+      if (is.element("dummy:R.oo", search())) {
+        detach("dummy:R.oo");
+      }
     }
   } # finalizer()
-  reg.finalizer(attr(this, ".env"), finalizer, 
-                onexit=getOption("R.oo::Object/finalizeOnExit", FALSE));
+
+  onexit <- getOption("R.oo::Object/finalizeOnExit", FALSE);
+  reg.finalizer(this.env, finalizer, onexit=onexit);
 
 
   # Finally, create the static instance?
@@ -1403,8 +1426,24 @@ setMethodS3("extend", "Object", function(this, ...className, ..., ...fields=NULL
       staticCode(static);
   }
 
-  # Record which fields are cached
-  assign("...modifiers", attr(fields, "modifiers"), envir=attr(this, ".env"));
+  # Record field modifiers
+  # Get the field modifiers (always a list)
+  modifiers <- attr(fields, "modifiers");
+
+  # Append already existing modifiers?
+  if (exists("...modifiers", envir=this.env)) {
+    modifiersT <- get("...modifiers", envir=this.env);
+    for (key in names(modifiersT)) {
+      modifiers[[key]] <- c(modifiers[[key]], modifiersT[[key]]);
+    }
+  }
+
+  # Drop duplicated modifier entries and sort
+  modifiers <- lapply(modifiers, FUN=function(mods) {
+    sort(unique(mods));
+  });
+
+  assign("...modifiers", modifiers, envir=this.env);
 
   this;
 }) # extend()
@@ -1494,17 +1533,16 @@ setMethodS3("$", "Object", function(this, name) {
         return( attr(this, name) );
       } else if (lookup == 4) {
          fcn <- attr(lookup, "fcn");
-         if (is.null(fcn)) {
-           # Backward compatibility for Object:s saved with R.oo < 1.10.0.
-           method <- attr(lookup, "method");
-           code <- sprintf("function(...) \"%s\"(this, ...)", method);
-           fcn <- eval(base::parse(text=code));
+         if (!is.null(fcn)) {
+           return(fcn);
          }
-         return(fcn);
+         # Backward compatibility for Object:s saved with R.oo < 1.10.0,
+         # which used deprecated attr(lookup, "method").  The below code
+         # will NULL the 'lookup' and force an updated.
       } else if (lookup == 5) {
          return( get(name, envir=attr(lookup, "static.envir")) );
       }
-    }
+    } # if (identical(attr(lookup, ...)))
     lookup <- NULL;
   } else {
     lookup <- NULL;
@@ -1513,7 +1551,7 @@ setMethodS3("$", "Object", function(this, name) {
   for (memberAccessor in memberAccessorOrder) {
     if (memberAccessor == 1) {
       if (is.null(attr(this, "disableGetMethods"))) {
-        firstChar <- substr(name, 1,1);
+        firstChar <- substr(name, start=1L, stop=1L);
         # Do not try to access private fields using a get<Name>() method,
         # because such a functionality means that the user *expects* that
         # there actually is a field called '.<name>', which he or she
@@ -1521,10 +1559,10 @@ setMethodS3("$", "Object", function(this, name) {
         # Is it a private field?
         if (!identical(firstChar, ".")) {
           # Field names can not contain spaces...
-          if (regexpr(" ", name) == -1) {
+          if (regexpr(" ", name) == -1L) {
             # 1. Is there a get<Name>() method?
             capitalizedName <- name;
-            substr(capitalizedName,1,1) <- toupper(firstChar);
+            substr(capitalizedName, start=1L, stop=1L) <- toupper(firstChar);
             getMethodNames <- paste("get", capitalizedName, ".", class(this), sep="");
             for (getMethodName in getMethodNames) {
               if (exists(getMethodName, mode="function")) {
@@ -1576,10 +1614,7 @@ setMethodS3("$", "Object", function(this, name) {
       methodNames <- paste(name, class(this), sep=".");
       for (methodName in methodNames) {
         if (exists(methodName, mode="function")) {
-#          # Alt 1. Rather "obfuscated" code
-#          method <- get(methodName, mode="function");
-#          fcn <- function(...) method(this, ...);
-          # Alt 3. Using explicit UseMethod() code
+          # Using explicit UseMethod() code
           code <- sprintf("function(...) \"%s\"(this, ...)", name);
           fcn <- eval(base::parse(text=code));
           lookup <- memberAccessor;
@@ -1592,7 +1627,10 @@ setMethodS3("$", "Object", function(this, name) {
     } else if (memberAccessor == 5) {
     
       # 5. Finally, if nothing is found, it might be that it is a static field
-      static <- getStaticInstance(get(class(this)[1]));
+      className <- class(this)[1];
+      # WAS: clazz <- get(className);
+      clazz <- .getClassByName(className);
+      static <- getStaticInstance(clazz);
       static.envir <- attr(static, ".env");
       # For static method calls, e.g. Object$load, 'this' has no
       # environment assigned and therefore, for now, no static
@@ -1741,7 +1779,10 @@ setMethodS3("$<-", "Object", function(this, name, value) {
       # Search for a static <name> field
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
       # 4. If not, it might be that it is a static field
-      static <- getStaticInstance(get(class(this)[1]));
+      className <- class(this)[1];
+      # WAS: clazz <- get(className);
+      clazz <- .getClassByName(className);
+      static <- getStaticInstance(clazz);
       static.envir <- attr(static, ".env");
       # For static method calls, e.g. Object$load, 'this' has no
       # environment assigned and therefore, for now, no static
@@ -2208,7 +2249,9 @@ setMethodS3("registerFinalizer", "Object", function(this, ...) {
       # R.oo, call garbage collect to clean out all R.oo's objects, and
       # then remove the dummy finalize() function.
       # (1) Put a dummy finalize() function on the search path.
-      attach(list(finalize = function(...) { }), name="dummy:R.oo",
+      # To please R CMD check
+      attachX <- base::attach;
+      attachX(list(finalize = function(...) { }), name="dummy:R.oo",
                                                     warn.conflicts=FALSE);
       # (2) Detach R.oo
       detach("package:R.oo");
@@ -2233,6 +2276,18 @@ setMethodS3("registerFinalizer", "Object", function(this, ...) {
 
 ############################################################################
 # HISTORY:
+# 2012-12-18
+# o R CMD check for R devel no longer gives a NOTE about attach().
+# 2012-11-28
+# o BUG FIX: extend() for Object dropped already existing field modifiers.
+# 2012-11-23
+# o GENERALIZATION: Now getStaticInstance(), "$"(), and "$<-"() for Object
+#   finds static instances also in loaded namespaces (without the
+#   corresponding packages having to be loaded).
+# 2012-11-07
+# o BUG FIX: obj$<method>(...) would throw an error iff the Object 'obj'
+#   was saved/instanciated by R.oo (< 1.10.0).  Code is now backward
+#   compatible with this case.
 # 2012-10-14
 # o Now <Object>$<staticFcn>(...) calls <staticFcn>(<Object>, ...).
 # 2012-06-22
