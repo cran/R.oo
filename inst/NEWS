@@ -1,6 +1,33 @@
 Package: R.oo
 =============
 
+Version: 1.11.7 [2013-01-08]
+o ROBUSTNESS/BUG FIX: Made the Object finalizers reentrant.  This was
+  previously not the case on R prior to R v2.15.2 Patched r61487 iff
+  the garbage collection is triggered from within base::parse() and
+  the R.oo package is not already loaded when the finalizer is called.
+  In such cases, R could crash.  Added a package system test for this.
+  Thanks to Duncan Murdoch (R core) for reporting on this and R core
+  for making base::library() reentrant in R (>= 2.15.2 Patched r61487).
+
+
+Version: 1.11.6 [2013-01-08]
+o Added argument 'format' to getInternalAddress() for Object.
+o BUG FIX: The hexadecimal string returned by as.character() for 
+  Object would contain the decimal value and not the hexadecimal one.
+
+
+Version: 1.11.5 [2012-12-28]
+o GENERALIZATION: Further preparation for supporting R.oo and its 
+  derived packages to be imported without attaching ("loading") them.
+o Replaced all data.class(obj) with class(obj)[1L].
+o ROBUSTNESS/BUG FIX: getMethods() for Class would give an error if
+  no methods were found for the queried Class.
+o ROBUSTNESS/BUG FIX: In the rare case where getStaticInstance() for
+  Class failed to setup a static instance, the temporary state set
+  internally would not be unset.
+
+
 Version: 1.11.4 [2012-12-19]
 o Added startupMessage() for Package.
 
