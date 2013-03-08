@@ -9,9 +9,7 @@
 \name{getName.Class}
 \alias{getName.Class}
 \alias{Class.getName}
-\alias{getName.Class}
 \alias{getName,Class-method}
-
 
 \title{Gets the name of the class}
 
@@ -19,7 +17,9 @@
  Gets the name of the class.
 }
 
-\usage{\method{getName}{Class}(this, ...)}
+\usage{
+\method{getName}{Class}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -34,7 +34,7 @@
   print(getName(Class))    # "Class"
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Class}}.

@@ -9,9 +9,7 @@
 \name{as.character.Class}
 \alias{as.character.Class}
 \alias{Class.as.character}
-\alias{as.character.Class}
 \alias{as.character,Class-method}
-
 
 \title{Returns a short string describing the class}
 
@@ -19,7 +17,9 @@
  Returns a short string describing the class.
 }
 
-\usage{\method{as.character}{Class}(x, ...)}
+\usage{
+\method{as.character}{Class}(x, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -35,7 +35,7 @@
   # gives:  "Class Object: no fields, 8 methods (no inherited)"
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Class}}.

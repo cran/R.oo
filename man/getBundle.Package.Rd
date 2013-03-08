@@ -9,9 +9,7 @@
 \name{getBundle.Package}
 \alias{getBundle.Package}
 \alias{Package.getBundle}
-\alias{getBundle.Package}
 \alias{getBundle,Package-method}
-
 
 \title{Gets the Bundle that this package might belong to}
 
@@ -19,7 +17,9 @@
   Gets the Bundle that this package might belong to as specified by the \code{DESCRIPTION} file.
 }
 
-\usage{\method{getBundle}{Package}(this, ...)}
+\usage{
+\method{getBundle}{Package}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -42,7 +42,7 @@
   print(getBundle(pkg))
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Package}}.

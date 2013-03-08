@@ -9,9 +9,7 @@
 \name{getStackTrace.Exception}
 \alias{getStackTrace.Exception}
 \alias{Exception.getStackTrace}
-\alias{getStackTrace.Exception}
 \alias{getStackTrace,Exception-method}
-
 
 \title{Gets the stack trace saved when the exception was created}
 
@@ -19,7 +17,9 @@
  .
 }
 
-\usage{\method{getStackTrace}{Exception}(this, cleanup=getOption("R.oo::Exception/getStackTrace/args/cleanup", TRUE), ...)}
+\usage{
+\method{getStackTrace}{Exception}(this, cleanup=getOption("R.oo::Exception/getStackTrace/args/cleanup", TRUE), ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -38,7 +38,7 @@
   For more information see \code{\link{Exception}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \keyword{programming}
 \keyword{methods}

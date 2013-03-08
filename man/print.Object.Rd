@@ -9,9 +9,7 @@
 \name{print.Object}
 \alias{print.Object}
 \alias{Object.print}
-\alias{print.Object}
 \alias{print,Object-method}
-
 
 \title{Prints an Object}
 
@@ -21,11 +19,13 @@
  not called if the argument is not an object of class \code{\link[R.oo]{Object}}.
 }
 
-\usage{\method{print}{Object}(x, ...)}
+\usage{
+\method{print}{Object}(x, ...)
+}
 
 \examples{\dontrun{For a complete example see help(Object).}}
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[base]{print.default}}()

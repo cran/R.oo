@@ -9,9 +9,7 @@
 \name{isPublic.Class}
 \alias{isPublic.Class}
 \alias{Class.isPublic}
-\alias{isPublic.Class}
 \alias{isPublic,Class-method}
-
 
 \title{Checks if a class is defined public or not}
 
@@ -19,7 +17,9 @@
  Checks if a class is defined public or not. A class is public if it is neither private nor protected.
 }
 
-\usage{\method{isPublic}{Class}(this, ...)}
+\usage{
+\method{isPublic}{Class}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -34,7 +34,7 @@
     throw("The class RccViolationException should be public.")
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[base]{class}}().

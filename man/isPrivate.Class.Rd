@@ -9,9 +9,7 @@
 \name{isPrivate.Class}
 \alias{isPrivate.Class}
 \alias{Class.isPrivate}
-\alias{isPrivate.Class}
 \alias{isPrivate,Class-method}
-
 
 \title{Checks if a class is defined private or not}
 
@@ -19,7 +17,9 @@
  Checks if a class is defined private or not.
 }
 
-\usage{\method{isPrivate}{Class}(this, ...)}
+\usage{
+\method{isPrivate}{Class}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -34,7 +34,7 @@
     throw("The class RccViolationException should NOT be private.")
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[base]{class}}().

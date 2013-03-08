@@ -9,9 +9,7 @@
 \name{as.character.BasicObject}
 \alias{as.character.BasicObject}
 \alias{BasicObject.as.character}
-\alias{as.character.BasicObject}
 \alias{as.character,BasicObject-method}
-
 
 \title{Gets a character string representing the object}
 
@@ -19,13 +17,15 @@
  Gets a character string representing the object.
 }
 
-\usage{\method{as.character}{BasicObject}(x, ...)}
+\usage{
+\method{as.character}{BasicObject}(x, ...)
+}
 
 \value{
  Returns a \code{\link[base]{character}} string representation of the object.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{BasicObject}}.

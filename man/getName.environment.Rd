@@ -9,8 +9,6 @@
 
 \name{getName.environment}
 \alias{getName.environment}
-\alias{getName.environment}
-
 
 \title{Gets the name of an environment}
 
@@ -18,7 +16,9 @@
  Gets the name of an environment, e.g. \code{"R_GlobalEnv"} or \code{"0x01ddd060"}.
 }
 
-\usage{\method{getName}{environment}(env, ...)}
+\usage{
+\method{getName}{environment}(env, ...)
+}
 
 \arguments{
   \item{env}{An \code{\link[base]{environment}}.}
@@ -37,7 +37,7 @@
   getName(new.env())
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[base:environment]{environmentName}()}.

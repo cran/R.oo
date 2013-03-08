@@ -8,8 +8,6 @@
 
 \name{getSuperclasses.classRepresentation}
 \alias{getSuperclasses.classRepresentation}
-\alias{getSuperclasses.classRepresentation}
-
 
 
 \title{Gets the superclasses}
@@ -18,7 +16,9 @@
   Gets the superclasses.
 }
 
-\usage{\method{getSuperclasses}{classRepresentation}(this, ...)}
+\usage{
+\method{getSuperclasses}{classRepresentation}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -28,7 +28,7 @@
  Returns a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 
 \keyword{methods}

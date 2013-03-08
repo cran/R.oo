@@ -1,6 +1,29 @@
 Package: R.oo
 =============
 
+Version: 1.13.0 [2013-03-08]
+o Added support for Rdoc tag @author to have an optional value, e.g.
+  @author "John Doe" as well as @author "JD, FB" where the initials
+  are inferred from the package's DESCRIPTION file.
+o Added compileRdoc() to make it easier to compile Rdoc comments
+  into Rd help files, e.g. Rscript -e "R.oo::compileRdoc()".
+o Now getAuthor() and getMaintainer() for Package use the 'Authors@R'
+  field of DESCRIPTION and if not found then the 'Author'/'Maintainer'
+  field.  In addition, using argument 'as="person"' will parse and
+  return the results as a 'person' list.
+o Added an Authors@R field to the DESCRIPTION.
+
+
+Version: 1.12.0 [2013-03-04]
+o DOCUMENTATION: It is now easier to find help for static method,
+  e.g. help("Object$load") and ?"Object$load".
+o DOCUMENTATION: For "static" methods (e.g. Object$load()), the 
+  Rdoc compiler now generates a \usage{} section without the
+  deprecated Rd markup \synopsis{}, which has been replaced by
+  the static call placed in a comment.  It also uses the static
+  method as the name and alias (e.g. \name{Object$load}).
+
+
 Version: 1.11.7 [2013-01-08]
 o ROBUSTNESS/BUG FIX: Made the Object finalizers reentrant.  This was
   previously not the case on R prior to R v2.15.2 Patched r61487 iff

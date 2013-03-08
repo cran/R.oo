@@ -9,9 +9,7 @@
 \name{getExamplePath.Package}
 \alias{getExamplePath.Package}
 \alias{Package.getExamplePath}
-\alias{getExamplePath.Package}
 \alias{getExamplePath,Package-method}
-
 
 \title{Gets the path to the example (R-ex/) directory of this package}
 
@@ -19,7 +17,9 @@
   Gets the path to the example (R-ex/) directory of this package.
 }
 
-\usage{\method{getExamplePath}{Package}(this, ...)}
+\usage{
+\method{getExamplePath}{Package}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
   Returns a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Package}}.

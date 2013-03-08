@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{argsToString.Class}
+\name{Class$argsToString}
+\alias{Class$argsToString}
 \alias{argsToString.Class}
 \alias{Class.argsToString}
-\alias{argsToString.Class}
 \alias{argsToString,Class-method}
-
 
 \title{Gets the arguments of a function as a character string}
 
@@ -21,8 +20,13 @@
   Used by: classinfo().
 }
 
-\synopsis{argsToString.Class(this, fcn, ...)}
-\usage{Class$argsToString(fcn, ...)}
+\usage{
+## Static method (use this):
+## Class$argsToString(fcn, ...)
+
+## Don't use the below:
+\method{argsToString}{Class}(this, fcn, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -40,7 +44,7 @@
   For more information see \code{\link{Class}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 
 

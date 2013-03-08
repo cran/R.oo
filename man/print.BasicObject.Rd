@@ -9,9 +9,7 @@
 \name{print.BasicObject}
 \alias{print.BasicObject}
 \alias{BasicObject.print}
-\alias{print.BasicObject}
 \alias{print,BasicObject-method}
-
 
 \title{Prints an BasicObject}
 
@@ -21,13 +19,15 @@
  not called if the argument is not an object of class \code{\link{BasicObject}}.
 }
 
-\usage{\method{print}{BasicObject}(x, ...)}
+\usage{
+\method{print}{BasicObject}(x, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[base]{print.default}}()

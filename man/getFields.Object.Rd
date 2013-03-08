@@ -9,9 +9,7 @@
  \name{getFields.Object}
 \alias{getFields.Object}
 \alias{Object.getFields}
-\alias{getFields.Object}
 \alias{getFields,Object-method}
-
  \alias{Object.names}
 \alias{names.Object}
 \alias{names,Object-method}
@@ -23,7 +21,9 @@
    Returns the field names of an Object.
  }
 
- \usage{\method{getFields}{Object}(this, private=FALSE, ...)}
+ \usage{
+\method{getFields}{Object}(this, private=FALSE, ...)
+}
 
  \arguments{
    \item{private}{If \code{\link[base:logical]{TRUE}}, private fields will also be returned,
@@ -48,7 +48,7 @@
    }
  }
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+ \author{Henrik Bengtsson}
 
  \seealso{
    To check if a field exists or not, see \code{\link[R.oo:hasField.Object]{*hasField}()}.

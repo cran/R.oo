@@ -9,13 +9,13 @@
  \name{attachLocally.Object}
 \alias{attachLocally.Object}
 \alias{Object.attachLocally}
-\alias{attachLocally.Object}
 \alias{attachLocally,Object-method}
-
 
  \title{Attaches an Object locally to an environment}
 
- \usage{\method{attachLocally}{Object}(this, private=FALSE, fields=NULL, excludeFields=NULL, overwrite=TRUE, envir=parent.frame(), ...)}
+ \usage{
+\method{attachLocally}{Object}(this, private=FALSE, fields=NULL, excludeFields=NULL, overwrite=TRUE, envir=parent.frame(), ...)
+}
 
  \description{
   Attaches an Object locally to an environment.  By default, the fields of the Object are attached to
@@ -63,7 +63,7 @@ foo(obj)
 print(a)
 }
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+ \author{Henrik Bengtsson}
 
  \seealso{
   \code{\link[R.oo:attach.Object]{*attach}()}

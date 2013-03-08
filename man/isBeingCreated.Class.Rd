@@ -9,9 +9,7 @@
 \name{isBeingCreated.Class}
 \alias{isBeingCreated.Class}
 \alias{Class.isBeingCreated}
-\alias{isBeingCreated.Class}
 \alias{isBeingCreated,Class-method}
-
 
 \title{Checks if a class is currently being initiated initiated}
 
@@ -24,7 +22,9 @@
   constructor.
 }
 
-\usage{\method{isBeingCreated}{Class}(this, ...)}
+\usage{
+\method{isBeingCreated}{Class}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -61,7 +61,7 @@ print(Car("Tyrrell P34", 6))
 print(Car("T-Rex", 3))
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Class}}.

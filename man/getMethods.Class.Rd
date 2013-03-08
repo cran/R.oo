@@ -9,9 +9,7 @@
 \name{getMethods.Class}
 \alias{getMethods.Class}
 \alias{Class.getMethods}
-\alias{getMethods.Class}
 \alias{getMethods,Class-method}
-
 
 \title{Returns the method names of class and its super classes}
 
@@ -19,7 +17,9 @@
   Returns the method names of class and its super classes as a list.
 }
 
-\usage{\method{getMethods}{Class}(this, private=FALSE, deprecated=TRUE, unique=TRUE, ...)}
+\usage{
+\method{getMethods}{Class}(this, private=FALSE, deprecated=TRUE, unique=TRUE, ...)
+}
 
 \arguments{
   \item{private}{If \code{\link[base:logical]{TRUE}}, private methods are also returned,
@@ -39,7 +39,7 @@
   print(names)
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Class}}.

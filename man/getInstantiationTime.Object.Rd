@@ -9,9 +9,7 @@
 \name{getInstantiationTime.Object}
 \alias{getInstantiationTime.Object}
 \alias{Object.getInstantiationTime}
-\alias{getInstantiationTime.Object}
 \alias{getInstantiationTime,Object-method}
-
 
 \title{Gets the time when the object was instantiated}
 
@@ -19,7 +17,9 @@
  Gets the time when the object was instantiated (created) as a POSIXt object.
 }
 
-\usage{\method{getInstantiationTime}{Object}(this, ...)}
+\usage{
+\method{getInstantiationTime}{Object}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -46,7 +46,7 @@
   For more information see \code{\link{Object}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \keyword{programming}
 \keyword{methods}

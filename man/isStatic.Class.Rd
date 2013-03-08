@@ -9,9 +9,7 @@
 \name{isStatic.Class}
 \alias{isStatic.Class}
 \alias{Class.isStatic}
-\alias{isStatic.Class}
 \alias{isStatic,Class-method}
-
 
 \title{Checks if a class is static or not}
 
@@ -19,7 +17,9 @@
  Checks if a class is static or not. A class is static if it has static methods.
 }
 
-\usage{\method{isStatic}{Class}(this, ...)}
+\usage{
+\method{isStatic}{Class}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -34,7 +34,7 @@
     throw("RccViolationException should be static because Exception is.")
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link{setConstructorS3}}().

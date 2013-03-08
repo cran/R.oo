@@ -9,9 +9,7 @@
 \name{equals.BasicObject}
 \alias{equals.BasicObject}
 \alias{BasicObject.equals}
-\alias{equals.BasicObject}
 \alias{equals,BasicObject-method}
-
 
 \title{Compares an object with another}
 
@@ -38,7 +36,9 @@
  \code{( !is.null(obj) && (hashCode(this) == hashCode(obj)) )}.
 }
 
-\usage{\method{equals}{BasicObject}(this, other, ...)}
+\usage{
+\method{equals}{BasicObject}(this, other, ...)
+}
 
 \arguments{
   \item{other}{The other object this object should be compared to.}
@@ -53,7 +53,7 @@
   For more information see \code{\link{BasicObject}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \keyword{programming}
 \keyword{methods}

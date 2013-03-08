@@ -9,9 +9,7 @@
 \name{getTitle.Package}
 \alias{getTitle.Package}
 \alias{Package.getTitle}
-\alias{getTitle.Package}
 \alias{getTitle,Package-method}
-
 
 \title{Gets the Title of this package}
 
@@ -19,7 +17,9 @@
   Gets the Title of this package as specified by the \code{DESCRIPTION} file.
 }
 
-\usage{\method{getTitle}{Package}(this, ...)}
+\usage{
+\method{getTitle}{Package}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -34,7 +34,7 @@
   print(getTitle(pkg))
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Package}}.

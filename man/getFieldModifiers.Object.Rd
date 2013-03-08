@@ -9,9 +9,7 @@
 \name{getFieldModifiers.Object}
 \alias{getFieldModifiers.Object}
 \alias{Object.getFieldModifiers}
-\alias{getFieldModifiers.Object}
 \alias{getFieldModifiers,Object-method}
-
 \alias{Object.getFieldModifier}
 \alias{getFieldModifier.Object}
 \alias{getFieldModifier,Object-method}
@@ -23,7 +21,9 @@
  Gets all types of field modifiers, if any.
 }
 
-\usage{\method{getFieldModifiers}{Object}(this, ...)}
+\usage{
+\method{getFieldModifiers}{Object}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -33,7 +33,7 @@
   Returns a named \code{\link[base]{list}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 
 

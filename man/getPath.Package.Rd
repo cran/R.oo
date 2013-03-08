@@ -9,9 +9,7 @@
 \name{getPath.Package}
 \alias{getPath.Package}
 \alias{Package.getPath}
-\alias{getPath.Package}
 \alias{getPath,Package-method}
-
 
 \title{Gets the library (system) path to this package}
 
@@ -19,7 +17,9 @@
   Gets the library (system) path to this package.
 }
 
-\usage{\method{getPath}{Package}(this, ...)}
+\usage{
+\method{getPath}{Package}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
   Returns a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Package}}.

@@ -9,9 +9,7 @@
 \name{getStackTraceString.Exception}
 \alias{getStackTraceString.Exception}
 \alias{Exception.getStackTraceString}
-\alias{getStackTraceString.Exception}
 \alias{getStackTraceString,Exception-method}
-
 
 \title{Gets the stack trace as a string}
 
@@ -19,7 +17,9 @@
  .
 }
 
-\usage{\method{getStackTraceString}{Exception}(this, ..., details=TRUE)}
+\usage{
+\method{getStackTraceString}{Exception}(this, ..., details=TRUE)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -34,7 +34,7 @@
   For more information see \code{\link{Exception}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \keyword{programming}
 \keyword{methods}

@@ -9,9 +9,7 @@
 \name{getWhen.Exception}
 \alias{getWhen.Exception}
 \alias{Exception.getWhen}
-\alias{getWhen.Exception}
 \alias{getWhen,Exception-method}
-
 
 \title{Gets the time when the Exception was created}
 
@@ -19,7 +17,9 @@
  Gets the time, as a POSIX object, when the Exception was created.
 }
 
-\usage{\method{getWhen}{Exception}(this, ...)}
+\usage{
+\method{getWhen}{Exception}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -31,7 +31,7 @@
 
 \examples{\dontrun{For a complete example see help(Exception).}}
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Exception}}.

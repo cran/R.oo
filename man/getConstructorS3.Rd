@@ -16,7 +16,9 @@
  Get a constructor method.
 }
 
-\usage{\method{getConstructorS3}{default}(name, ...)}
+\usage{
+\method{getConstructorS3}{default}(name, ...)
+}
 
 \arguments{
   \item{name}{The name of the constructor function.}
@@ -29,7 +31,7 @@
   \code{\link[R.methodsS3]{isGenericS3}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 
 

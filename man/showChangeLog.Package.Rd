@@ -9,9 +9,7 @@
 \name{showChangeLog.Package}
 \alias{showChangeLog.Package}
 \alias{Package.showChangeLog}
-\alias{showChangeLog.Package}
 \alias{showChangeLog,Package-method}
-
 \alias{Package.showHistory}
 \alias{showHistory.Package}
 \alias{showHistory,Package-method}
@@ -28,7 +26,9 @@
   If the change log file does not exist, an exception is thrown.
 }
 
-\usage{\method{showChangeLog}{Package}(this, filenames=c("NEWS", "HISTORY", "ChangeLog"), ...)}
+\usage{
+\method{showChangeLog}{Package}(this, filenames=c("NEWS", "HISTORY", "ChangeLog"), ...)
+}
 
 \arguments{
   \item{filenames}{A \code{\link[base]{character}} \code{\link[base]{vector}} of (non-case sensitive) filenames
@@ -40,7 +40,7 @@
   Returns nothing.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.oo:getChangeLog.Package]{*getChangeLog}()}.

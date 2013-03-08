@@ -9,9 +9,7 @@
 \name{objectSize.Object}
 \alias{objectSize.Object}
 \alias{Object.objectSize}
-\alias{objectSize.Object}
 \alias{objectSize,Object-method}
-
 
 \title{Gets the size of the Object in bytes}
 
@@ -21,7 +19,9 @@
   allocates might vary slighty.
 }
 
-\usage{\method{objectSize}{Object}(this, ...)}
+\usage{
+\method{objectSize}{Object}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -38,7 +38,7 @@
   objectSize(obj)   # 856
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   To clear fields that are declared \code{cached},

@@ -9,9 +9,7 @@
 \name{getCalls.Exception}
 \alias{getCalls.Exception}
 \alias{Exception.getCalls}
-\alias{getCalls.Exception}
 \alias{getCalls,Exception-method}
-
 \alias{Exception.getCall}
 \alias{getCall.Exception}
 \alias{getCall,Exception-method}
@@ -23,7 +21,9 @@
  .
 }
 
-\usage{\method{getCalls}{Exception}(this, ...)}
+\usage{
+\method{getCalls}{Exception}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -41,7 +41,7 @@
   For more information see \code{\link{Exception}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \keyword{programming}
 \keyword{methods}

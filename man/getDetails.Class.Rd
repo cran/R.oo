@@ -9,9 +9,7 @@
 \name{getDetails.Class}
 \alias{getDetails.Class}
 \alias{Class.getDetails}
-\alias{getDetails.Class}
 \alias{getDetails,Class-method}
-
 
 \title{Lists the fields and methods of a class}
 
@@ -19,7 +17,9 @@
   Lists the fields and methods of a class (or an object).
 }
 
-\usage{\method{getDetails}{Class}(this, private=FALSE, ...)}
+\usage{
+\method{getDetails}{Class}(this, private=FALSE, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -33,7 +33,7 @@
   getDetails(Exception)
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 
 

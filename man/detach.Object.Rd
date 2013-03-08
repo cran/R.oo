@@ -9,9 +9,7 @@
 \name{detach.Object}
 \alias{detach.Object}
 \alias{Object.detach}
-\alias{detach.Object}
 \alias{detach,Object-method}
-
 
 \title{Detach an Object from the R search path}
 
@@ -21,7 +19,9 @@
  and nothing will be done.
 }
 
-\usage{\method{detach}{Object}(this, ...)}
+\usage{
+\method{detach}{Object}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -33,7 +33,7 @@
 
 \examples{\dontrun{For a complete example see help(Object).}}
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.oo:attach.Object]{*attach}()} and \code{\link[base]{attach}}(), \code{\link[base]{detach}}().

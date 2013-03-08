@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getUsage.Rdoc}
+\name{Rdoc$getUsage}
+\alias{Rdoc$getUsage}
 \alias{getUsage.Rdoc}
 \alias{Rdoc.getUsage}
-\alias{getUsage.Rdoc}
 \alias{getUsage,Rdoc-method}
-
 
 \title{Gets the usage of a method}
 
@@ -19,8 +18,13 @@
   Gets the usage of a method.
 }
 
-\synopsis{getUsage.Rdoc(static, method, class=NULL, ...)}
-\usage{Rdoc$getUsage(method, class=NULL, ...)}
+\usage{
+## Static method (use this):
+## Rdoc$getUsage(method, class=NULL, ...)
+
+## Don't use the below:
+\method{getUsage}{Rdoc}(static, method, class=NULL, ...)
+}
 
 \arguments{
   \item{method}{A method name (\code{\link[base]{character}} string).}
@@ -33,7 +37,7 @@
  Returns a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Rdoc}}.

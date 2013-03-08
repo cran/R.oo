@@ -45,7 +45,9 @@ extends \link[R.oo]{Exception}\cr
   this error type.
  }
 
- \usage{InternalErrorException(..., package=NULL)}
+ \usage{
+InternalErrorException(..., package=NULL)
+}
 
  \arguments{
    \item{...}{Any arguments accepted by \code{\link{Exception}}}.
@@ -76,7 +78,7 @@ $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCa
 
  }
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+ \author{Henrik Bengtsson}
 
  \seealso{
    For detailed information about exceptions see \code{\link{Exception}}.

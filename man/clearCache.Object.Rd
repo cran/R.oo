@@ -9,9 +9,7 @@
 \name{clearCache.Object}
 \alias{clearCache.Object}
 \alias{Object.clearCache}
-\alias{clearCache.Object}
 \alias{clearCache,Object-method}
-
 
 \title{Clear fields that are defined to have cached values}
 
@@ -19,7 +17,9 @@
  Clear fields that are defined to have cached values by assigning \code{\link[base]{NULL}} to these fields.
 }
 
-\usage{\method{clearCache}{Object}(this, recursive=TRUE, ...)}
+\usage{
+\method{clearCache}{Object}(this, recursive=TRUE, ...)
+}
 
 \arguments{
   \item{recursive}{If \code{\link[base:logical]{TRUE}}, the same method is called also on all
@@ -93,7 +93,7 @@ print(ll(objC))
 
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   To clear the cached fields and run the garbage collector

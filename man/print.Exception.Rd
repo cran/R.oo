@@ -9,9 +9,7 @@
 \name{print.Exception}
 \alias{print.Exception}
 \alias{Exception.print}
-\alias{print.Exception}
 \alias{print,Exception-method}
-
 
 \title{Prints the Exception}
 
@@ -20,7 +18,9 @@
  the stack trace is printed.
 }
 
-\usage{\method{print}{Exception}(x, ...)}
+\usage{
+\method{print}{Exception}(x, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -30,7 +30,7 @@
 
 \examples{\dontrun{For a complete example see help(Exception).}}
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.oo:as.character.Exception]{*as.character}()}.

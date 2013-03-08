@@ -9,9 +9,7 @@
 \name{getRdHierarchy.Class}
 \alias{getRdHierarchy.Class}
 \alias{Class.getRdHierarchy}
-\alias{getRdHierarchy.Class}
 \alias{getRdHierarchy,Class-method}
-
 
 \title{Gets the class hierarchy in Rd format}
 
@@ -19,7 +17,9 @@
   Gets the class hierarchy in Rd format.
 }
 
-\usage{\method{getRdHierarchy}{Class}(this, ...)}
+\usage{
+\method{getRdHierarchy}{Class}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
  Returns a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Class}}.

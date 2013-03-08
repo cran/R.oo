@@ -9,9 +9,7 @@
  \name{extend.Object}
 \alias{extend.Object}
 \alias{Object.extend}
-\alias{extend.Object}
 \alias{extend,Object-method}
-
 
  \title{Extends another class}
 
@@ -26,7 +24,9 @@
    The method should be used by the constructor of a class and nowhere else.
  }
 
- \usage{\method{extend}{Object}(this, ...className, ..., ...fields=NULL, ...envir=parent.frame())}
+ \usage{
+\method{extend}{Object}(this, ...className, ..., ...fields=NULL, ...envir=parent.frame())
+}
 
  \arguments{
    \item{...className}{The name of new class.}
@@ -58,7 +58,7 @@
 
  \examples{\dontrun{For a complete example see help(Object).}}
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+ \author{Henrik Bengtsson}
 
  \seealso{
    For more information see \code{\link{Object}}.

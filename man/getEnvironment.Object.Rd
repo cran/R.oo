@@ -9,9 +9,7 @@
 \name{getEnvironment.Object}
 \alias{getEnvironment.Object}
 \alias{Object.getEnvironment}
-\alias{getEnvironment.Object}
 \alias{getEnvironment,Object-method}
-
 
 \title{Gets the environment of this object}
 
@@ -20,7 +18,9 @@
  This is the environment where the members of the Object are stored.
 }
 
-\usage{\method{getEnvironment}{Object}(fun, ...)}
+\usage{
+\method{getEnvironment}{Object}(fun, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -35,7 +35,7 @@
   ll(envir=getEnvironment(R.oo))
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Object}}.

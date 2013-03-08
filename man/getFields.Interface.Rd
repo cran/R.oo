@@ -9,9 +9,7 @@
 \name{getFields.Interface}
 \alias{getFields.Interface}
 \alias{Interface.getFields}
-\alias{getFields.Interface}
 \alias{getFields,Interface-method}
-
 
 \title{Returns NULL}
 
@@ -19,7 +17,9 @@
   Returns NULL.
 }
 
-\usage{\method{getFields}{Interface}(...)}
+\usage{
+\method{getFields}{Interface}(...)
+}
 
 \arguments{
   \item{...}{Ignored.}
@@ -29,7 +29,7 @@
  Always returns \code{\link[base]{NULL}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Interface}}.

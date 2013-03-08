@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{hierarchy.Rdoc}
+\name{Rdoc$hierarchy}
+\alias{Rdoc$hierarchy}
 \alias{hierarchy.Rdoc}
 \alias{Rdoc.hierarchy}
-\alias{hierarchy.Rdoc}
 \alias{hierarchy,Rdoc-method}
-
 
 \title{Gets the class hierarchy}
 
@@ -19,8 +18,13 @@
   Gets the class hierarchy.
 }
 
-\synopsis{hierarchy.Rdoc(this, class, ...)}
-\usage{Rdoc$hierarchy(class, ...)}
+\usage{
+## Static method (use this):
+## Rdoc$hierarchy(class, ...)
+
+## Don't use the below:
+\method{hierarchy}{Rdoc}(this, class, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -30,7 +34,7 @@
  Returns a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Rdoc}}.

@@ -46,7 +46,9 @@ extends \link[R.oo]{Exception}\cr
   references below.
  }
 
- \usage{RccViolationException(...)}
+ \usage{
+RccViolationException(...)
+}
 
  \arguments{
    \item{...}{Any arguments accepted by the constructor of Exception, i.e.
@@ -89,7 +91,7 @@ $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCa
   }
  }
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+ \author{Henrik Bengtsson}
 
  \seealso{
    See also \code{\link[base]{try}}() and \code{\link[base:conditions]{tryCatch}()}.

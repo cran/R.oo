@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{setNameFormat.Rdoc}
+\name{Rdoc$setNameFormat}
+\alias{Rdoc$setNameFormat}
 \alias{setNameFormat.Rdoc}
 \alias{Rdoc.setNameFormat}
-\alias{setNameFormat.Rdoc}
 \alias{setNameFormat,Rdoc-method}
-
 
 \title{Sets the current name format}
 
@@ -20,8 +19,13 @@
   Throws a \code{\link{RccViolationException}} if an unknown format is requested.
 }
 
-\synopsis{setNameFormat.Rdoc(static, nameFormat, ...)}
-\usage{Rdoc$setNameFormat(nameFormat, ...)}
+\usage{
+## Static method (use this):
+## Rdoc$setNameFormat(nameFormat, ...)
+
+## Don't use the below:
+\method{setNameFormat}{Rdoc}(static, nameFormat, ...)
+}
 
 \arguments{
   \item{nameFormat}{
@@ -38,7 +42,7 @@
  Returns nothing.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.oo:getNameFormat.Rdoc]{*getNameFormat}()}

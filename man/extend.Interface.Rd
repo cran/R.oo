@@ -9,9 +9,7 @@
 \name{extend.Interface}
 \alias{extend.Interface}
 \alias{Interface.extend}
-\alias{extend.Interface}
 \alias{extend,Interface-method}
-
 
 \title{Extends another Interface class}
 
@@ -19,7 +17,9 @@
  Extends another Interface class.
 }
 
-\usage{\method{extend}{Interface}(this, ...className, ...)}
+\usage{
+\method{extend}{Interface}(this, ...className, ...)
+}
 
 \arguments{
   \item{...className}{The name of new interface.}
@@ -30,7 +30,7 @@
  Returns an Interface of class \code{className}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Interface}}.

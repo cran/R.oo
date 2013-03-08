@@ -9,9 +9,7 @@
 \name{hashCode.Object}
 \alias{hashCode.Object}
 \alias{Object.hashCode}
-\alias{hashCode.Object}
 \alias{hashCode,Object-method}
-
 
 \title{Gets a hash code for the Object}
 
@@ -34,7 +32,9 @@
  Object is located.
 }
 
-\usage{\method{hashCode}{Object}(this, ...)}
+\usage{
+\method{hashCode}{Object}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -49,7 +49,7 @@
   hashCode(obj)          # 26979608
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.oo:equals.Object]{*equals}()}

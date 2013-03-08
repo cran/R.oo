@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{createManPath.Rdoc}
+\name{Rdoc$createManPath}
+\alias{Rdoc$createManPath}
 \alias{createManPath.Rdoc}
 \alias{Rdoc.createManPath}
-\alias{createManPath.Rdoc}
 \alias{createManPath,Rdoc-method}
-
 
 \title{Creates the directory where the Rd files should be saved}
 
@@ -19,8 +18,13 @@
   Creates the directory where the Rd files should be saved.
 }
 
-\synopsis{createManPath.Rdoc(this, ...)}
-\usage{Rdoc$createManPath(...)}
+\usage{
+## Static method (use this):
+## Rdoc$createManPath(...)
+
+## Don't use the below:
+\method{createManPath}{Rdoc}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -31,7 +35,7 @@
  and throws an \code{\link[R.oo]{Exception}} if failed.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.oo:getManPath.Rdoc]{*getManPath}()}

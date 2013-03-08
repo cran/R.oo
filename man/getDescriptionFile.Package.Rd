@@ -9,9 +9,7 @@
 \name{getDescriptionFile.Package}
 \alias{getDescriptionFile.Package}
 \alias{Package.getDescriptionFile}
-\alias{getDescriptionFile.Package}
 \alias{getDescriptionFile,Package-method}
-
 
 \title{Gets the description file of this package}
 
@@ -19,7 +17,9 @@
   Gets the description file of this package, i.e. the parsed \code{DESCRIPTION} file.
 }
 
-\usage{\method{getDescriptionFile}{Package}(this, fields=NULL, ...)}
+\usage{
+\method{getDescriptionFile}{Package}(this, fields=NULL, ...)
+}
 
 \arguments{
   \item{fields}{A \code{\link[base]{vector}} of \code{\link[base]{character}} strings of fields to be returned.
@@ -31,7 +31,7 @@
   Returns named \code{\link[base]{vector}} of \code{\link[base]{character}} strings.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Package}}.

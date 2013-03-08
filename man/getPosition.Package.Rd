@@ -9,9 +9,7 @@
 \name{getPosition.Package}
 \alias{getPosition.Package}
 \alias{Package.getPosition}
-\alias{getPosition.Package}
 \alias{getPosition,Package-method}
-
 
 \title{Gets the search path position of the package}
 
@@ -19,7 +17,9 @@
   Gets the search path position of the package.
 }
 
-\usage{\method{getPosition}{Package}(this, ...)}
+\usage{
+\method{getPosition}{Package}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -34,7 +34,7 @@
   print(getPosition(pkg))
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.oo:getEnvironment.Package]{*getEnvironment}()}.

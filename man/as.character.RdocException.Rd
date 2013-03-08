@@ -9,9 +9,7 @@
 \name{as.character.RdocException}
 \alias{as.character.RdocException}
 \alias{RdocException.as.character}
-\alias{as.character.RdocException}
 \alias{as.character,RdocException-method}
-
 
 \title{Gets a character string representing of the RdocException}
 
@@ -19,7 +17,9 @@
  .
 }
 
-\usage{\method{as.character}{RdocException}(x, ...)}
+\usage{
+\method{as.character}{RdocException}(x, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
  Returns a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{RdocException}}.

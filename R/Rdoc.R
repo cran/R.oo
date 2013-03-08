@@ -495,7 +495,7 @@ setMethodS3("escapeRdFilename", "Rdoc", function(static, filename, ...) {
 #   \item{addTimestamp}{If @TRUE, a date and time stamp is added to the 
 #     Rd header comments.  This timestamp might be confusing for version 
 #     control systems, which is why it can be turned off with @FALSE.}
-#   \item{source}{If @TRUE, the Rdoc files will be \code{source()}'ed first.
+#   \item{source}{If @TRUE, the Rdoc files will be \code{source()}:ed first.
 #     This work of course only for Rdoc files that are R source files.}
 #   \item{verbose}{If @TRUE, detailed compilation information is printed.}
 #   \item{debug}{If @TRUE, extra debug information is printed.}
@@ -515,6 +515,16 @@ setMethodS3("escapeRdFilename", "Rdoc", function(static, filename, ...) {
 # @keyword documentation
 #*/###########################################################################
 setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getManPath(this), showDeprecated=FALSE, addTimestamp=FALSE, verbose=FALSE, source=FALSE, check=TRUE, debug=FALSE, ...) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # Global variables
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  authorWarn <- FALSE;
+  pkgAuthors <- NULL;
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # Local functions
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
   isCapitalized <- function(str) {
     first <- substring(str,1,1);
     (first == toupper(first))
@@ -835,6 +845,28 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       is.element("deprecated", mods);
     } # isObjectDeprecated()
 
+
+    # Read and parse authors from DESCRIPTION's 'Authors@R' or 'Author'.
+    getPackageAuthors <- function() {
+      if (!is.null(pkgAuthors)) {
+         return(pkgAuthors);
+      }
+      pkg <- Package(Rdoc$package);
+      authors <- getAuthor(pkg, as="person");
+      authorsN <- format(authors, include=c("given", "family"));
+
+      maintainers <- getMaintainer(pkg, as="person");
+      maintainersN <- format(maintainers, include=c("given", "family"));
+
+      # Append maintainers, if not already listed as authors
+      keep <- !is.element(maintainersN, authorsN);
+      maintainers <- maintainers[keep];
+      if (length(maintainers) > 0L) {
+##        authors <- c(authors, maintainers);
+      }
+
+      authors;
+    } # getPackageAuthors()
   
     
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -888,30 +920,61 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
     tagRdocMethod <- function(bfr) {
       bfr <- getTagValue(bfr);
       method <- attr(bfr, "value");
-      objectName <<- paste(method, ".", class, sep="");
+      objectName <<- paste(method, class, sep=".");
       isDeprecated <<- isObjectDeprecated(objectName);
-      name <- createName.Rdoc(NULL, class, method, escape=FALSE);
-      alias <- name;
-      name <<- name <- escapeName(name);
-      line <- paste("\\name{", name, "}\n", sep="");
-      alias <- escapeAlias(alias);
-      line <- paste(line, "\\alias{", alias, "}\n", sep="");
+
+      # Find method
+      fcn <- NULL;
+      tryCatch({
+        fcn <- Rdoc$getObject(objectName, mode="function");
+      }, error = function(ex) {
+        cat("Failed...\n");
+        print(ex);
+        cat("Failed...done\n");
+      })
+ 
+      if (!is.function(fcn)) {
+        throw(RdocException("Could not get method. Function was not found: ", objectName, "()", source=Rdoc$source));
+      }
+ 
+      methodName <- createName.Rdoc(NULL, class, method, escape=FALSE);
+
+      isStatic <- is.element("static", attr(fcn, "modifiers"));
+      if (isStatic) {
+        staticName <- paste(class, method, sep="$");
+        name <- staticName;
+        alias <- c(staticName, escapeAlias(methodName));
+      } else {
+        name <- escapeName(methodName);
+        alias <- escapeAlias(methodName);
+      }
+
+      # Treat internal and non-internal methods differently
+      if (isCapitalized(class)) {
+        alias <- c(alias, paste(class, method, sep="."));
+        alias <- c(alias, paste(method, ",", class, "-method", sep=""));
+      }
+      alias <- c(alias, paste(method, class, sep="."));
+
+      # Multiple aliases(?)
+      alias <- unique(alias);
+      alias <- paste("\\alias{", alias, "}", sep="");
+
+      line <- paste("\\name{", name, "}", sep="");
+      line <- c(line, alias);
+      line <- paste(line, collapse="\n");
 
       # Treat internal and non-internal methods differently
       if (isCapitalized(class)) {
         addKeyword("internal");
-        if (!identical(alias, paste(class, ".", method, sep="")))
-          line <- paste(line, "\\alias{", class, ".", method, "}\n", sep="");
-        line <- paste(line, "\\alias{", method, ".", class, "}\n", sep="");
-        line <- paste(line, "\\alias{", method, ",", class, "-method}\n", sep="");
-      } else {
-        line <- paste(line, "\\alias{", method, ".", class, "}\n", sep="");
       }
 
       addKeyword("methods");
 
+      name <<- methodName; # Filename
       usage <<- Rdoc$getUsage(method=method, class=class);
       rd <<- paste(rd, line, sep="");
+
       bfr;
     }
   
@@ -1121,18 +1184,9 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagSynopsis <- function(bfr) {
-      if (is.element("synopsis", names(attributes(usage)))) {
-        synopsis <- attr(usage, "synopsis");
-        line <- paste("\\synopsis{", synopsis, "}\n", sep="");
-      } else {
-        line <- NULL;
-      }
-      # \synopsis{} is made deprecated by R v2.4.0 and will be defunct 
-      # around R v3.0.0 (see HISTORY below). HOWEVER, static methods 
-      # such as Object$load() still need \synopsis{} to please the
-      # R CMD check.  /HB 2006-09-12
-      # line <- NULL;  # TO DO
-      line <- paste(line, "\\usage{", usage, "}", sep="");
+      usage <- c("", usage, "");
+      usage <- paste(usage, collapse="\n");
+      line <- paste("\\usage{", usage, "}", sep="");
       rd <<- paste(rd, line, sep="");
       bfr;
     }
@@ -1223,10 +1277,78 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagAuthor <- function(bfr) {
-      if (!exists("author"))
-        throw(RdocException("R variable does not exist: author", source=sourcefile));
-      line <- paste("\\author{", as.character(get("author")), "}", sep="");
+      bfrT <- getTagValue(bfr);
+      value <- attr(bfrT, "value");
+      value <- as.character(value);
+      hasValue <- (nchar(value) > 0L);
+      hasValue <- hasValue && (regexpr("^[ \t]*[\n\r]", value) == -1L);
+
+      # Does the @author tag has a value?      
+      if (hasValue) {
+        # Non-empty @author tag with value, e.g. '@author "HB"'
+
+        value <- gsub("^[ \t]*['\"]?", "", value);
+        value <- gsub("['\"]?[ \t]*$", "", value);
+
+        # (i) All authors?
+        if (value == "*") {
+          pkgAuthors <<- authors <- getPackageAuthors();
+        } else {
+          # (ii) All initials?  An initial = 2-5 upper case letters
+          tmp <- unlist(strsplit(value, split=",", fixed=TRUE))
+          tmp <- gsub("^[ \t]*", "", tmp);
+          tmp <- gsub("[ \t]*$", "", tmp);
+          tmpU <- toupper(tmp);
+          pattern <- sprintf("^[%s]{2,5}$", paste(base::LETTERS, collapse=""));
+          allInitials <- all( (tmpU == tmp) & (regexpr(pattern, tmp) != -1L) );
+          if (allInitials) {
+            initials <- tmp;
+
+            # Create all initials of the 'authors'
+            pkgAuthors <<- authors <- getPackageAuthors();
+            fullnames <- format(authors, include=c("given", "family"));
+            known <- abbreviate(fullnames, minlength=2L);
+            known <- toupper(known);
+
+            # Check if the initials match
+            idxs <- match(initials, known);
+            unknown <- initials[is.na(idxs)];
+            if (length(unknown) > 0L) {
+              known <- paste(sQuote(known), sQuote(fullnames), sep="=");
+              throw(RdocException("Rdoc 'author' tag specifies initials (", paste(sQuote(unknown), collapse=", "), ") that are not part of the known ones (", paste(known, collapse=", "), ")", source=sourcefile));
+            }
+            authors <- authors[idxs];
+          } else {
+            authors <- as.person(value);
+          }
+        }
+        bfr <- bfrT;
+      } else {
+        # Empty @author tag, i.e. '@author'
+
+        pkgAuthors <<- authors <- getPackageAuthors();
+        # If there are creators of the package (which there should be),
+        # use those as the default for an empty '@author' tag.
+        isCreator <- sapply(authors, FUN=function(a) is.element("cre", a$role));
+        if (any(isCreator)) {
+          authors <- authors[isCreator];
+        }
+
+        if (exists("author", mode="character", envir=globalenv())) {
+          if (!authorWarn) {
+            author <- get("author", mode="character", envir=globalenv());
+            warning("Detected an 'author' character variable in the global environment. Note that, since R.oo 1.13.0, the author for an (empty) Rdoc @author tag is inferred from the 'Authors@R' or 'Author' DESCRIPTION field and no longer take from the global 'author' variable: ", sQuote(author));
+            authorWarn <<- TRUE;
+          }
+        }
+      }
+
+      authorsTag <- format(authors, include=c("given", "family"));
+      authorsTag <- paste(authorsTag, collapse=", ");
+
+      line <- paste("\\author{", authorsTag, "}", sep="");
       rd <<- paste(rd, line, sep="");
+
       bfr;
     }
   
@@ -1501,6 +1623,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
     names <- names(tags);
     attr(tags, "beginsWith") <- paste("^@", names, sep="");
   
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Make a best guess what the package is that is created by looking
@@ -1521,7 +1644,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
     for (rdoc in rdocs) {
       # Remember the name of the source file in case of an error...
       Rdoc$source <- sourcefile <<- attr(rdoc, "sourcefile");
-  
+
       title <- NULL;
       objectName <- NULL;
       isDeprecated <- FALSE;
@@ -1650,8 +1773,8 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
         if (is.null(name)) {
           # @RdocClass, @RdocDefault and/or @RdocMethod was not given. Search for classical \name{...}
           search <- regexpr("\\name\\{[^\\}]*\\}", rd);
-          if (search == -1) {
-            throw(RdocException("The resulting Rd text does not have a \\name{} tag.", source=sourcefile));
+          if (search == -1L) {
+            throw(RdocException("The resulting Rd text does not have a \\name{} tag: ", substring(rd, first=1L, last=40L), source=sourcefile));
           }
           name <- substring(rd, search+5, search+attr(search, "match.length")-2);
           search <- regexpr("\\name\\{[^\\}]*\\}", substring(rd, search+1));
@@ -2077,16 +2200,24 @@ setMethodS3("getUsage", "Rdoc", function(static, method, class=NULL, ...) {
     args <- paste(args, collapse=", ");
     usage <- paste(method, "(", args, ")", sep="");
   } else if (isStatic) {
-    # Creates the \synopsis == the true synopsis, e.g. forName.Class(...)
-    argsStr <- paste(args, collapse=", ");
-    synopsis <- paste(method, ".", class, "(", argsStr, ")", sep="");
-    # Creates the usage, e.g. Class$forName(...)
-    args <- args[-1];
-    args <- paste(args, collapse=", ");
-    usage <- paste(class, "$", method, "(", args, ")", sep="");
+    # (a) The "static" method call, e.g. Class$forName(...)
+    argsS <- args[-1];
+    argsS <- paste(argsS, collapse=", ");
+    usageS <- paste(class, "$", method, "(", argsS, ")", sep="");
     if (isReplacement)
-      usage <- paste(usage, " <- ", valueArg, sep="");
-    attr(usage, "synopsis") <- synopsis;
+      usageS <- paste(usageS, " <- ", valueArg, sep="");
+    usageS <- paste("## ", usageS, sep="");
+    usageS <- c("## Static method (use this):", usageS, "");
+
+    # (b) The S3 method call
+    args <- paste(args, collapse=", ");
+    usageM <- paste("\\method{", method, "}{", class, "}(", args, ")", sep="");
+    if (isReplacement)
+      usageM <- paste(usageM, " <- ", valueArg, sep="");
+    usageM <- c("## Don't use the below:", usageM);
+
+    # (c) Combine
+    usage <- c(usageS, usageM);
   } else if (!is.null(class)) {
     args <- paste(args, collapse=", ");
     usage <- paste("\\method{", method, "}{", class, "}(", args, ")", sep="");
@@ -2518,6 +2649,9 @@ setMethodS3("isVisible", "Rdoc", function(static, modifiers, visibilities, ...) 
 
 #########################################################################
 # HISTORY:
+# 2013-03-08
+# o Added support for @author "John Doe" as well as @author "JD" where
+#   the initials are then inferred from the package's DESCRIPTION file.
 # 2012-12-28
 # o Replaced all data.class(obj) with class(obj)[1].
 # 2012-06-11

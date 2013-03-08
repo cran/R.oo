@@ -9,9 +9,7 @@
 \name{print.Class}
 \alias{print.Class}
 \alias{Class.print}
-\alias{print.Class}
 \alias{print,Class-method}
-
 
 \title{Prints detailed information about the class and its fields and methods}
 
@@ -19,7 +17,9 @@
  Prints detailed information about the class and its fields and methods.
 }
 
-\usage{\method{print}{Class}(x, ...)}
+\usage{
+\method{print}{Class}(x, ...)
+}
 
 \arguments{
   \item{...}{Arguments passed to \code{\link[R.oo:getDetails.Class]{*getDetails}()}.}
@@ -33,7 +33,7 @@
   print(Object)
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.oo:getDetails.Class]{*getDetails}()}

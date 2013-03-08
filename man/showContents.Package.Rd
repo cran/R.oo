@@ -9,9 +9,7 @@
 \name{showContents.Package}
 \alias{showContents.Package}
 \alias{Package.showContents}
-\alias{showContents.Package}
 \alias{showContents,Package-method}
-
 
 \title{Show the CONTENTS file of this package}
 
@@ -20,7 +18,9 @@
   If the \code{CONTENTS} file does not exist, an exception is thrown.
 }
 
-\usage{\method{showContents}{Package}(this, ...)}
+\usage{
+\method{showContents}{Package}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -30,7 +30,7 @@
   Returns nothing.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Package}}.

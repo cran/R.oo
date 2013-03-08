@@ -18,7 +18,9 @@
   the range [0,255], the input vector is taken modulo 256.
 }
 
-\usage{\method{intToChar}{default}(i, ...)}
+\usage{
+\method{intToChar}{default}(i, ...)
+}
 
 \arguments{
   \item{i}{An \code{\link[base]{integer}} \code{\link[base]{vector}}.}
@@ -29,7 +31,7 @@
   Returns a ASCII \code{\link[base]{integer}} \code{\link[base]{vector}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \examples{
   i <- charToInt(unlist(strsplit("Hello world!", split=NULL)))

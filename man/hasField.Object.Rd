@@ -9,9 +9,7 @@
  \name{hasField.Object}
 \alias{hasField.Object}
 \alias{Object.hasField}
-\alias{hasField.Object}
 \alias{hasField,Object-method}
-
 
  \title{Checks if a field exists or not}
 
@@ -19,7 +17,9 @@
    Checks if a field exists or not.
  }
 
- \usage{\method{hasField}{Object}(this, field, ...)}
+ \usage{
+\method{hasField}{Object}(this, field, ...)
+}
 
  \arguments{
    \item{field}{\code{\link[base]{vector}} of fields to be checked if they exists or not.}
@@ -43,7 +43,7 @@
    }
  }
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+ \author{Henrik Bengtsson}
 
  \seealso{
    To get the fields of an Object, see \code{\link[R.oo:getFields.Object]{*getFields}()}.

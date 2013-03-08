@@ -9,9 +9,7 @@
 \name{novirtual.Object}
 \alias{novirtual.Object}
 \alias{Object.novirtual}
-\alias{novirtual.Object}
 \alias{novirtual,Object-method}
-
 
 \title{Returns a reference to the same Object with virtual fields turned off}
 
@@ -19,7 +17,9 @@
   Returns a reference to the same Object with virtual fields turned off.
 }
 
-\usage{\method{novirtual}{Object}(this, ...)}
+\usage{
+\method{novirtual}{Object}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
  Returns an \code{\link[R.oo]{Object}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Object}}.

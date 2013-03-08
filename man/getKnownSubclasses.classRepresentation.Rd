@@ -10,8 +10,6 @@
 
 \name{getKnownSubclasses.classRepresentation}
 \alias{getKnownSubclasses.classRepresentation}
-\alias{getKnownSubclasses.classRepresentation}
-
 
 
 \title{Gets the known subclasses}
@@ -20,7 +18,9 @@
   Gets the known subclasses.
 }
 
-\usage{\method{getKnownSubclasses}{classRepresentation}(this, ...)}
+\usage{
+\method{getKnownSubclasses}{classRepresentation}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -30,7 +30,7 @@
  Returns a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 
 \keyword{methods}

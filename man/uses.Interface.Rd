@@ -9,9 +9,7 @@
 \name{uses.Interface}
 \alias{uses.Interface}
 \alias{Interface.uses}
-\alias{uses.Interface}
 \alias{uses,Interface-method}
-
 \alias{uses}
 \alias{uses.character}
 
@@ -21,13 +19,15 @@
  Specifies that an object uses this Interface.
 }
 
-\usage{\method{uses}{Interface}(this, ...)}
+\usage{
+\method{uses}{Interface}(this, ...)
+}
 
 \value{
  Returns a \code{\link[base]{character}} \code{\link[base]{vector}} of class names of Interface:s.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Interface}}.

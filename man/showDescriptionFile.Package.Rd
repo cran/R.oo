@@ -9,9 +9,7 @@
 \name{showDescriptionFile.Package}
 \alias{showDescriptionFile.Package}
 \alias{Package.showDescriptionFile}
-\alias{showDescriptionFile.Package}
 \alias{showDescriptionFile,Package-method}
-
 
 \title{Show the DESCRIPTION file of this package}
 
@@ -20,7 +18,9 @@
   If the \code{DESCRIPTION} file does not exist, an exception is thrown.
 }
 
-\usage{\method{showDescriptionFile}{Package}(this, ...)}
+\usage{
+\method{showDescriptionFile}{Package}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -30,7 +30,7 @@
   Returns nothing.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Package}}.

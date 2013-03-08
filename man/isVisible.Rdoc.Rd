@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{isVisible.Rdoc}
+\name{Rdoc$isVisible}
+\alias{Rdoc$isVisible}
 \alias{isVisible.Rdoc}
 \alias{Rdoc.isVisible}
-\alias{isVisible.Rdoc}
 \alias{isVisible,Rdoc-method}
-
 
 \title{Checks if a member is visible given its modifiers}
 
@@ -19,8 +18,13 @@
   Checks if a member is visible given its modifiers.
 }
 
-\synopsis{isVisible.Rdoc(static, modifiers, visibilities, ...)}
-\usage{Rdoc$isVisible(modifiers, visibilities, ...)}
+\usage{
+## Static method (use this):
+## Rdoc$isVisible(modifiers, visibilities, ...)
+
+## Don't use the below:
+\method{isVisible}{Rdoc}(static, modifiers, visibilities, ...)
+}
 
 \arguments{
  \item{modifiers}{A \code{\link[base]{character}} string of modifiers.}
@@ -33,7 +37,7 @@
  flags, otherwise \code{\link[base:logical]{FALSE}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Rdoc}}.

@@ -9,9 +9,7 @@
 \name{getSuperclasses.Class}
 \alias{getSuperclasses.Class}
 \alias{Class.getSuperclasses}
-\alias{getSuperclasses.Class}
 \alias{getSuperclasses,Class-method}
-
 
 \title{Gets the super classes of this class}
 
@@ -19,7 +17,9 @@
  Gets the super classes of this class.
 }
 
-\usage{\method{getSuperclasses}{Class}(this, ...)}
+\usage{
+\method{getSuperclasses}{Class}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -37,7 +37,7 @@
   }
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[base]{class}}().

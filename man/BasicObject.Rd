@@ -20,7 +20,9 @@
   public class \bold{BasicObject}\cr
  }
 
- \usage{BasicObject(core=NULL)}
+ \usage{
+BasicObject(core=NULL)
+}
 
  \arguments{
    \item{core}{The core value of the object.}
@@ -54,7 +56,7 @@ as.data.frame, as.raster, whichVector
 
  }
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+ \author{Henrik Bengtsson}
 
  \keyword{programming}
  \keyword{methods}

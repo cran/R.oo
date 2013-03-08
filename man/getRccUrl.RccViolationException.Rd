@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getRccUrl.RccViolationException}
+\name{RccViolationException$getRccUrl}
+\alias{RccViolationException$getRccUrl}
 \alias{getRccUrl.RccViolationException}
 \alias{RccViolationException.getRccUrl}
-\alias{getRccUrl.RccViolationException}
 \alias{getRccUrl,RccViolationException-method}
-
 
 \title{Static method to get a URL where the RCC can be found}
 
@@ -21,8 +20,13 @@
  Currently the URL is \url{http://aroma-project.org/developers/RCC/}.
 }
 
-\synopsis{getRccUrl.RccViolationException(this, ...)}
-\usage{RccViolationException$getRccUrl(...)}
+\usage{
+## Static method (use this):
+## RccViolationException$getRccUrl(...)
+
+## Don't use the below:
+\method{getRccUrl}{RccViolationException}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -34,7 +38,7 @@
 
 \examples{\dontrun{For a complete example see help(RccViolationException).}}
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{RccViolationException}}.

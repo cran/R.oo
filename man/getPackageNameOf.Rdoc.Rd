@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getPackageNameOf.Rdoc}
+\name{Rdoc$getPackageNameOf}
+\alias{Rdoc$getPackageNameOf}
 \alias{getPackageNameOf.Rdoc}
 \alias{Rdoc.getPackageNameOf}
-\alias{getPackageNameOf.Rdoc}
 \alias{getPackageNameOf,Rdoc-method}
-
 
 \title{Gets the package of a method or an object}
 
@@ -19,8 +18,13 @@
   Gets the package of a method or an object.
 }
 
-\synopsis{getPackageNameOf.Rdoc(static, objectName, mode="any", unique=TRUE, ...)}
-\usage{Rdoc$getPackageNameOf(objectName, mode="any", unique=TRUE, ...)}
+\usage{
+## Static method (use this):
+## Rdoc$getPackageNameOf(objectName, mode="any", unique=TRUE, ...)
+
+## Don't use the below:
+\method{getPackageNameOf}{Rdoc}(static, objectName, mode="any", unique=TRUE, ...)
+}
 
 \arguments{
  \item{objectName}{An method or object name (\code{\link[base]{character}} string).}
@@ -34,7 +38,7 @@
  Returns a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Rdoc}}.

@@ -9,9 +9,7 @@
 \name{printStackTrace.Exception}
 \alias{printStackTrace.Exception}
 \alias{Exception.printStackTrace}
-\alias{printStackTrace.Exception}
 \alias{printStackTrace,Exception-method}
-
 
 \title{Prints the stack trace saved when the exception was created}
 
@@ -19,7 +17,9 @@
  .
 }
 
-\usage{\method{printStackTrace}{Exception}(this, ...)}
+\usage{
+\method{printStackTrace}{Exception}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -37,7 +37,7 @@
   For more information see \code{\link{Exception}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \keyword{programming}
 \keyword{methods}

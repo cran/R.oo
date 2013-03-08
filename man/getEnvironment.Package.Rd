@@ -9,9 +9,7 @@
 \name{getEnvironment.Package}
 \alias{getEnvironment.Package}
 \alias{Package.getEnvironment}
-\alias{getEnvironment.Package}
 \alias{getEnvironment,Package-method}
-
 
 \title{Gets the environment of a loaded package}
 
@@ -19,7 +17,9 @@
   Gets the environment of a loaded package.
 }
 
-\usage{\method{getEnvironment}{Package}(this, ...)}
+\usage{
+\method{getEnvironment}{Package}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
   Returns a \code{\link[base]{environment}}, or \code{\link[base]{NULL}} if the package was not loaded.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.oo:getPosition.Package]{*getPosition}()}.

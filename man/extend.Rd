@@ -22,7 +22,9 @@
   The method should be used by the constructor of a class and nowhere else.
 }
 
-\usage{\method{extend}{default}(this, ...className, ...)}
+\usage{
+\method{extend}{default}(this, ...className, ...)
+}
 
 \arguments{
   \item{this}{Object to be extended.}
@@ -34,7 +36,7 @@
  Returns an object of class \code{...className}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \examples{
 setConstructorS3("MyDouble", function(value=0, ...) {

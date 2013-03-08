@@ -9,9 +9,7 @@
 \name{clone.Object}
 \alias{clone.Object}
 \alias{Object.clone}
-\alias{clone.Object}
 \alias{clone,Object-method}
-
 
 \title{Clones an Object}
 
@@ -20,7 +18,9 @@
  new object.
 }
 
-\usage{\method{clone}{Object}(this, ...)}
+\usage{
+\method{clone}{Object}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -46,7 +46,7 @@
   For more information see \code{\link{Object}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \keyword{programming}
 \keyword{methods}

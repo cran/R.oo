@@ -9,9 +9,7 @@
 \name{equals.Object}
 \alias{equals.Object}
 \alias{Object.equals}
-\alias{equals.Object}
 \alias{equals,Object-method}
-
 
 \title{Compares an object with another}
 
@@ -38,7 +36,9 @@
  \code{( !is.null(obj) && (hashCode(this) == hashCode(obj)) )}.
 }
 
-\usage{\method{equals}{Object}(this, other, ...)}
+\usage{
+\method{equals}{Object}(this, other, ...)
+}
 
 \arguments{
   \item{other}{The other object this \code{\link[R.oo]{Object}} should be compared to.}
@@ -61,7 +61,7 @@
   For more information see \code{\link{Object}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \keyword{programming}
 \keyword{methods}

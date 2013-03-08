@@ -9,9 +9,7 @@
 \name{getSource.RdocException}
 \alias{getSource.RdocException}
 \alias{RdocException.getSource}
-\alias{getSource.RdocException}
 \alias{getSource,RdocException-method}
-
 
 \title{Gets the source of the exception}
 
@@ -19,7 +17,9 @@
  .
 }
 
-\usage{\method{getSource}{RdocException}(this, ...)}
+\usage{
+\method{getSource}{RdocException}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
  Returns the source.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{RdocException}}.

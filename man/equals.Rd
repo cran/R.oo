@@ -33,7 +33,9 @@
  By default \code{\link[base]{identical}}() is used.
 }
 
-\usage{\method{equals}{default}(object, other, ...)}
+\usage{
+\method{equals}{default}(object, other, ...)
+}
 
 \arguments{
   \item{object, other}{Objects to be compared.}
@@ -44,7 +46,7 @@
   Returns \code{\link[base:logical]{TRUE}} if the objects are equal, otherwise \code{\link[base:logical]{FALSE}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[base]{identical}}().

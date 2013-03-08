@@ -9,9 +9,7 @@
 \name{as.character.Object}
 \alias{as.character.Object}
 \alias{Object.as.character}
-\alias{as.character.Object}
 \alias{as.character,Object-method}
-
 
 \title{Gets a character string representing the object}
 
@@ -21,7 +19,9 @@
  of the object.
 }
 
-\usage{\method{as.character}{Object}(x, ...)}
+\usage{
+\method{as.character}{Object}(x, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -37,7 +37,7 @@
   as.character(obj)    # "Object: 0x000000000ab6a7a8"
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Object}}.

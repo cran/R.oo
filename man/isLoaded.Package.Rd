@@ -9,9 +9,7 @@
 \name{isLoaded.Package}
 \alias{isLoaded.Package}
 \alias{Package.isLoaded}
-\alias{isLoaded.Package}
 \alias{isLoaded,Package-method}
-
 
 \title{Checks if the package is installed on the search path or not}
 
@@ -19,7 +17,9 @@
   Checks if the package is installed on the search path or not.
 }
 
-\usage{\method{isLoaded}{Package}(this, ...)}
+\usage{
+\method{isLoaded}{Package}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -34,7 +34,7 @@
   print(isLoaded(pkg))       # TRUE
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.oo:load.Package]{*load}()}.

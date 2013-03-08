@@ -9,9 +9,7 @@
 \name{isProtected.Class}
 \alias{isProtected.Class}
 \alias{Class.isProtected}
-\alias{isProtected.Class}
 \alias{isProtected,Class-method}
-
 
 \title{Checks if a class is defined protected or not}
 
@@ -19,7 +17,9 @@
  Checks if a class is defined protected or not.
 }
 
-\usage{\method{isProtected}{Class}(this, ...)}
+\usage{
+\method{isProtected}{Class}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -34,7 +34,7 @@
     throw("The class RccViolationException should NOT be protected.")
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[base]{class}}().

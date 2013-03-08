@@ -9,9 +9,7 @@
 \name{getContribUrl.Package}
 \alias{getContribUrl.Package}
 \alias{Package.getContribUrl}
-\alias{getContribUrl.Package}
 \alias{getContribUrl,Package-method}
-
 
 \title{Gets the URL(s) from where this package can be installed}
 
@@ -21,7 +19,9 @@
   of the package. If no such line exists, \code{getUrl()} is used.
 }
 
-\usage{\method{getContribUrl}{Package}(this, ...)}
+\usage{
+\method{getContribUrl}{Package}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -36,7 +36,7 @@
   print(getContribUrl(pkg))
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Package}}.
