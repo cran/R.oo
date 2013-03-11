@@ -9,9 +9,7 @@
 \name{getUrl.Package}
 \alias{getUrl.Package}
 \alias{Package.getUrl}
-\alias{getUrl.Package}
 \alias{getUrl,Package-method}
-
 
 \title{Gets the URL of this package}
 
@@ -19,7 +17,9 @@
   Gets the URL of this package as specified by the \code{DESCRIPTION} file.
 }
 
-\usage{\method{getUrl}{Package}(this, ...)}
+\usage{
+\method{getUrl}{Package}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -34,7 +34,7 @@
   print(getUrl(pkg))
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Package}}.

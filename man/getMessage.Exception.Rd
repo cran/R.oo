@@ -9,9 +9,7 @@
 \name{getMessage.Exception}
 \alias{getMessage.Exception}
 \alias{Exception.getMessage}
-\alias{getMessage.Exception}
 \alias{getMessage,Exception-method}
-
 
 \title{Gets the message of the Exception}
 
@@ -19,7 +17,9 @@
  Gets the message of the Exception.
 }
 
-\usage{\method{getMessage}{Exception}(this, ...)}
+\usage{
+\method{getMessage}{Exception}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -31,7 +31,7 @@
 
 \examples{\dontrun{For a complete example see help(Exception).}}
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Exception}}.

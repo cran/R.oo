@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{methodsInheritedFrom.Rdoc}
+\name{Rdoc$methodsInheritedFrom}
+\alias{Rdoc$methodsInheritedFrom}
 \alias{methodsInheritedFrom.Rdoc}
 \alias{Rdoc.methodsInheritedFrom}
-\alias{methodsInheritedFrom.Rdoc}
 \alias{methodsInheritedFrom,Rdoc-method}
-
 
 \title{Gets all methods inherited from a class in Rd format}
 
@@ -19,8 +18,13 @@
   Gets all methods inherited from a class in Rd format.
 }
 
-\synopsis{methodsInheritedFrom.Rdoc(this, class, visibility=c("public", "protected", "private"), showDeprecated=FALSE, inheritedFrom=NULL, sort=TRUE, trial=FALSE, ...)}
-\usage{Rdoc$methodsInheritedFrom(class, visibility=c("public", "protected", "private"), showDeprecated=FALSE, inheritedFrom=NULL, sort=TRUE, trial=FALSE, ...)}
+\usage{
+## Static method (use this):
+## Rdoc$methodsInheritedFrom(class, visibility=c("public", "protected", "private"), showDeprecated=FALSE, inheritedFrom=NULL, sort=TRUE, trial=FALSE, ...)
+
+## Don't use the below:
+\method{methodsInheritedFrom}{Rdoc}(this, class, visibility=c("public", "protected", "private"), showDeprecated=FALSE, inheritedFrom=NULL, sort=TRUE, trial=FALSE, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -30,7 +34,7 @@
  Returns a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Rdoc}}.

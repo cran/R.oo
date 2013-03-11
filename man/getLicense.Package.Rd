@@ -9,9 +9,7 @@
 \name{getLicense.Package}
 \alias{getLicense.Package}
 \alias{Package.getLicense}
-\alias{getLicense.Package}
 \alias{getLicense,Package-method}
-
 
 \title{Gets the License of this package}
 
@@ -19,7 +17,9 @@
   Gets the License of this package as specified by the \code{DESCRIPTION} file.
 }
 
-\usage{\method{getLicense}{Package}(this, ...)}
+\usage{
+\method{getLicense}{Package}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -34,7 +34,7 @@
   print(getLicense(pkg))
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Package}}.

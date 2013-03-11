@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{declaration.Rdoc}
+\name{Rdoc$declaration}
+\alias{Rdoc$declaration}
 \alias{declaration.Rdoc}
 \alias{Rdoc.declaration}
-\alias{declaration.Rdoc}
 \alias{declaration,Rdoc-method}
-
 
 \title{Gets the class declaration}
 
@@ -19,8 +18,13 @@
   Gets the class declaration.
 }
 
-\synopsis{declaration.Rdoc(this, class, ...)}
-\usage{Rdoc$declaration(class, ...)}
+\usage{
+## Static method (use this):
+## Rdoc$declaration(class, ...)
+
+## Don't use the below:
+\method{declaration}{Rdoc}(this, class, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -30,7 +34,7 @@
  Returns a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Rdoc}}.

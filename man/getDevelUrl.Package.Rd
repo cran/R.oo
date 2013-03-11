@@ -9,9 +9,7 @@
 \name{getDevelUrl.Package}
 \alias{getDevelUrl.Package}
 \alias{Package.getDevelUrl}
-\alias{getDevelUrl.Package}
 \alias{getDevelUrl,Package-method}
-
 
 \title{Gets the URL(s) from where the developers version of this package can be installed}
 
@@ -21,7 +19,9 @@
   of the package.
 }
 
-\usage{\method{getDevelUrl}{Package}(this, ...)}
+\usage{
+\method{getDevelUrl}{Package}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -36,7 +36,7 @@
   print(getDevelUrl(pkg))
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Package}}.

@@ -9,9 +9,7 @@
 \name{getDescription.Package}
 \alias{getDescription.Package}
 \alias{Package.getDescription}
-\alias{getDescription.Package}
 \alias{getDescription,Package-method}
-
 
 \title{Gets the description of the package}
 
@@ -19,7 +17,9 @@
   Gets the description of the package. Not to be mixed up with \code{\link[R.oo:getDescriptionFile.Package]{*getDescriptionFile}()}.
 }
 
-\usage{\method{getDescription}{Package}(this, replaceNewlines=" ", ...)}
+\usage{
+\method{getDescription}{Package}(this, replaceNewlines=" ", ...)
+}
 
 \arguments{
   \item{replaceNewlines}{If a \code{\link[base]{character}} string, all newline characters
@@ -36,7 +36,7 @@
   print(getDescription(pkg))
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Package}}.

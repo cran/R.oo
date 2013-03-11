@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{load.Object}
+\name{Object$load}
+\alias{Object$load}
 \alias{load.Object}
 \alias{Object.load}
-\alias{load.Object}
 \alias{load,Object-method}
-
 
 \title{Static method to load an Object from a file or a connection}
 
@@ -20,8 +19,13 @@
   class Object.
 }
 
-\synopsis{load.Object(static, file, path=NULL, ...)}
-\usage{Object$load(file, path=NULL, ...)}
+\usage{
+## Static method (use this):
+## Object$load(file, path=NULL, ...)
+
+## Don't use the below:
+\method{load}{Object}(static, file, path=NULL, ...)
+}
 
 \arguments{
  \item{file}{Filename or \code{\link[base:connections]{connection}} from where to read the Object.}
@@ -56,7 +60,7 @@
 
 \examples{\dontrun{For a complete example see help(Object).}}
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.oo:save.Object]{*save}()} and

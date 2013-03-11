@@ -9,9 +9,7 @@
 \name{as.character.Interface}
 \alias{as.character.Interface}
 \alias{Interface.as.character}
-\alias{as.character.Interface}
 \alias{as.character,Interface-method}
-
 
 \title{Gets a character string representing the Interface}
 
@@ -19,13 +17,15 @@
  Gets a character string representing the Interface.
 }
 
-\usage{\method{as.character}{Interface}(x, ...)}
+\usage{
+\method{as.character}{Interface}(x, ...)
+}
 
 \value{
  Returns a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Interface}}.

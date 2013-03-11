@@ -9,9 +9,7 @@
 \name{staticCode.Object}
 \alias{staticCode.Object}
 \alias{Object.staticCode}
-\alias{staticCode.Object}
 \alias{staticCode,Object-method}
-
 
 \title{Method that will be call each time a new instance of a class is created}
 
@@ -22,7 +20,9 @@
   each time a new instance of a class is created.
 }
 
-\usage{\method{staticCode}{Object}(static, ...)}
+\usage{
+\method{staticCode}{Object}(static, ...)
+}
 
 \arguments{
   \item{static}{The static instance of this class.}
@@ -43,7 +43,7 @@
 
 \examples{\dontrun{For a complete example see help(Object).}}
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Object}}.

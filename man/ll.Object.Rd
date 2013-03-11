@@ -9,9 +9,7 @@
 \name{ll.Object}
 \alias{ll.Object}
 \alias{Object.ll}
-\alias{ll.Object}
 \alias{ll,Object-method}
-
 
 \title{Generates a list of informative properties of all members of an Object}
 
@@ -19,7 +17,9 @@
   Generates a list of informative properties of all members of an Object.
 }
 
-\usage{\method{ll}{Object}(this, ...)}
+\usage{
+\method{ll}{Object}(this, ...)
+}
 
 \arguments{
   \item{...}{Any arguments accepted by the underlying function \code{ll()}.}
@@ -44,7 +44,7 @@
   }
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link{ll.default}}().

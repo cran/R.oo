@@ -9,9 +9,7 @@
 \name{detach.BasicObject}
 \alias{detach.BasicObject}
 \alias{BasicObject.detach}
-\alias{detach.BasicObject}
 \alias{detach,BasicObject-method}
-
 
 \title{Detach an BasicObject from the R search path}
 
@@ -21,7 +19,9 @@
  generated and nothing will be done.
 }
 
-\usage{\method{detach}{BasicObject}(this, ...)}
+\usage{
+\method{detach}{BasicObject}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -31,7 +31,7 @@
  Returns \code{\link[base:logical]{TRUE}} if the BasicObject was detached, otherwise \code{\link[base:logical]{FALSE}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.oo:attach.BasicObject]{*attach}()} and \code{\link[base]{attach}}(), \code{\link[base]{detach}}().

@@ -9,9 +9,7 @@
 \name{extend.BasicObject}
 \alias{extend.BasicObject}
 \alias{BasicObject.extend}
-\alias{extend.BasicObject}
 \alias{extend,BasicObject-method}
-
 
 \title{Extends another class}
 
@@ -26,7 +24,9 @@
   The method should be used by the constructor of a class and nowhere else.
 }
 
-\usage{\method{extend}{BasicObject}(this, ...className, ...)}
+\usage{
+\method{extend}{BasicObject}(this, ...className, ...)
+}
 
 \arguments{
   \item{...className}{The name of new class.}
@@ -37,7 +37,7 @@
  Returns an BasicObject of class \code{className}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{BasicObject}}.

@@ -9,9 +9,7 @@
 \name{getKnownSubclasses.Class}
 \alias{getKnownSubclasses.Class}
 \alias{Class.getKnownSubclasses}
-\alias{getKnownSubclasses.Class}
 \alias{getKnownSubclasses,Class-method}
-
 
 \title{Gets all subclasses that are currently loaded}
 
@@ -19,7 +17,9 @@
  Gets all subclasses that are currently loaded.
 }
 
-\usage{\method{getKnownSubclasses}{Class}(this, sort=TRUE, ...)}
+\usage{
+\method{getKnownSubclasses}{Class}(this, sort=TRUE, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -45,7 +45,7 @@
   }
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.oo:getSuperclasses.Class]{*getSuperclasses}()}.

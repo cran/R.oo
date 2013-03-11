@@ -9,9 +9,7 @@
 \name{getHowToCite.Package}
 \alias{getHowToCite.Package}
 \alias{Package.getHowToCite}
-\alias{getHowToCite.Package}
 \alias{getHowToCite,Package-method}
-
 
 \title{Gets the howToCite of this package}
 
@@ -21,8 +19,10 @@
   \code{\link[R.oo:getPath.Package]{*getPath}()}.
 }
 
-\usage{\method{getHowToCite}{Package}(this, newline="
-", ...)}
+\usage{
+\method{getHowToCite}{Package}(this, newline="
+", ...)
+}
 
 \arguments{
   \item{newline}{The \code{\link[base]{character}} string to collapse lines in the file.}
@@ -34,7 +34,7 @@
   \code{\link[base]{character}} string. If not found, \code{\link[base]{NULL}} is returned.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Package}}.

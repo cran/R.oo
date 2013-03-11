@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{setManPath.Rdoc}
+\name{Rdoc$setManPath}
+\alias{Rdoc$setManPath}
 \alias{setManPath.Rdoc}
 \alias{Rdoc.setManPath}
-\alias{setManPath.Rdoc}
 \alias{setManPath,Rdoc-method}
-
 
 \title{Sets the path to the directory where the Rd files should be saved}
 
@@ -21,8 +20,13 @@
   are placed.
 }
 
-\synopsis{setManPath.Rdoc(this, path="../man/", ...)}
-\usage{Rdoc$setManPath(path="../man/", ...)}
+\usage{
+## Static method (use this):
+## Rdoc$setManPath(path="../man/", ...)
+
+## Don't use the below:
+\method{setManPath}{Rdoc}(this, path="../man/", ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -32,7 +36,7 @@
  Returns nothing.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.oo:getManPath.Rdoc]{*getManPath}()}

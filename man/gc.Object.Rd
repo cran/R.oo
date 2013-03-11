@@ -9,9 +9,7 @@
 \name{gc.Object}
 \alias{gc.Object}
 \alias{Object.gc}
-\alias{gc.Object}
 \alias{gc,Object-method}
-
 
 \title{Clear cached fields and calls the garbage collector}
 
@@ -19,7 +17,9 @@
  Clear cached fields and calls the garbage collector.  Cached fields are set to \code{\link[base]{NULL}} when cleared.
 }
 
-\usage{\method{gc}{Object}(this, ...)}
+\usage{
+\method{gc}{Object}(this, ...)
+}
 
 \arguments{
   \item{...}{Passed to \code{\link[base]{gc}}() returns.}
@@ -52,7 +52,7 @@ print(obj) # [1] "CachedObject: 0x02466E28. RAM: 391.05kb."
 
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   To clear the fields without calling the garbage collector,

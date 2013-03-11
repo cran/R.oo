@@ -9,9 +9,7 @@
 \name{hashCode.BasicObject}
 \alias{hashCode.BasicObject}
 \alias{BasicObject.hashCode}
-\alias{hashCode.BasicObject}
 \alias{hashCode,BasicObject-method}
-
 
 \title{Gets a hash code for the object}
 
@@ -19,7 +17,9 @@
  Gets a hash code for the object.
 }
 
-\usage{\method{hashCode}{BasicObject}(this, ...)}
+\usage{
+\method{hashCode}{BasicObject}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
   Returns an \code{\link[base]{integer}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.oo:equals.BasicObject]{*equals}()}

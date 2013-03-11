@@ -9,9 +9,7 @@
 \name{isAbstract.Class}
 \alias{isAbstract.Class}
 \alias{Class.isAbstract}
-\alias{isAbstract.Class}
 \alias{isAbstract,Class-method}
-
 
 \title{Checks if a class is abstract or not}
 
@@ -19,7 +17,9 @@
  Checks if a class is abstract or not. A class is abstract if it has abstract methods.
 }
 
-\usage{\method{isAbstract}{Class}(this, ...)}
+\usage{
+\method{isAbstract}{Class}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -34,7 +34,7 @@
     throw("The class RccViolationException should NOT be abstract.")
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[base]{class}}().

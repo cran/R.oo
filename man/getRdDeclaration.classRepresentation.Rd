@@ -8,8 +8,6 @@
 
 \name{getRdDeclaration.classRepresentation}
 \alias{getRdDeclaration.classRepresentation}
-\alias{getRdDeclaration.classRepresentation}
-
 
 
 \title{Gets the class declaration in Rd format}
@@ -18,7 +16,9 @@
   Gets the class declaration in Rd format.
 }
 
-\usage{\method{getRdDeclaration}{classRepresentation}(this, ...)}
+\usage{
+\method{getRdDeclaration}{classRepresentation}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -28,7 +28,7 @@
  Returns a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 
 \keyword{methods}

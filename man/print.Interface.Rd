@@ -9,9 +9,7 @@
 \name{print.Interface}
 \alias{print.Interface}
 \alias{Interface.print}
-\alias{print.Interface}
 \alias{print,Interface-method}
-
 
 \title{Prints an Interface}
 
@@ -20,13 +18,15 @@
  value of \code{as.character()} of the object.
 }
 
-\usage{\method{print}{Interface}(x, ...)}
+\usage{
+\method{print}{Interface}(x, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Interface}}.

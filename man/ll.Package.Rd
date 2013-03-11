@@ -9,9 +9,7 @@
 \name{ll.Package}
 \alias{ll.Package}
 \alias{Package.ll}
-\alias{ll.Package}
 \alias{ll,Package-method}
-
 
 \title{Generates a list of informative properties of all members of the package}
 
@@ -22,7 +20,9 @@
   retrieved and then the package will be unloaded again.
 }
 
-\usage{\method{ll}{Package}(this, envir=pos.to.env(getPosition(this)), ...)}
+\usage{
+\method{ll}{Package}(this, envir=pos.to.env(getPosition(this)), ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -46,7 +46,7 @@
   \dontrun{ll(R.oo)}
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Package}}.

@@ -34,7 +34,9 @@ extends \link[R.oo]{Object}\cr
   neither the end user nor the programmer need to no about the class Class.
  }
 
- \usage{Class(name=NULL, constructor=NULL)}
+ \usage{
+Class(name=NULL, constructor=NULL)
+}
 
  \arguments{
    \item{name}{Name of the class.}
@@ -87,7 +89,7 @@ $, $<-, [[, [[<-, as.character, attach, attachLocally, clearCache, clearLookupCa
    information about the class and its fields and methods.
  }
 
- \author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+ \author{Henrik Bengtsson}
 
 
 

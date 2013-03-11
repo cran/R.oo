@@ -9,9 +9,7 @@
 \name{as.character.Exception}
 \alias{as.character.Exception}
 \alias{Exception.as.character}
-\alias{as.character.Exception}
 \alias{as.character,Exception-method}
-
 
 \title{Gets a character string representing of the Exception}
 
@@ -20,7 +18,9 @@
  By default the format is: "[\{POSIX date string\}] \{class name\}: \{msg\}".
 }
 
-\usage{\method{as.character}{Exception}(x, ...)}
+\usage{
+\method{as.character}{Exception}(x, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -32,7 +32,7 @@
 
 \examples{\dontrun{For a complete example see help(Exception).}}
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Exception}}.

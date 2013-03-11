@@ -9,9 +9,7 @@
 \name{DOLLAR< -.Object}
 \alias{$<-.Object}
 \alias{Object.$<-}
-\alias{$<-.Object}
 \alias{$<-,Object-method}
-
 \alias{Object.[[<-}
 \alias{[[<-.Object}
 \alias{[[<-,Object-method}
@@ -67,7 +65,7 @@
 
 \examples{\dontrun{For a complete example see help(Object).}}
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Object}}.

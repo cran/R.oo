@@ -9,9 +9,7 @@
 \name{getChangeLog.Package}
 \alias{getChangeLog.Package}
 \alias{Package.getChangeLog}
-\alias{getChangeLog.Package}
 \alias{getChangeLog,Package-method}
-
 \alias{Package.getNews}
 \alias{getNews.Package}
 \alias{getNews,Package-method}
@@ -30,8 +28,10 @@
   i.e. \code{\link[R.oo:getPath.Package]{*getPath}()}.
 }
 
-\usage{\method{getChangeLog}{Package}(this, filenames=c("NEWS", "HISTORY", "ChangeLog"), newline="
-", ...)}
+\usage{
+\method{getChangeLog}{Package}(this, filenames=c("NEWS", "HISTORY", "ChangeLog"), newline="
+", ...)
+}
 
 \arguments{
   \item{filenames}{A \code{\link[base]{character}} \code{\link[base]{vector}} of (non-case sensitive) filenames
@@ -45,7 +45,7 @@
   \code{\link[base]{character}} string. If not found, \code{\link[base]{NULL}} is returned.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Package}}.

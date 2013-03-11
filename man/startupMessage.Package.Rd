@@ -9,9 +9,7 @@
 \name{startupMessage.Package}
 \alias{startupMessage.Package}
 \alias{Package.startupMessage}
-\alias{startupMessage.Package}
 \alias{startupMessage,Package-method}
-
 
 \title{Generates a 'package successfully loaded' package startup message}
 
@@ -19,7 +17,9 @@
   Generates a 'package successfully loaded' package startup message.
 }
 
-\usage{\method{startupMessage}{Package}(this, ...)}
+\usage{
+\method{startupMessage}{Package}(this, ...)
+}
 
 \arguments{
   \item{...}{Additional arguments passed to
@@ -30,7 +30,7 @@
   Returns nothing.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[base]{packageStartupMessage}}().

@@ -9,9 +9,7 @@
 \name{unload.Package}
 \alias{unload.Package}
 \alias{Package.unload}
-\alias{unload.Package}
 \alias{unload,Package-method}
-
 
 \title{Unloads a package}
 
@@ -21,7 +19,9 @@
   If the package is not loaded, it will quietly return.
 }
 
-\usage{\method{unload}{Package}(this, ...)}
+\usage{
+\method{unload}{Package}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -40,7 +40,7 @@ print(isLoaded(pkg))
 
 }}
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.oo:load.Package]{*load}()}.

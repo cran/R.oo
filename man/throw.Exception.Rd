@@ -9,9 +9,7 @@
 \name{throw.Exception}
 \alias{throw.Exception}
 \alias{Exception.throw}
-\alias{throw.Exception}
 \alias{throw,Exception-method}
-
 
 \title{Throws an Exception that can be caught}
 
@@ -19,7 +17,9 @@
  Throws an Exception that can be caught by \code{tryCatch()}.
 }
 
-\usage{\method{throw}{Exception}(this, ...)}
+\usage{
+\method{throw}{Exception}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -31,7 +31,7 @@
 
 \examples{\dontrun{For a complete example see help(Exception).}}
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Exception}}.

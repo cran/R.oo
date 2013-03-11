@@ -9,8 +9,6 @@
 
 \name{objectSize.environment}
 \alias{objectSize.environment}
-\alias{objectSize.environment}
-
 
 \title{Gets the size of an environment in bytes}
 
@@ -18,7 +16,9 @@
   Gets the size of an environment in bytes.
 }
 
-\usage{\method{objectSize}{environment}(envir, ...)}
+\usage{
+\method{objectSize}{environment}(envir, ...)
+}
 
 \arguments{
   \item{envir}{An \code{\link[base]{environment}}().}
@@ -29,7 +29,7 @@
  Returns an \code{\link[base]{integer}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   Internally \code{\link[utils]{object.size}} is used.

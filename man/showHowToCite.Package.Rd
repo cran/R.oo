@@ -9,9 +9,7 @@
 \name{showHowToCite.Package}
 \alias{showHowToCite.Package}
 \alias{Package.showHowToCite}
-\alias{showHowToCite.Package}
 \alias{showHowToCite,Package-method}
-
 
 \title{Show the HOWTOCITE file of this package}
 
@@ -20,7 +18,9 @@
   If the \code{HOWTOCITE} file does not exist, an exception is thrown.
 }
 
-\usage{\method{showHowToCite}{Package}(this, ...)}
+\usage{
+\method{showHowToCite}{Package}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -30,7 +30,7 @@
   Returns nothing.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Package}}.

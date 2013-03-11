@@ -9,9 +9,7 @@
 \name{update.Package}
 \alias{update.Package}
 \alias{Package.update}
-\alias{update.Package}
 \alias{update,Package-method}
-
 
 \title{Updates the package is a newer version is available}
 
@@ -22,7 +20,9 @@
   especially for non-CRAN packages.
 }
 
-\usage{\method{update}{Package}(object, contribUrl=c(getContribUrl(this), getDevelUrl(this)), force=FALSE, reload=TRUE, verbose=TRUE, ...)}
+\usage{
+\method{update}{Package}(object, contribUrl=c(getContribUrl(this), getDevelUrl(this)), force=FALSE, reload=TRUE, verbose=TRUE, ...)
+}
 
 \arguments{
   \item{contribUrl}{The URL from where the package can be installed and
@@ -40,7 +40,7 @@
 
 \examples{\dontrun{update(R.oo)}}
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[utils]{update.packages}}.

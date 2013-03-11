@@ -9,9 +9,7 @@
 \name{attach.BasicObject}
 \alias{attach.BasicObject}
 \alias{BasicObject.attach}
-\alias{attach.BasicObject}
 \alias{attach,BasicObject-method}
-
 
 \title{Attach an BasicObject to the R search path}
 
@@ -22,7 +20,9 @@
  inbetween, a \code{\link[base]{warning}} will be generated and nothing will be done.
 }
 
-\usage{\method{attach}{BasicObject}(this, private=FALSE, pos=2, ...)}
+\usage{
+\method{attach}{BasicObject}(this, private=FALSE, pos=2, ...)
+}
 
 \arguments{
   \item{private}{If \code{\link[base:logical]{TRUE}}, private fields will also be attached,
@@ -36,7 +36,7 @@
  Returns \code{\link[base:logical]{TRUE}} if the \code{\link{BasicObject}} was attached, otherwise \code{\link[base:logical]{FALSE}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.oo:detach.BasicObject]{*detach}()} and \code{\link[base]{attach}}(), \code{\link[base]{detach}}().

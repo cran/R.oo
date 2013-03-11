@@ -11,9 +11,7 @@
 \name{getRdDeclaration.Class}
 \alias{getRdDeclaration.Class}
 \alias{Class.getRdDeclaration}
-\alias{getRdDeclaration.Class}
 \alias{getRdDeclaration,Class-method}
-
 
 \title{Gets the class declaraction in Rd format}
 
@@ -21,7 +19,9 @@
   Gets the class declaraction in Rd format.
 }
 
-\usage{\method{getRdDeclaration}{Class}(this, ...)}
+\usage{
+\method{getRdDeclaration}{Class}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -31,7 +31,7 @@
  Returns a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Class}}.

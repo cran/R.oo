@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getKeywords.Rdoc}
+\name{Rdoc$getKeywords}
+\alias{Rdoc$getKeywords}
 \alias{getKeywords.Rdoc}
 \alias{Rdoc.getKeywords}
-\alias{getKeywords.Rdoc}
 \alias{getKeywords,Rdoc-method}
-
 
 \title{Gets the keywords defined in R with descriptions}
 
@@ -19,8 +18,13 @@
   Gets the keywords defined in R with descriptions.
 }
 
-\synopsis{getKeywords.Rdoc(this, fullInfo=FALSE, ...)}
-\usage{Rdoc$getKeywords(fullInfo=FALSE, ...)}
+\usage{
+## Static method (use this):
+## Rdoc$getKeywords(fullInfo=FALSE, ...)
+
+## Don't use the below:
+\method{getKeywords}{Rdoc}(this, fullInfo=FALSE, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -30,7 +34,7 @@
  Returns a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.oo:setManPath.Rdoc]{*setManPath}()}

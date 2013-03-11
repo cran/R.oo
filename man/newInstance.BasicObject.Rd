@@ -9,9 +9,7 @@
 \name{newInstance.BasicObject}
 \alias{newInstance.BasicObject}
 \alias{BasicObject.newInstance}
-\alias{newInstance.BasicObject}
 \alias{newInstance,BasicObject-method}
-
 
 \title{Creates a new instance of the same class as this object}
 
@@ -19,7 +17,9 @@
  Creates a new instance of the same class as this object.
 }
 
-\usage{\method{newInstance}{BasicObject}(this, ...)}
+\usage{
+\method{newInstance}{BasicObject}(this, ...)
+}
 
 \arguments{
   \item{...}{Arguments passed to the constructor of the corresponding
@@ -30,7 +30,7 @@
   Returns a reference to an instance of \code{\link{BasicObject}} or a subclass thereof.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link{newInstance.Object}}().

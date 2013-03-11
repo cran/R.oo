@@ -9,9 +9,7 @@
 \name{check.Rdoc}
 \alias{check.Rdoc}
 \alias{Rdoc.check}
-\alias{check.Rdoc}
 \alias{check,Rdoc-method}
-
 
 \title{Checks the compiled Rd files}
 
@@ -19,7 +17,9 @@
   Checks the compiled Rd files.
 }
 
-\usage{\method{check}{Rdoc}(this, manPath=getManPath(this), verbose=FALSE, ...)}
+\usage{
+\method{check}{Rdoc}(this, manPath=getManPath(this), verbose=FALSE, ...)
+}
 
 \arguments{
  \item{manPath}{The path to the Rd files (\code{\link[base]{character}} string).}
@@ -35,7 +35,7 @@
  Internally the \code{tools} package is used.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Rdoc}}.

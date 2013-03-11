@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getRdTitle.Rdoc}
+\name{Rdoc$getRdTitle}
+\alias{Rdoc$getRdTitle}
 \alias{getRdTitle.Rdoc}
 \alias{Rdoc.getRdTitle}
-\alias{getRdTitle.Rdoc}
 \alias{getRdTitle,Rdoc-method}
-
 
 \title{Extracts the title string of a Rd file}
 
@@ -19,8 +18,13 @@
   Extracts the title string of a Rd file corresponding the the specified method of the specified class.
 }
 
-\synopsis{getRdTitle.Rdoc(this, class, method, ...)}
-\usage{Rdoc$getRdTitle(class, method, ...)}
+\usage{
+## Static method (use this):
+## Rdoc$getRdTitle(class, method, ...)
+
+## Don't use the below:
+\method{getRdTitle}{Rdoc}(this, class, method, ...)
+}
 
 \arguments{
   \item{method}{The method to be search for.}
@@ -32,7 +36,7 @@
  Returns a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Rdoc}}.

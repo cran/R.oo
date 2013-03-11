@@ -9,9 +9,7 @@
 \name{getAuthor.Package}
 \alias{getAuthor.Package}
 \alias{Package.getAuthor}
-\alias{getAuthor.Package}
 \alias{getAuthor,Package-method}
-
 
 \title{Gets the Author of this package}
 
@@ -19,14 +17,19 @@
   Gets the Author of this package as specified by the \code{DESCRIPTION} file.
 }
 
-\usage{\method{getAuthor}{Package}(this, ...)}
+\usage{
+\method{getAuthor}{Package}(this, as=c("character", "person"), include=c("given", "family"), ...)
+}
 
 \arguments{
-  \item{...}{Not used.}
+  \item{as}{A \code{\link[base]{character}} string specifying the return format.}
+  \item{include}{A \code{\link[base]{character}} \code{\link[base]{vector}}  specifying which person fields
+    to include if returning a \code{\link[base]{character}} string.}
+  \item{...}{Optional arguments passed to \code{\link[utils]{format.person}}.}
 }
 
 \value{
-  Returns a \code{\link[base]{character}} string.
+  Returns a \code{\link[base]{character}} string or a \code{\link[utils]{person}} object.
 }
 
 \examples{
@@ -34,7 +37,7 @@
   print(getAuthor(pkg))
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Package}}.

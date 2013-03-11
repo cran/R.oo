@@ -9,9 +9,7 @@
 \name{isReferable.BasicObject}
 \alias{isReferable.BasicObject}
 \alias{BasicObject.isReferable}
-\alias{isReferable.BasicObject}
 \alias{isReferable,BasicObject-method}
-
 
 \title{Checks if the object is referable or not}
 
@@ -19,7 +17,9 @@
  Checks if the object is referable or not.
 }
 
-\usage{\method{isReferable}{BasicObject}(this, ...)}
+\usage{
+\method{isReferable}{BasicObject}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -30,7 +30,7 @@
  \code{\link{BasicObject}}'s.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{BasicObject}}.

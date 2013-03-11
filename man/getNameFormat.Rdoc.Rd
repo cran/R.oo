@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{getNameFormat.Rdoc}
+\name{Rdoc$getNameFormat}
+\alias{Rdoc$getNameFormat}
 \alias{getNameFormat.Rdoc}
 \alias{Rdoc.getNameFormat}
-\alias{getNameFormat.Rdoc}
 \alias{getNameFormat,Rdoc-method}
-
 
 \title{Gets the current name format}
 
@@ -19,8 +18,13 @@
   Gets the current name format.
 }
 
-\synopsis{getNameFormat.Rdoc(static, ...)}
-\usage{Rdoc$getNameFormat(...)}
+\usage{
+## Static method (use this):
+## Rdoc$getNameFormat(...)
+
+## Don't use the below:
+\method{getNameFormat}{Rdoc}(static, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -30,7 +34,7 @@
  Returns a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.oo:setNameFormat.Rdoc]{*setNameFormat}()}

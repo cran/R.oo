@@ -8,8 +8,6 @@
 
 \name{getRdHierarchy.classRepresentation}
 \alias{getRdHierarchy.classRepresentation}
-\alias{getRdHierarchy.classRepresentation}
-
 
 
 \title{Gets the class hierarchy in Rd format}
@@ -18,7 +16,9 @@
   Gets the class hierarchy in Rd format.
 }
 
-\usage{\method{getRdHierarchy}{classRepresentation}(this, ...)}
+\usage{
+\method{getRdHierarchy}{classRepresentation}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -28,7 +28,7 @@
  Returns a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 
 \keyword{methods}

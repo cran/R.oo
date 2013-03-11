@@ -9,9 +9,7 @@
 \name{attach.Object}
 \alias{attach.Object}
 \alias{Object.attach}
-\alias{attach.Object}
 \alias{attach,Object-method}
-
 
 \title{Attaches an Object to the R search path}
 
@@ -22,7 +20,9 @@
  a \code{\link[base]{warning}} will be generated and nothing will be done.
 }
 
-\usage{\method{attach}{Object}(this, private=FALSE, pos=2, ...)}
+\usage{
+\method{attach}{Object}(this, private=FALSE, pos=2, ...)
+}
 
 \arguments{
   \item{private}{If \code{\link[base:logical]{TRUE}}, private fields will also be attached,
@@ -38,7 +38,7 @@
 
 \examples{\dontrun{For a complete example see help(Object).}}
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.oo:detach.Object]{*detach}()} and \code{\link[base]{attach}}(), \code{\link[base]{detach}}().

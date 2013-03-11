@@ -9,9 +9,7 @@
 \name{getDataPath.Package}
 \alias{getDataPath.Package}
 \alias{Package.getDataPath}
-\alias{getDataPath.Package}
 \alias{getDataPath,Package-method}
-
 
 \title{Gets the path to the data (data/) directory of this package}
 
@@ -19,7 +17,9 @@
   Gets the path to the data (data/) directory of this package.
 }
 
-\usage{\method{getDataPath}{Package}(this, ...)}
+\usage{
+\method{getDataPath}{Package}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
   Returns a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Package}}.

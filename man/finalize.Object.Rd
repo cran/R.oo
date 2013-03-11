@@ -9,9 +9,7 @@
 \name{finalize.Object}
 \alias{finalize.Object}
 \alias{Object.finalize}
-\alias{finalize.Object}
 \alias{finalize,Object-method}
-
 
 \title{Finalizer methods called when object is clean out}
 
@@ -27,7 +25,9 @@
  \bold{A finalizer method should never be called explicitly!}
 }
 
-\usage{\method{finalize}{Object}(this, ...)}
+\usage{
+\method{finalize}{Object}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -62,7 +62,7 @@ rm(o)
 ## Vcells  53725  0.5     786432  6.0
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Object}}.

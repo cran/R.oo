@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{argsToString.Rdoc}
+\name{Rdoc$argsToString}
+\alias{Rdoc$argsToString}
 \alias{argsToString.Rdoc}
 \alias{Rdoc.argsToString}
-\alias{argsToString.Rdoc}
 \alias{argsToString,Rdoc-method}
-
 
 \title{Gets the arguments signature of a function}
 
@@ -19,8 +18,13 @@
   Gets the arguments signature of a function.
 }
 
-\synopsis{argsToString.Rdoc(static, fcn, ...)}
-\usage{Rdoc$argsToString(fcn, ...)}
+\usage{
+## Static method (use this):
+## Rdoc$argsToString(fcn, ...)
+
+## Don't use the below:
+\method{argsToString}{Rdoc}(static, fcn, ...)
+}
 
 \arguments{
  \item{fcn}{A \code{\link[base]{function}}.}
@@ -31,7 +35,7 @@
  Returns a \code{\link[base]{list}} of \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Rdoc}}.

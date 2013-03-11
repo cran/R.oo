@@ -9,9 +9,7 @@
 \name{getPackage.InternalErrorException}
 \alias{getPackage.InternalErrorException}
 \alias{InternalErrorException.getPackage}
-\alias{getPackage.InternalErrorException}
 \alias{getPackage,InternalErrorException-method}
-
 
 \title{Gets the suspicious package likely to contain an error}
 
@@ -19,7 +17,9 @@
  Gets the suspicious package likely to contain an error.
 }
 
-\usage{\method{getPackage}{InternalErrorException}(this, ...)}
+\usage{
+\method{getPackage}{InternalErrorException}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
  Returns a \code{\link{Package}} object.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{InternalErrorException}}.

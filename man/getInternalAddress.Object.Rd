@@ -9,9 +9,7 @@
 \name{getInternalAddress.Object}
 \alias{getInternalAddress.Object}
 \alias{Object.getInternalAddress}
-\alias{getInternalAddress.Object}
 \alias{getInternalAddress,Object-method}
-
 
 \title{Gets the memory location where the Object resides}
 
@@ -19,7 +17,9 @@
  Gets the memory location where the Object resides.
 }
 
-\usage{\method{getInternalAddress}{Object}(this, format=c("numeric", "hexstring"), ...)}
+\usage{
+\method{getInternalAddress}{Object}(this, format=c("numeric", "hexstring"), ...)
+}
 
 \arguments{
   \item{format}{A \code{\link[base]{character}} string specifying what format to return.}
@@ -38,7 +38,7 @@
   getInternalAddress(obj, format="hexstring")  # "0x000000000ab6a7a8"
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[=getName.environment]{getName()}}.

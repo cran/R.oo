@@ -9,9 +9,7 @@
 \name{getFields.BasicObject}
 \alias{getFields.BasicObject}
 \alias{BasicObject.getFields}
-\alias{getFields.BasicObject}
 \alias{getFields,BasicObject-method}
-
 
 \title{Returns the field names of an BasicObject}
 
@@ -19,7 +17,9 @@
   Returns the field names of an BasicObject.
 }
 
-\usage{\method{getFields}{BasicObject}(this, private=FALSE, ...)}
+\usage{
+\method{getFields}{BasicObject}(this, private=FALSE, ...)
+}
 
 \arguments{
   \item{private}{If \code{\link[base:logical]{TRUE}}, private fields will also be returned,
@@ -31,7 +31,7 @@
  Returns a \code{\link[base]{character}} \code{\link[base]{vector}} of field names.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   To check if a field exists or not, see \code{\link[R.oo:hasField.BasicObject]{*hasField}()}.

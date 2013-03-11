@@ -9,9 +9,7 @@
 \name{getDate.Package}
 \alias{getDate.Package}
 \alias{Package.getDate}
-\alias{getDate.Package}
 \alias{getDate,Package-method}
-
 
 \title{Gets the date when package was build}
 
@@ -19,7 +17,9 @@
   Checks if the package is loaded onto the search path or not.
 }
 
-\usage{\method{getDate}{Package}(this, ...)}
+\usage{
+\method{getDate}{Package}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -34,7 +34,7 @@
   print(isLoaded(pkg))       # TRUE
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Package}}.

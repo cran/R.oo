@@ -9,9 +9,7 @@
 \name{objectSize.BasicObject}
 \alias{objectSize.BasicObject}
 \alias{BasicObject.objectSize}
-\alias{objectSize.BasicObject}
 \alias{objectSize,BasicObject-method}
-
 
 \title{Gets the size of the BasicObject in bytes}
 
@@ -20,7 +18,9 @@
   the size of memory the BasicObject actually allocates might vary slighty.
 }
 
-\usage{\method{objectSize}{BasicObject}(this, ...)}
+\usage{
+\method{objectSize}{BasicObject}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -30,7 +30,7 @@
  Returns an \code{\link[base]{integer}} specifying the size of the object in number of bytes.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[utils]{object.size}}.

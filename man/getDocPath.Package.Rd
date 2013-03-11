@@ -9,9 +9,7 @@
 \name{getDocPath.Package}
 \alias{getDocPath.Package}
 \alias{Package.getDocPath}
-\alias{getDocPath.Package}
 \alias{getDocPath,Package-method}
-
 
 \title{Gets the path to the accompanying documentation (doc/) directory of this package}
 
@@ -19,7 +17,9 @@
   Gets the path to the accompanying documentation (doc/) directory of this package.
 }
 
-\usage{\method{getDocPath}{Package}(this, ...)}
+\usage{
+\method{getDocPath}{Package}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -34,7 +34,7 @@
   print(list.files(R.oo$docPath))       # as a virtual field
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Package}}.

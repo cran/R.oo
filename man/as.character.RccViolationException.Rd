@@ -9,9 +9,7 @@
 \name{as.character.RccViolationException}
 \alias{as.character.RccViolationException}
 \alias{RccViolationException.as.character}
-\alias{as.character.RccViolationException}
 \alias{as.character,RccViolationException-method}
-
 
 \title{Gets a string representing of the RCC violation}
 
@@ -19,7 +17,9 @@
  Gets a string representing of the RCC violation of format "[\{POSIX date string\}] \{class name\}: \{msg\}, cf. http://aroma-project.org/developers/RCC/".
 }
 
-\usage{\method{as.character}{RccViolationException}(x, ...)}
+\usage{
+\method{as.character}{RccViolationException}(x, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -31,7 +31,7 @@
 
 \examples{\dontrun{For a complete example see help(Exception).}}
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{RccViolationException}}.

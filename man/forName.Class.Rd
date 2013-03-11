@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{forName.Class}
+\name{Class$forName}
+\alias{Class$forName}
 \alias{forName.Class}
 \alias{Class.forName}
-\alias{forName.Class}
 \alias{forName,Class-method}
-
 
 \title{Gets a Class object by a name of a class}
 
@@ -19,8 +18,13 @@
  Gets a Class object by a name of a class. If no such class exists and exception is thrown.
 }
 
-\synopsis{forName.Class(this, name, ...)}
-\usage{Class$forName(name, ...)}
+\usage{
+## Static method (use this):
+## Class$forName(name, ...)
+
+## Don't use the below:
+\method{forName}{Class}(this, name, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -34,7 +38,7 @@
   print(Class$forName("Exception"))
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[base]{class}}().

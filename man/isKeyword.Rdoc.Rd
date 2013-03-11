@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{isKeyword.Rdoc}
+\name{Rdoc$isKeyword}
+\alias{Rdoc$isKeyword}
 \alias{isKeyword.Rdoc}
 \alias{Rdoc.isKeyword}
-\alias{isKeyword.Rdoc}
 \alias{isKeyword,Rdoc-method}
-
 
 \title{Checks if a word is a Rd keyword}
 
@@ -19,8 +18,13 @@
   Checks if a word is a Rd keyword.
 }
 
-\synopsis{isKeyword.Rdoc(this, word, ...)}
-\usage{Rdoc$isKeyword(word, ...)}
+\usage{
+## Static method (use this):
+## Rdoc$isKeyword(word, ...)
+
+## Don't use the below:
+\method{isKeyword}{Rdoc}(this, word, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -30,7 +34,7 @@
  Returns a \code{\link[base]{logical}}.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.oo:getKeywords.Rdoc]{*getKeywords}()}

@@ -9,9 +9,7 @@
 \name{getMessage.InternalErrorException}
 \alias{getMessage.InternalErrorException}
 \alias{InternalErrorException.getMessage}
-\alias{getMessage.InternalErrorException}
 \alias{getMessage,InternalErrorException-method}
-
 
 \title{Gets the message of the exception}
 
@@ -25,7 +23,9 @@
  easily cut'n'paste that information into a bug report.
 }
 
-\usage{\method{getMessage}{InternalErrorException}(this, ...)}
+\usage{
+\method{getMessage}{InternalErrorException}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -35,7 +35,7 @@
  Returns a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{InternalErrorException}}.

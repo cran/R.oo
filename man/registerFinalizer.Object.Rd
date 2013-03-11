@@ -9,9 +9,7 @@
 \name{registerFinalizer.Object}
 \alias{registerFinalizer.Object}
 \alias{Object.registerFinalizer}
-\alias{registerFinalizer.Object}
 \alias{registerFinalizer,Object-method}
-
 
 \title{Registers a finalizer hook for the object}
 
@@ -23,7 +21,9 @@
  at all.
 }
 
-\usage{\method{registerFinalizer}{Object}(this, ...)}
+\usage{
+\method{registerFinalizer}{Object}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -33,7 +33,7 @@
  Returns nothing.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   Internally, \code{\link[base]{reg.finalizer}}() is used.

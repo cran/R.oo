@@ -9,9 +9,7 @@
 \name{clearLookupCache.Object}
 \alias{clearLookupCache.Object}
 \alias{Object.clearLookupCache}
-\alias{clearLookupCache.Object}
 \alias{clearLookupCache,Object-method}
-
 
 \title{Clear internal fields used for faster lookup}
 
@@ -21,7 +19,9 @@
  object.
 }
 
-\usage{\method{clearLookupCache}{Object}(this, ...)}
+\usage{
+\method{clearLookupCache}{Object}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -31,7 +31,7 @@
   Returns itself (invisible).
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Object}}.

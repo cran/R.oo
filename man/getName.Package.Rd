@@ -9,9 +9,7 @@
 \name{getName.Package}
 \alias{getName.Package}
 \alias{Package.getName}
-\alias{getName.Package}
 \alias{getName,Package-method}
-
 
 \title{Gets the name of this package}
 
@@ -19,7 +17,9 @@
   Gets the name of this package.
 }
 
-\usage{\method{getName}{Package}(this, ...)}
+\usage{
+\method{getName}{Package}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
   Returns a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Package}}.

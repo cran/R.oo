@@ -9,9 +9,7 @@
 \name{isReferable.Object}
 \alias{isReferable.Object}
 \alias{Object.isReferable}
-\alias{isReferable.Object}
 \alias{isReferable,Object-method}
-
 
 \title{Checks if the object is referable or not}
 
@@ -19,7 +17,9 @@
  Checks if the object is referable or not.
 }
 
-\usage{\method{isReferable}{Object}(this, ...)}
+\usage{
+\method{isReferable}{Object}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -29,7 +29,7 @@
  Returns a \code{\link[base]{logical}} value, which by default is \code{\link[base:logical]{TRUE}} for all \code{\link[R.oo]{Object}}'s.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Object}}.

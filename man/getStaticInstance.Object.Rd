@@ -9,9 +9,7 @@
 \name{getStaticInstance.Object}
 \alias{getStaticInstance.Object}
 \alias{Object.getStaticInstance}
-\alias{getStaticInstance.Object}
 \alias{getStaticInstance,Object-method}
-
 
 \title{Gets the static instance of this objects class}
 
@@ -19,7 +17,9 @@
   Gets the static instance of this objects class.
 }
 
-\usage{\method{getStaticInstance}{Object}(this, ...)}
+\usage{
+\method{getStaticInstance}{Object}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -34,7 +34,7 @@
   obj <- getStaticInstance(ex)
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Object}}.

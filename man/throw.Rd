@@ -29,7 +29,9 @@
  using \code{\link[base:conditions]{tryCatch}()}.
 }
 
-\usage{\method{throw}{default}(...)}
+\usage{
+\method{throw}{default}(...)
+}
 
 \arguments{
   \item{...}{One or several strings that are concatenated and collapsed
@@ -54,7 +56,7 @@
   )
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   See the \code{\link{Exception}} class for more detailed information.

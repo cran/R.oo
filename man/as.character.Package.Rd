@@ -9,9 +9,7 @@
 \name{as.character.Package}
 \alias{as.character.Package}
 \alias{Package.as.character}
-\alias{as.character.Package}
 \alias{as.character,Package-method}
-
 
 \title{Gets a string representation of this package}
 
@@ -19,7 +17,9 @@
   Gets a string representation of this package.
 }
 
-\usage{\method{as.character}{Package}(x, ...)}
+\usage{
+\method{as.character}{Package}(x, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -31,7 +31,7 @@
 
 \examples{print(R.oo)}
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Package}}.

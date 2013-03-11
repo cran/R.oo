@@ -9,9 +9,7 @@
 \name{save.Object}
 \alias{save.Object}
 \alias{Object.save}
-\alias{save.Object}
 \alias{save,Object-method}
-
 
 \title{Saves an Object to a file or a connection}
 
@@ -19,7 +17,9 @@
   Saves an Object to a file or a connection.
 }
 
-\usage{\method{save}{Object}(this, file=NULL, path=NULL, compress=TRUE, ..., safe=TRUE)}
+\usage{
+\method{save}{Object}(this, file=NULL, path=NULL, compress=TRUE, ..., safe=TRUE)
+}
 
 \arguments{
  \item{file}{Filename or \code{\link[base:connections]{connection}} to which the Object should be saved.
@@ -39,7 +39,7 @@
 
 \examples{\dontrun{For a complete example see help(Object).}}
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.oo:load.Object]{*load}()} and \code{\link[base]{save}}(), \code{\link[base]{load}}().

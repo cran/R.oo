@@ -6,12 +6,11 @@
 % by the Rdoc compiler part of the R.oo package.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\name{createName.Rdoc}
+\name{Rdoc$createName}
+\alias{Rdoc$createName}
 \alias{createName.Rdoc}
 \alias{Rdoc.createName}
-\alias{createName.Rdoc}
 \alias{createName,Rdoc-method}
-
 
 \title{Creates a class-method name}
 
@@ -19,8 +18,13 @@
   Creates a class-method name.
 }
 
-\synopsis{createName.Rdoc(static, class, method, escape=TRUE, ...)}
-\usage{Rdoc$createName(class, method, escape=TRUE, ...)}
+\usage{
+## Static method (use this):
+## Rdoc$createName(class, method, escape=TRUE, ...)
+
+## Don't use the below:
+\method{createName}{Rdoc}(static, class, method, escape=TRUE, ...)
+}
 
 \arguments{
   \item{class}{A class name (\code{\link[base]{character}} string).}
@@ -34,7 +38,7 @@
  Returns \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link[R.oo:escapeRdFilename.Rdoc]{*escapeRdFilename}()}.

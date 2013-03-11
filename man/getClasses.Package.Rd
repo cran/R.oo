@@ -9,9 +9,7 @@
 \name{getClasses.Package}
 \alias{getClasses.Package}
 \alias{Package.getClasses}
-\alias{getClasses.Package}
 \alias{getClasses,Package-method}
-
 
 \title{Gets all classes of a package}
 
@@ -19,7 +17,9 @@
   Gets all classes of a package.
 }
 
-\usage{\method{getClasses}{Package}(this, ...)}
+\usage{
+\method{getClasses}{Package}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -34,7 +34,7 @@
   print(getClasses(pkg))
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   For more information see \code{\link{Package}}.

@@ -9,9 +9,7 @@
 \name{newInstance.Class}
 \alias{newInstance.Class}
 \alias{Class.newInstance}
-\alias{newInstance.Class}
 \alias{newInstance,Class-method}
-
 
 \title{Creates a new instance of this class}
 
@@ -22,7 +20,9 @@
  This method is simply calling the constructor method of the class.
 }
 
-\usage{\method{newInstance}{Class}(this, ...)}
+\usage{
+\method{newInstance}{Class}(this, ...)
+}
 
 \arguments{
   \item{...}{Not used.}
@@ -40,7 +40,7 @@
   obj <- Object(NA)
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link{newInstance.Object}}().

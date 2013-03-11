@@ -8,8 +8,6 @@
 
 \name{getRdMethods.classRepresentation}
 \alias{getRdMethods.classRepresentation}
-\alias{getRdMethods.classRepresentation}
-
 
 
 \title{Gets the methods in Rd format}
@@ -18,7 +16,9 @@
   Gets the methods in Rd format.
 }
 
-\usage{\method{getRdMethods}{classRepresentation}(class, visibility=c("public", "protected", "private"), trial=FALSE, ...)}
+\usage{
+\method{getRdMethods}{classRepresentation}(class, visibility=c("public", "protected", "private"), trial=FALSE, ...)
+}
 
 \arguments{
   \item{visibility}{-}
@@ -30,7 +30,7 @@
  Returns a \code{\link[base]{character}} string.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 
 \keyword{methods}

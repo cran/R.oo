@@ -18,7 +18,9 @@
   If a function is passed, \code{\link[base]{NULL}} is returned.
 }
 
-\usage{\method{dimension}{default}(object, ...)}
+\usage{
+\method{dimension}{default}(object, ...)
+}
 
 \arguments{
   \item{object}{The object for which the dimension should be obtained.}
@@ -36,7 +38,7 @@
   dimension(print)                      # NULL
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   \code{\link{ll.default}}().

@@ -9,8 +9,6 @@
 
 \name{throw.error}
 \alias{throw.error}
-\alias{throw.error}
-
 
 \title{Throws (rethrows) an object of class 'error'}
 
@@ -19,7 +17,9 @@
  with the new error handling mechanisms.
 }
 
-\usage{\method{throw}{error}(error, ...)}
+\usage{
+\method{throw}{error}(error, ...)
+}
 
 \arguments{
   \item{error}{An object or class 'error'.}
@@ -30,7 +30,7 @@
   Returns nothing.
 }
 
-\author{Henrik Bengtsson (\url{http://www.braju.com/R/})}
+\author{Henrik Bengtsson}
 
 \seealso{
   See the \code{tryCatch()} method etc.
