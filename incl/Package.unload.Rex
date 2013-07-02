@@ -1,5 +1,0 @@
-pkg <- Package("boot")
-load(pkg)
-print(isLoaded(pkg))
-unload(pkg)
-print(isLoaded(pkg))

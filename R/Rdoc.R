@@ -1,11 +1,11 @@
-###########################################################################/**
+##########################################################################/**
 # @RdocClass Rdoc
 #
 # @title "Class for converting Rdoc comments to Rd files"
 #
 # \description{
 #  @classhierarchy
-#  
+#
 #  @get "title".
 # }
 #
@@ -20,14 +20,14 @@
 # \examples{\dontrun{@include "../incl/Rdoc.Rex"}}
 #
 # \references{
-#   R developers, 
+#   R developers,
 #   \emph{Guidelines for Rd files},
 #   \url{http://developer.r-project.org/Rds.html},
 #   2003
 # }
 #
 # @keyword documentation
-#*/########################################################################### 
+#*/###########################################################################
 setConstructorS3("Rdoc", function() {
   extend(Object(), "Rdoc",
     .START      = paste(sep="", "/", "**"),  # To hide it from itself!!!
@@ -82,7 +82,7 @@ setMethodS3("getNameFormat", "Rdoc", function(static, ...) {
 # @title "Sets the current name format"
 #
 # \description{
-#   @get "title". 
+#   @get "title".
 #   Throws a @see "RccViolationException" if an unknown format is requested.
 # }
 #
@@ -91,9 +91,9 @@ setMethodS3("getNameFormat", "Rdoc", function(static, ...) {
 # \arguments{
 #   \item{nameFormat}{
 #    If \code{"method.class"}, help files for methods belonging to classes are
-#    named <method>.<class>. 
+#    named <method>.<class>.
 #    If \code{"class.method"}, help files for methods belonging to classes are
-#    named <class>.<method>. 
+#    named <class>.<method>.
 #    These are currently the only name formats supported.
 #   }
 #   \item{...}{Not used.}
@@ -237,7 +237,7 @@ setMethodS3("isKeyword", "Rdoc", function(this, word, ...) {
 # @title "Gets the path to the directory where the Rd files will be saved"
 #
 # \description{
-#   @get "title". 
+#   @get "title".
 # }
 #
 # @synopsis
@@ -343,12 +343,12 @@ setMethodS3("createManPath", "Rdoc", function(this, ...) {
   path <- getManPath(this);
   # file.exists() and file.info() is sensitive to trailing '/'.
   path <- gsub("/$", "", path);
-  isdir <- as.logical(file.info(path)["isdir"]); 
+  isdir <- as.logical(file.info(path)["isdir"]);
   if (file.exists(path) && isdir)
     return(FALSE);
 
   # Path 'destPath' does not exist at all. It might be that there is
-  # a file with the same name, but in any case, the OS should 
+  # a file with the same name, but in any case, the OS should
   # take care of conflict if it thinks it is a conflict.
   if (!dir.create(path))
     throw(Exception("Could not create destination directory: ", path));
@@ -374,7 +374,7 @@ setMethodS3("createManPath", "Rdoc", function(this, ...) {
 # \arguments{
 #   \item{class}{A class name (@character string).}
 #   \item{method}{A method name (@character string).}
-#   \item{escape}{If @TRUE, non-valid filename characters are escaped into 
+#   \item{escape}{If @TRUE, non-valid filename characters are escaped into
 #     valid character strings.}
 #   \item{...}{Not used.}
 # }
@@ -492,9 +492,11 @@ setMethodS3("escapeRdFilename", "Rdoc", function(static, filename, ...) {
 #   \item{destPath}{The path where the generated Rd files should be saved.}
 #   \item{showDeprecated}{If @TRUE, Rd files are generated for deprecated
 #     objects too, otherwise not.}
-#   \item{addTimestamp}{If @TRUE, a date and time stamp is added to the 
-#     Rd header comments.  This timestamp might be confusing for version 
+#   \item{addTimestamp}{If @TRUE, a date and time stamp is added to the
+#     Rd header comments.  This timestamp might be confusing for version
 #     control systems, which is why it can be turned off with @FALSE.}
+#   \item{locale}{The locale to be set/used when compiling Rdoc comments.
+#     This help assuring strings are sorted the same way across systems.}
 #   \item{source}{If @TRUE, the Rdoc files will be \code{source()}:ed first.
 #     This work of course only for Rdoc files that are R source files.}
 #   \item{verbose}{If @TRUE, detailed compilation information is printed.}
@@ -514,25 +516,25 @@ setMethodS3("escapeRdFilename", "Rdoc", function(static, filename, ...) {
 #
 # @keyword documentation
 #*/###########################################################################
-setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getManPath(this), showDeprecated=FALSE, addTimestamp=FALSE, verbose=FALSE, source=FALSE, check=TRUE, debug=FALSE, ...) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getManPath(this), showDeprecated=FALSE, addTimestamp=FALSE, locale="C", verbose=FALSE, source=FALSE, check=TRUE, debug=FALSE, ...) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Global variables
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   authorWarn <- FALSE;
   pkgAuthors <- NULL;
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   isCapitalized <- function(str) {
     first <- substring(str,1,1);
     (first == toupper(first))
   }
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # a d d K e y w o r d ( )
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   validateKeyword <- function(keyword) {
     knownKeywords <- Rdoc$getKeywords();
     if (!is.element(keyword, knownKeywords)) {
@@ -540,7 +542,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       alts <- paste("'", knownKeywords[alts], "'", collapse=", ", sep="");
       if (nchar(alts) > 0)
         alts <- paste("Did you mean ", alts, "?", sep="");
-      throw(RdocException("Unknown keyword: ", keyword, ". ", 
+      throw(RdocException("Unknown keyword: ", keyword, ". ",
                                                 alts, source=sourcefile));
     }
   } # validateKeyword()
@@ -580,18 +582,18 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
 
     if (length(keywords) == 0)
       return(NULL);
-      
+
     lines <- paste("\\keyword{", keywords, "}", sep="");
     lines <- paste(lines, collapse="\n");
     lines;
   } # getRdKeywords()
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # e s c a p e N a m e ( )
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # From the help:
-  #  \name{name} 
+  #  \name{name}
   #    name typically is the basename of the Rd file containing the
   #    documentation. It is the "name" of the Rd object represented
   #    by the file, has to be unique in a package, and must not
@@ -610,10 +612,10 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
     name <- gsub("<-", "< -", name);
     name;
   } # escapeName()
-  
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # e s c a p e A l i a s ( )
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   escapeAlias <- function(alias) {
     # Don't escape aliases?!?  /HB 2004-03-03
     alias <- gsub("\\%", "\\\\%", alias);
@@ -622,79 +624,79 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
     alias;
   } # escapeAlias()
 
-  
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # e x t r a c t R d o c s ( )
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   extractRdocs <- function(filename, verbose=FALSE, debug=FALSE) {
     if (!file.exists(filename))
       throw(RdocException("File not found: ", filename));
-  
+
     # Read all lines from the source code file
     lines <- readLines(filename, warn=FALSE);
-  
+
     if (length(lines) == 0)
       return(list());
-  
+
     # Keep only the lines that are comments.
     lines <- lines[(regexpr("^ *#", lines) != -1)];
-    
+
     if (length(lines) == 0)
       return(list());
-  
+
     # Find all Rdoc begins and ends
     begins <- which(regexpr("/\\*\\*", lines) != -1);
     ends <- which(regexpr("\\*/", lines) != -1);
-  
+
     if (length(begins) != length(ends))
       throw(RdocException("Number of Rdoc begins do not match number of Rdoc ends: ", filename));
-  
+
     if (any(begins - ends > 0))
       throw(RdocException("Some of the Rdoc begins comes after the Rdoc ends: ", filename));
-  
-    
+
+
     rdocs <- list();
     for (k in seq(length=length(begins))) {
       idx <- begins[k]:ends[k];
       tmp <- lines[idx];
-  
+
       # Remove everything before the begin tag including the tag
       tmp[1] <- gsub("^#.*/\\*\\*", "", tmp[1]);
-  
+
       # Remove everything after the end tag including the tag
       last <- length(tmp);
       tmp[last] <- gsub("^#.*\\*/.*", "", tmp[last]);
-  
+
       # Remove all leading single and double comment characters
       tmp <- gsub("^#{1,3}", "", tmp);
-  
+
       # Find (minimum) indentation
       indents <- regexpr("[^ ]", tmp[nchar(tmp) > 0])
       indent <- min(indents);
       tmp <- substring(tmp, first=indent);
-  
+
       # Remove all trailing whitespace
       tmp <- gsub("[ \t\v\r\n]$", "", tmp);
-  
+
       # Remove all empty lines at the beginning
       while (nchar(tmp[1]) == 0)
         tmp <- tmp[-1];
-  
+
       # Remove all empty lines at the end
       while (nchar(tmp[length(tmp)]) == 0)
         tmp <- tmp[-length(tmp)];
-  
+
       attr(tmp, "sourcefile") <- filename;
       rdocs[[k]] <- tmp;
     }
-    
+
     rdocs;
   } # extractRdocs()
 
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # w r i t e R d ( )
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   sourcefile <- NA;
   writeRd <- function(rds, path=getManPath(this), addTimestamp=TRUE, verbose=FALSE, debug=FALSE) {
     for (rd in rds) {
@@ -710,24 +712,26 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
         cat("Generating ", filename, "...", sep="");
       }
       sourcefile <<- sourcefile <- attr(rd, "sourcefile");
-  
-      cat("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n", file=filename, append=FALSE);
-      cat("% Do not modify this file since it was automatically generated from:\n", file=filename, sep="", append=TRUE);
-      cat("% \n", sep="", file=filename, append=TRUE);
-      cat("%  ", sourcefile, "\n", sep="", file=filename, append=TRUE);
-      cat("% \n", sep="", file=filename, append=TRUE);
+
+      hdr <- c("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+      hdr <- c(hdr, "% Do not modify this file since it was automatically generated from:");
+      hdr <- c(hdr, "% ");
+      hdr <- c(hdr, paste("%  ", sourcefile, sep=""));
+      hdr <- c(hdr, "% ");
       if (addTimestamp) {
-        cat("% on ", date(), ".\n% \n", sep="", file=filename, append=TRUE);
+        hdr <- c(hdr, paste("% on ", date(), ".", sep=""));
+        hdr <- c(hdr, "% ");
       }
-      cat("% by the Rdoc compiler part of the R.oo package.\n", file=filename, append=TRUE);
-      cat("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n", file=filename, append=TRUE);
-      cat(rd, file=filename, sep="\n", append=TRUE);
-    }  
+      hdr <- c(hdr, "% by the Rdoc compiler part of the R.oo package.");
+      hdr <- c(hdr, "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+      bfr <- paste(c(hdr, "", rd, ""), collapse="\n");
+      writeChar(bfr, eos=NULL, con=filename);
+    }
   } # writeRd()
 
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # c o m p i l e R d o c ()
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   compileRdoc <- function(rdocs, showDeprecated=FALSE, verbose=FALSE, debug=FALSE) {
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Pre-processing
@@ -739,7 +743,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (!is.list(rdocs))
       throw(RdocException("Internal error: Expected a list: ", class(rdocs)[1L]));
-  
+
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Defines all simple tags that are shortcuts to different help documents.
@@ -793,7 +797,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       "Exception"   = "R.oo",
       "throw"       = "R.oo"
     );
-  
+
     names <- names(shorttags);
     match <- gsub("\\.", "\\\\.", names);
     attr(shorttags, "beginsWith") <- paste("^@", match, sep="");
@@ -802,42 +806,49 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
     replace[is.na(shorttags)] <- names[is.na(shorttags)];
     replace <- paste("\\code{", replace, "}", sep="");
     attr(shorttags, "replace") <- replace;
-  
+
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     getTagValue <- function(bfr) {
       # 1. Remove all leading whitespace
-      bfr <- gsub("^[ \t\n\r]", "", bfr);
-  
+      bfr <- gsub("^[ \t]", "", bfr);
+
       # 2a. Is there a '{' + '}' pair?  (nesting brackets are not allowed)
-      if ((beginPos <- regexpr("^\\{", bfr)) != -1) {
+      if ((beginPos <- regexpr("^\\{", bfr)) != -1L) {
         # Find the end '}'
         endPos <- regexpr("\\}", bfr);
-        if (endPos == -1) 
-          throw(RdocException("Closing } is missing: ", substring(bfr, 1,20), source=sourcefile));
-        value <- substring(bfr, beginPos+1, endPos-1);
-        bfr <- substring(bfr, endPos+1);
-      } 
+        if (endPos == -1L)
+          throw(RdocException("Closing } is missing: ", substring(bfr, first=1L, last=20L), source=sourcefile));
+        value <- substring(bfr, first=beginPos+1L, last=endPos-1L);
+        bfr <- substring(bfr, first=endPos+1L);
+      }
       # 2b. ...or a '"' + '"' pair?  (*internal* escaped " are ignored)
-      else if ((beginPos <- regexpr("^\"", bfr)) != -1) {
+      else if ((beginPos <- regexpr("^\"", bfr)) != -1L) {
         endPos <- regexpr("[^\\]\"", bfr);
-        if (endPos == -1) 
-          throw(RdocException("Closing \" is missing: ", substring(bfr, 1,20), source=sourcefile));
-        value <- substring(bfr, beginPos+1, endPos);
-        bfr <- substring(bfr, endPos+2);
+        if (endPos == -1L)
+          throw(RdocException("Closing \" is missing: ", substring(bfr, first=1L, last=20L), source=sourcefile));
+        value <- substring(bfr, first=beginPos+1L, last=endPos);
+        bfr <- substring(bfr, first=endPos+2L);
       }
       # 2c. ...otherwise the value is the first word found
+      #     (on the same line!)
       else {
+        beginPos <- 1L;
         endPos <- regexpr("([ \t\n\r]|$)", bfr);
-        value <- substring(bfr, 1, endPos-1);
-        bfr <- substring(bfr, endPos);
+        value <- substring(bfr, first=1L, last=endPos-1L);
+        # Ad hoc. /HB 2013-03-25
+        if (value != "}") {
+          bfr <- substring(bfr, first=endPos);
+        } else {
+          value <- "";
+        }
       }
-  
+
       attr(bfr, "value") <- value;
       bfr;
     } # getTagValue()
-    
+
 
     isObjectDeprecated <- function(name, ...) {
       obj <- getObject(this, name=name, ...);
@@ -867,8 +878,8 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
 
       authors;
     } # getPackageAuthors()
-  
-    
+
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagRdocClass <- function(bfr) {
@@ -883,9 +894,9 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       if (typeOfClass == "S4") {
         clazz <<- getClass(class);
       } else if (typeOfClass == "S3-Object") {
-        clazz <<- Class$forName(class); 
+        clazz <<- Class$forName(class);
       }
-  
+
       line <- paste("\\name{", escapeName(class), "}\n", sep="");
       line <- paste(line, "\\docType{class}\n", sep="");
       line <- paste(line, "\\alias{", class, "}\n", sep="");
@@ -901,11 +912,11 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
 
       name <<- class;
       objectName <<- class;
-  
+
       rd <<- paste(rd, line, sep="");
       bfr;
     } # tagRdocClass()
-  
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagClass <- function(bfr) {
@@ -914,7 +925,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       class <<- value;
       bfr;
     }
-  
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagRdocMethod <- function(bfr) {
@@ -932,11 +943,11 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
         print(ex);
         cat("Failed...done\n");
       })
- 
+
       if (!is.function(fcn)) {
         throw(RdocException("Could not get method. Function was not found: ", objectName, "()", source=Rdoc$source));
       }
- 
+
       methodName <- createName.Rdoc(NULL, class, method, escape=FALSE);
 
       isStatic <- is.element("static", attr(fcn, "modifiers"));
@@ -977,7 +988,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
 
       bfr;
     }
-  
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagRdocDefault <- function(bfr) {
@@ -994,7 +1005,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       rd <<- paste(rd, line, sep="");
       bfr;
     }
-  
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagRdocGeneric <- function(bfr) {
@@ -1011,7 +1022,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       rd <<- paste(rd, line, sep="");
       bfr;
     }
-  
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagRdocFunction <- function(bfr) {
@@ -1027,7 +1038,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       rd <<- paste(rd, line, sep="");
       bfr;
     }
-  
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagRdocObject <- function(bfr) {
@@ -1043,7 +1054,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       rd <<- paste(rd, line, sep="");
       bfr;
     }
-  
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagRdocData <- function(bfr) {
@@ -1053,13 +1064,14 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       name <<- name <- escapeName(name);
       line <- paste("\\name{", name, "}\n", sep="");
       line <- paste(line, "\\alias{", name, "}\n", sep="");
+      line <- paste(line, "\\docType{data}\n", sep="");
       addKeyword("datasets");
       objectName <<- value;
       usage <<- NULL;
       rd <<- paste(rd, line, sep="");
       bfr;
     }
-  
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagRdocDocumentation <- function(bfr) {
@@ -1078,7 +1090,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       rd <<- paste(rd, line, sep="");
       bfr;
     }
-  
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagRdocAbout <- function(bfr) {
@@ -1098,7 +1110,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       rd <<- paste(rd, line, sep="");
       bfr;
     }
-  
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagRdocPackage <- function(bfr) {
@@ -1121,7 +1133,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       rd <<- paste(rd, line, sep="");
       bfr;
     }
-  
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagName <- function(bfr) {
@@ -1140,7 +1152,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       rd <<- paste(rd, line, sep="");
       bfr;
     }
-  
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagAlias <- function(bfr) {
@@ -1166,7 +1178,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       rd <<- paste(rd, line, sep="");
       bfr;
     }
-  
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagAliasUndocumented <- function(bfr) {
@@ -1180,9 +1192,32 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       bfr;
     }
 
-  
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    tagUsage <- function(bfr) {
+      bfr <- getTagValue(bfr);
+      value <- attr(bfr, "value");
+      if (nchar(value) == 0L) {
+        # Usage is inferred from the @RdocNnn tag.
+      } else if (nchar(value) > 0L) {
+        # Usage is inferred from the @usage <spec> tag.
+        parts <- strsplit(value, split=",", fixed=TRUE)[[1]];
+        nparts <- length(parts);
+        method <- parts[1L];
+        if (nparts == 1L) {
+          usage <- Rdoc$getUsage(method=method);
+        } else if (nparts == 2L) {
+          class <- parts[2L];
+          usage <- Rdoc$getUsage(method=method, class=class);
+        }
+      }
+      usage <- paste(usage, collapse="\n");
+      line <- usage;
+      rd <<- paste(rd, line, sep="");
+      bfr;
+    }
+
     tagSynopsis <- function(bfr) {
       usage <- c("", usage, "");
       usage <- paste(usage, collapse="\n");
@@ -1190,7 +1225,8 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       rd <<- paste(rd, line, sep="");
       bfr;
     }
-  
+
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagKeyword <- function(bfr) {
@@ -1199,8 +1235,8 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       addKeyword(keyword);
       bfr;
     }
-  
-  
+
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagInclude <- function(bfr) {
@@ -1217,7 +1253,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       }
       bfr;
     }
-  
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagExamples <- function(bfr) {
@@ -1234,7 +1270,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       rd <<- paste(rd, line, sep="");
       bfr;
     }
-  
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagVisibility <- function(bfr) {
@@ -1247,7 +1283,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
         addKeyword("internal");
       bfr;
     }
-  
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagGet <- function(bfr) {
@@ -1263,7 +1299,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       rd <<- paste(rd, line, sep="");
       bfr;
     }
-  
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagSet <- function(bfr, envir=parent.frame()) {
@@ -1273,7 +1309,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       assign(keyValue[1], value=keyValue[2], envir=envir);
       bfr;
     }
-  
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagAuthor <- function(bfr) {
@@ -1283,7 +1319,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       hasValue <- (nchar(value) > 0L);
       hasValue <- hasValue && (regexpr("^[ \t]*[\n\r]", value) == -1L);
 
-      # Does the @author tag has a value?      
+      # Does the @author tag has a value?
       if (hasValue) {
         # Non-empty @author tag with value, e.g. '@author "HB"'
 
@@ -1351,7 +1387,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
 
       bfr;
     }
-  
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagHowToCite <- function(bfr) {
@@ -1370,7 +1406,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       rd <<- paste(rd, line, sep="");
       bfr;
     }
-  
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagSeeclass <- function(bfr) {
@@ -1378,7 +1414,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       rd <<- paste(rd, line, sep="");
       bfr;
     }
-  
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagSeemethod <- function(bfr) {
@@ -1388,7 +1424,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       rd <<- paste(rd, line, sep="");
       bfr;
     }
-  
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagSeeOtherMethods <- function(bfr) {
@@ -1415,7 +1451,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       for (k in 1:2) {
         classes[[k]] <- paste("\\code{\\link[", package, ":", Rdoc$createName(classes[[k]], method), "]{", classes[[k]], "}}", sep="");
       }
-           
+
       line <- "\\cr\\bold{Implementations of this method in}";
       line <- paste(line, " i) \\bold{superclasses:} ");
       line <- paste(line, paste(classes[[1]], collapse=", "), sep="");
@@ -1424,7 +1460,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       rd <<- paste(rd, line, sep="");
       bfr;
     }
- 
+
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1433,7 +1469,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       value <- attr(bfr, "value");
       pkgObject <- strsplit(value, "::", value)[[1]];
       fcn <- "";
-      if (length(pkgObject) == 1) { 
+      if (length(pkgObject) == 1) {
         pkg <- NULL;
         obj <- pkgObject[1];
         if (exists(obj, mode="function")) {
@@ -1441,7 +1477,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
           if (!eval(expr))
             fcn <- "()";
         }
-      } else { 
+      } else {
         pkg <- pkgObject[1];
         obj <- pkgObject[2];
         if (eval(substitute(require(pkg), list(pkg=pkg)))) {
@@ -1455,7 +1491,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       rd <<- paste(rd, line, sep="");
       bfr;
     }
-  
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagClasshierarchy <- function(bfr) {
@@ -1492,7 +1528,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       rd <<- paste(rd, line, sep="");
       bfr;
     }
-  
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagMethods <- function(bfr) {
@@ -1501,14 +1537,14 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       rd <<- paste(rd, line, sep="");
       bfr;
     }
-  
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagAllMethods <- function(bfr) {
       bfr <- getTagValue(bfr);
       visibilities <- attr(bfr, "value");
       # Ad hoc patch for parser /060530.
-      addEnd <- (identical(visibilities, "}"))  
+      addEnd <- (identical(visibilities, "}"))
       visibilities <- gsub(" ", "", visibilities);
       visibilities <- unlist(strsplit(visibilities, split="|", fixed=TRUE));
       methods <- getRdMethods(clazz, visibilities=visibilities);
@@ -1520,14 +1556,14 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       rd <<- paste(rd, line, sep="");
       bfr;
     }
-  
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagTitle <- function(bfr) {
       bfr <- getTagValue(bfr);
       value <- attr(bfr, "value");
       title <<- as.character(value);
-  
+
       # Check the title for correctness according to http://developer.r-project.org/Rds.html
       firstLetter <- substring(title, 1,1);
       if (firstLetter != toupper(firstLetter))
@@ -1536,14 +1572,14 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
         throw(RdocException("Titles should not end with a period: ", title, source=sourcefile));
       if (regexpr("[^\\][\\][:letter:]", title) != -1)
         throw(RdocException("Titles should not contain markup: ", title, source=sourcefile));
-  
+
       if (isDeprecated)
         title <<- paste("Deprecated: ", title, sep="");
       line <- paste("\\title{", title, "}", sep="");
       rd <<- paste(rd, line, sep="");
       bfr;
     }
-  
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagEval <- function(bfr) {
@@ -1555,7 +1591,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       rd <<- paste(rd, line, sep="");
       bfr;
     }
-  
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tagInheritedmethods <- function(bfr) {
@@ -1564,7 +1600,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       rd <<- paste(rd, line, sep="");
       bfr;
     }
-  
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     tag <- function(bfr) {
@@ -1591,6 +1627,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
   #
       "classhierarchy"   = tagClasshierarchy,  # must be *before* "class".
       "synopsis"         = tagSynopsis,
+      "usage"            = tagUsage,
       "keyword"          = tagKeyword,
   #
       "Class"            = tagRdocClass,
@@ -1601,7 +1638,6 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
   #   "aliasundocumented" = tagAliasUndocumented, # not useful.
       "alias"            = tagAlias,
       "title"            = tagTitle,
-      "usage"            = tagSynopsis,        # deprecated
   #
       "class"            = tagClass,
       "include"          = tagInclude,
@@ -1622,20 +1658,34 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
     );
     names <- names(tags);
     attr(tags, "beginsWith") <- paste("^@", names, sep="");
-  
+
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # SETUP
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # Make a best guess what the package is that is created by looking
-    # at the name of the parent directory of the getManPath() directory.
-    opwd <- getwd();
-    setwd(getManPath(this));
-    setwd("..");
-    path <- strsplit(getwd(), split="[/\\]")[[1]];
-    setwd(opwd);
-    package <- path[length(path)];
+    # Set the locale
+    Sys.setlocale(locale=locale);
+
+
+    # Make a best guess what the package is that is created by querying
+    # the DESCRIPTION file, which should be in the parent directory of
+    # the getManPath() directory.
+    pkgPath <- dirname(getManPath(this));
+    pathname <- file.path(pkgPath, "DESCRIPTION");
+    if (!file.exists(pathname)) {
+      stop("Cannot infer package name. File not found: ", pathname);
+    }
+    pi <- read.dcf(file=pathname);
+    package <- pi[,"Package", drop=TRUE];
+    if (length(package) == 0L) {
+      throw("Failed to infer package name.  No 'Package' was listed in ", sQuote(pathname), ".");
+    }
+    if (length(package) > 1L) {
+      throw("Failed to infer package name.  More than one 'Package' were listed in ", sQuote(pathname), ": ", paste(sQuote(package), collapse=", "));
+    }
+
     Rdoc$package <- package;
-  
+
     class <- NULL;
     clazz <- NULL;
     Rdoc$source <- sourcefile <<- NULL;
@@ -1652,7 +1702,7 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       name <- NULL;
       usage <- NULL;
       visibility <- NULL;
-  
+
       # ==============================================================
       # 1. Replace all shorttags
       #
@@ -1660,28 +1710,31 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       #    and does not rely on any state of Rdoc etc.
       #    This should speed up the process.
       # ==============================================================
-      for (k in 1:length(shorttags)) {
-        replace <- attr(shorttags, "replace")[k];
-    
+      for (kk in seq_along(shorttags)) {
+        replace <- attr(shorttags, "replace")[kk];
+
         # (a) Replace all occurances at the beginning of the lines.
-        rdoc <- gsub(attr(shorttags, "beginsWith")[k], replace, rdoc);
-          
+        pattern <- attr(shorttags, "beginsWith")[kk];
+        rdoc <- gsub(pattern, replace, rdoc);
+
         # (b) Replace all other occurances.
         ready <- FALSE;
         while (!ready) {
-          pos <- regexpr(attr(shorttags, "contains")[k], rdoc);
-          idx <- (pos != -1);
+          pattern <- attr(shorttags, "contains")[kk];
+          pos <- regexpr(pattern, rdoc);
+          idx <- (pos != -1L);
           if (any(idx)) {
             len <- attr(pos, "match.length")[idx];
             pos <- pos[idx];
-            prefix <- substring(rdoc[idx], 1, pos);
-            suffix <- substring(rdoc[idx], pos+len);
+            prefix <- substring(rdoc[idx], first=1L, last=pos);
+            suffix <- substring(rdoc[idx], first=pos+len);
             rdoc[idx] <- paste(prefix, replace, suffix, sep="");
           } else {
             ready <- TRUE;
           }
         }
-      } # for
+      } # for (kk ...)
+
 
       # ==============================================================
       # 2. Compile the remaining lines
@@ -1690,78 +1743,85 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       #    state of the Rdoc compiler or set a local variable, which
       #    will affect following tags.
       # ==============================================================
-  
+
       # (a) Make on big string of the whole Rdoc comment.
-      #     This will simplify handling of line breaks within a tag 
+      #     This will simplify handling of line breaks within a tag
       #     argument, e.g. when @title "Bla bla\nbla" exists.
       rdoc <- paste(rdoc, collapse="\n");
-  
+
       # (b) Get the first occurance of a tag.
-      #     A tag begins with a '@', but can not have a letter, a 
+      #     A tag begins with a '@', but can not have a letter, a
       #     number or a '.' in front since then it could be a code
       #     fragment refering to a S4 slot.
+      patternL <- "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      pattern <- sprintf("[^%s0-9.]@", patternL);
+      pattern2 <- sprintf("[^%s0-9]@", patternL);
+
       rd <- "";
       while (TRUE) {
         # (i) It can be that the tag start at position 1...
         pos <- regexpr("^@", rdoc);
-  
+
         # (ii) ...otherwise...
-        if (pos == -1) {
-          pos <- regexpr("[^abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0-9.]@", rdoc);
-          if (pos == -1)
+        if (pos == -1L) {
+          pos <- regexpr(pattern, rdoc);
+          if (pos == -1L)
             break;  # No more tags. Done!
           # Save everything before the tag...
-          rd <- paste(rd, substring(rdoc, 1, pos), sep="");
+          rd <- paste(rd, substring(rdoc, first=1L, last=pos), sep="");
           # ...and make the tag be at the first position.
-          rdoc <- substring(rdoc, pos+1);
+          rdoc <- substring(rdoc, first=pos+1L);
         }
-  
+
         if (debug)
           str(rdoc);
-  
+
         # (iii) Identify the tag
         tagName <- NULL;
         tagFunction <- NULL;
-        for (k in 1:length(tags)) {
-          pos <- regexpr(attr(tags, "beginsWith")[k], rdoc);
-          if (pos != -1) {
+        for (kk in seq_along(tags)) {
+          patternKK <- attr(tags, "beginsWith")[kk];
+          pos <- regexpr(patternKK, rdoc);
+          if (pos != -1L) {
             len <- attr(pos, "match.length");
-            tagIdx <- k;
-            tagName <- names(tags)[k];
+            tagIdx <- kk;
+            tagName <- names(tags)[kk];
             if (debug)
               cat(paste("Found tag: ", tagName, "\n", sep=""));
-            tagFunction <- tags[[k]];
+            tagFunction <- tags[[kk]];
             break;
           }
-        }
-  
+        } # for (kk ...)
 
         if (!is.null(tagFunction)) {
           # Shift the Rdoc buffer
-          rdoc <- substring(rdoc, len+1);
+          rdoc <- substring(rdoc, first=len+1L);
           if (is.function(tagFunction)) {
             # Evaluate the tag function in the current environment
             # so all variables can be shared between tags.
             # All tag functions must return the resulting buffer!
-            eval(substitute(assign("rdoc", tagFunction(rdoc)), 
-               list(tagFunction=tagFunction, rdoc=rdoc)));
+            expr <- substitute(tagFunction(rdoc),
+                      list(tagFunction=tagFunction, rdoc=rdoc));
+            rdoc <- eval(expr);
           }
         } else {
-          pos <- regexpr("[^abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0-9]", substring(rdoc, 2));
-          tagName <- substring(rdoc, 1, pos);
-          msg <- paste("Unknown tag not processed in ", sourcefile, ": ", tagName, "\n", sep="");
+          pos <- regexpr(pattern2, substring(rdoc, first=2L));
+          tagName <- substring(rdoc, first=1L, last=pos);
+          msg <- sprintf("Unknown tag not processed in '%s': '%s'", sourcefile, tagName);
           warning(msg);
-          rd <- paste(rd, substring(rdoc, 1,1), sep="");
-          rdoc <- substring(rdoc, 2);
+          rd <- paste(rd, substring(rdoc, first=1L, last=1L), sep="");
+          rdoc <- substring(rdoc, first=2L);
         }
+
         if (isDeprecated && !showDeprecated)
           break;
       } # while(TRUE), i.e. get first tag...
-  
+
       if (showDeprecated || !isDeprecated) {
         # Do not forget to add the rest!
         rd <- paste(rd, rdoc, sep="");
         rdoc <- NULL;
+
 
         # Append all keywords at the end
         rd <- paste(rd, getRdKeywords(), sep="\n");
@@ -1776,12 +1836,12 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
           if (search == -1L) {
             throw(RdocException("The resulting Rd text does not have a \\name{} tag: ", substring(rd, first=1L, last=40L), source=sourcefile));
           }
-          name <- substring(rd, search+5, search+attr(search, "match.length")-2);
-          search <- regexpr("\\name\\{[^\\}]*\\}", substring(rd, search+1));
-          if (search != -1)
+          name <- substring(rd, first=search+5L, last=search+attr(search, "match.length")-2);
+          search <- regexpr("\\name\\{[^\\}]*\\}", substring(rd, first=search+1L));
+          if (search != -1L)
             throw(RdocException("The resulting Rd text has more than one \\name{} tag.", source=sourcefile));
         }
-      
+
         visibility <- "public";
         if (is.null(visibility)) {
           if (is.null(objectName)) {
@@ -1798,15 +1858,15 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
             }
           }
         }
-      
+
         attr(rd, "visibility") <- as.character(visibility);
         attr(rd, "isDeprecated") <- isDeprecated;
         attr(rd, "name") <- as.character(name);
         attr(rd, "sourcefile") <- sourcefile;
 
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         # Check Rd code?
-        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         if (check) {
           if (compareVersion(as.character(getRversion()), "2.10.0") >= 0) {
             # R v2.10.0 and newer
@@ -1814,7 +1874,9 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
               con <- textConnection(rd);
               rdParse <- tools::parse_Rd(file=con);
             }, warning = function(w) {
-              throw(RdocException("Syntax error in generated Rd code for Rdoc comment '", attr(rd, "name"), "' (in '", attr(rd, "sourcefile"), "') was detected by tools:parse_Rd(): ", as.character(w)));
+              filename <- sprintf("%s.Rd.ERROR", attr(rd, "name"));
+              cat(rd, sep="\n", file=filename);
+              throw(RdocException(sprintf("Syntax error in generated Rd code (see '%s') for Rdoc comment '%s' (in '%s') was detected by tools:parse_Rd(): %s", filename, attr(rd, "name"), attr(rd, "sourcefile"), as.character(w))));
             }, finally = {
               close(con);
               con <- NULL;
@@ -1836,48 +1898,55 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       } else {
         warning(paste("No Rd file for '", objectName, "' was generated since it was declared deprecated.", sep=""));
       } # if (!isDeprecated)
-    } # for (rdoc in rdocs) 
-  
+    } # for (rdoc in rdocs)
+
     rds;
   } # compileRdoc()
 
 
   # A local version of the sourceTo() in R.io.
   sourceTo <- function(..., local=TRUE, envir=parent.frame()) {
-    # Wrap up the arguments to source 
+    # Wrap up the arguments to source
     args <- list(...);
-  
+
     if (!is.element("file", names(args)))
       names(args)[1] <- "file";
 
     # Override any 'local' argument
     args$local <- local;
-  
+
     # Create a call expression to source(..., local=local)
     expr <- substitute({
       do.call("source", args)
     }, list(args=args));
-  
+
     # Call source()
-    eval(expr, envir=envir); 
+    eval(expr, envir=envir);
   } # sourceTo()
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   # Assert that the manPath exists.
   createManPath(this);
 
   filename <- as.character(filename);
-  if (!file.exists(filename)) {
-    if (regexpr("\\*", filename) != -1 || regexpr("\\?", filename) != -1) {
-      dir <- list.files();
-      idx <- grep(paste(filename, "$", sep=""), dir);
-      filename <- dir[idx];
+  if (length(filename) == 1L && !file.exists(filename)) {
+    if (regexpr("\\*", filename) != -1L || regexpr("\\?", filename) != -1L) {
+      # Filename pattern
+      pattern <- filename;
+      # List all files
+      filename <- list.files();
+      # Match to filename pattern
+      filename <- grep(paste(pattern, "$", sep=""), filename, value=TRUE);
+      # Keep only files
+      filename <- filename[file_test("-f", filename)];
+      # Keep only newer files?
     }
   }
 
   # Load the source code in case it contains new stuff.
-  if (source)
-    source(filename);
+  if (source) {
+    lapply(filename, FUN=source);
+  }
 
   for (file in filename) {
     if (verbose)
@@ -2105,8 +2174,8 @@ setMethodS3("methodsInheritedFrom", "Rdoc", function(this, class, visibility=c("
 
 
 setMethodS3("getObject", "Rdoc", function(static, name, mode="any", package=static$package, ...) {
-  # Search for object in: 
-  #  (i) the package names iff found, then 
+  # Search for object in:
+  #  (i) the package names iff found, then
   # (ii) then the search path.
 
   # Try to infer the package's namespace.
@@ -2144,7 +2213,7 @@ setMethodS3("getObject", "Rdoc", function(static, name, mode="any", package=stat
 # \arguments{
 #   \item{method}{A method name (@character string).}
 #   \item{class}{An optional class name (@character string).}
-#   \item{package}{An optional package name (@character string).}
+#   \item{wrap}{An @integer specifying the maximum number of characters per line.  Longer lines will be wrapped with newlines.}
 #   \item{...}{Not used.}
 # }
 #
@@ -2160,7 +2229,105 @@ setMethodS3("getObject", "Rdoc", function(static, name, mode="any", package=stat
 #
 # @keyword documentation
 #*/###########################################################################
-setMethodS3("getUsage", "Rdoc", function(static, method, class=NULL, ...) {
+setMethodS3("getUsage", "Rdoc", function(static, method, class=NULL, wrap=90L, indent=2L, ...) {
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Local functions
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  buildUsage <- function(method, class=NULL, args, valueArg=NULL, wrap=90L, head=NULL, ...) {
+    # Argument 'args':
+    stopifnot(is.list(args));
+
+    indentStr <- paste(rep(" ", times=indent), collapse="");
+
+    correction <- 0L;
+    if (length(head) == 0L) {
+      if (is.null(class)) {
+        head <- method;
+      } else {
+        # The effective length of this in the help manual is nchar(method).
+        head <- sprintf("\\method{%s}{%s}", method, class);
+        correction <- nchar(head) - nchar(method);
+      }
+    }
+    correction0 <- correction;
+
+    lines <- NULL;
+    line <- paste(head, "(", sep="");
+    if (length(args) == 0L) {
+      line <- paste(line, ") ", sep="");
+    }
+
+    while (length(args) > 0L) {
+      subargs <- args[[1L]];
+      nsubargs <-length(subargs);
+
+      # Try to keep <key>=<value> together
+      if (nsubargs >= 3L) {
+        # If <key>=<value> fit on a line, then keep the together...
+        if (sum(nchar(subargs[1:3L])) <= wrap) {
+          subargs[3L] <- paste(subargs[1:3], collapse="");
+          subargs <- subargs[-(1:2)];
+        } else if (sum(nchar(subargs[1:2L])) <= wrap) {
+        # ...otherwise, at least keep <key>= together, iff possible.
+          subargs[2L] <- paste(subargs[1:2], collapse="");
+          subargs <- subargs[-1L];
+        }
+        nsubargs <-length(subargs);
+      }
+
+      # Remaining arguments
+      args <- args[-1L];
+      nargs <- length(args);
+      suffix <- if (nargs > 0L) ", " else ") ";
+
+      # For each subargument
+      for (kk in seq(length=nsubargs)) {
+        subarg <- subargs[kk];
+##        str(list(kk=kk, subarg=subarg));
+
+        if (kk == nsubargs) {
+          subarg <- paste(subarg, suffix, sep="");
+        } else {
+          subarg <- paste(subarg, " ", sep="");
+        }
+        len <- nchar(subarg);
+
+        # Does argument fit on the same line?
+        if (nchar(line) - correction + len <= wrap) {
+          line <- paste(line, subarg, sep="");
+        } else {
+          lines <- c(lines, line);
+          line <- paste(indentStr, subarg, sep="");
+          correction <- 0L;
+        }
+      } # for (kk ...)
+    } # while (length(args) > 0L)
+
+    # Append a value assignment, i.e. "... <- value"?
+    if (!is.null(valueArg)) {
+      arg <- paste("<- ", valueArg, sep="");
+      # Does it fit on the same line?
+      if (nchar(line) - correction + nchar(arg) <= wrap) {
+        line <- paste(line, arg, sep="");
+      } else {
+        lines <- c(lines, line);
+        line <- paste(indentStr, arg, sep="");
+      }
+    }
+    lines <- c(lines, line);
+    lines <- gsub("[ ]$", "", lines); # Trim trailing space
+
+    # Sanity check
+    lens <- nchar(lines);
+    lens[1L] <- lens[1L] - correction0;
+    stopifnot(all(lens <= wrap));
+
+##    print(lines);
+
+    lines;
+  } # buildUsage()
+
+
   if (!is.null(class)) {
     fcnName <- paste(method, class, sep=".");
   } else {
@@ -2181,57 +2348,46 @@ setMethodS3("getUsage", "Rdoc", function(static, method, class=NULL, ...) {
 
   isStatic <- is.element("static", attr(fcn, "modifiers"));
   isConstructor <- inherits(fcn, "Class");
-  args <- Rdoc$argsToString(fcn);
-  # '%' is a comment in Rd format.
-  args <- lapply(args, FUN=function(x) {
-    gsub("\\%", "\\\\%", x);
-  })
+  args <- Rdoc$argsToString(fcn, escapeRd=TRUE, collapse=FALSE);
 
   # Replacement methods are special
-  isReplacement <- (regexpr("<-$", method) != -1);
+  isReplacement <- (regexpr("<-$", method) != -1L);
   if (isReplacement) {
     method <- gsub("<-$", "", method);
     nargs <- length(args);
     valueArg <- args[nargs];
     args <- args[-nargs];
+  } else {
+    valueArg <- NULL;
   }
 
   if (isConstructor) {
-    args <- paste(args, collapse=", ");
-    usage <- paste(method, "(", args, ")", sep="");
+    usage <- buildUsage(method, args=args, valueArg=valueArg, wrap=wrap);
   } else if (isStatic) {
-    # (a) The "static" method call, e.g. Class$forName(...)
-    argsS <- args[-1];
-    argsS <- paste(argsS, collapse=", ");
-    usageS <- paste(class, "$", method, "(", argsS, ")", sep="");
-    if (isReplacement)
-      usageS <- paste(usageS, " <- ", valueArg, sep="");
-    usageS <- paste("## ", usageS, sep="");
-    usageS <- c("## Static method (use this):", usageS, "");
+    # (a) The S3 method call
+    lines <- buildUsage(method, class=class, args=args, valueArg=valueArg, wrap=wrap);
+    usageM <- paste(lines, collapse="\n");
 
-    # (b) The S3 method call
-    args <- paste(args, collapse=", ");
-    usageM <- paste("\\method{", method, "}{", class, "}(", args, ")", sep="");
-    if (isReplacement)
-      usageM <- paste(usageM, " <- ", valueArg, sep="");
-    usageM <- c("## Don't use the below:", usageM);
+    # (b) The "static" method call, e.g. Class$forName(...)
+    # Adjust line width ('wrap') to fit prefix '## ' as well.
+    lines <- buildUsage(method, class=class, args=args[-1L], valueArg=valueArg, head=paste(class, method, sep="$"), wrap=wrap - 3L);
+    lines <- paste("## ", lines, sep="");
+    usageS <- paste(lines, collapse="\n");
 
     # (c) Combine
-    usage <- c(usageS, usageM);
+    usage <- c("## Static method (use this):",
+               usageS,
+               "",
+               "## Don't use the below:",
+               usageM);
   } else if (!is.null(class)) {
-    args <- paste(args, collapse=", ");
-    usage <- paste("\\method{", method, "}{", class, "}(", args, ")", sep="");
-    if (isReplacement)
-      usage <- paste(usage, " <- ", valueArg, sep="");
+    usage <- buildUsage(method, class=class, args=args, valueArg=valueArg, wrap=wrap);
   } else {
-    args <- paste(args, collapse=", ");
-    usage <- paste(method, "(", args, ")", sep="");
-    if (isReplacement)
-      usage <- paste(usage, " <- ", valueArg, sep="");
+    usage <- buildUsage(method, args=args, valueArg=valueArg, wrap=wrap);
   }
 
   usage;
-}, private=TRUE, static=TRUE);
+}, private=TRUE, static=TRUE) # getUsage()
 
 
 
@@ -2275,7 +2431,7 @@ setMethodS3("getClassS4Usage", "Rdoc", function(static, class, ...) {
   hasConstructor <- exists(name, mode="function");
   if (hasConstructor) {
     constructor <- get(name, mode="function");
-    args <- Rdoc$argsToString(constructor);
+    args <- Rdoc$argsToString(constructor, collapse=TRUE);
     args <- paste(args, collapse=", ");
     constructorUsage <- paste(name, "(", args, ")", sep="");
     usage <- paste(usage, "\n", constructorUsage, sep="");
@@ -2300,11 +2456,14 @@ setMethodS3("getClassS4Usage", "Rdoc", function(static, class, ...) {
 #
 # \arguments{
 #  \item{fcn}{A @function.}
+#  \item{escapeRd}{If @TRUE, certain Rd markup symbols are escaped.}
+#  \item{collapse}{If @TRUE, each argument is returned as a single string,
+#   otherwise split up into a vector of strings as far as possible.}
 #  \item{...}{Not used.}
 # }
 #
 # \value{
-#  Returns a @list of @character string.
+#  Returns a @list of @character strings.
 # }
 #
 # @author
@@ -2315,34 +2474,44 @@ setMethodS3("getClassS4Usage", "Rdoc", function(static, class, ...) {
 #
 # @keyword documentation
 #*/###########################################################################
-setMethodS3("argsToString", "Rdoc", function(static, fcn, ...) {
+setMethodS3("argsToString", "Rdoc", function(static, fcn, escapeRd=FALSE, collapse=TRUE, ...) {
   a <- args(fcn);
-  if (is.null(a))
+
+  # Nothing to do?
+  if (is.null(a)) {
     return("[primitive function]");
-  
-  if (typeof(a) != "closure")
-    throw("Expected closure but found something else.");
+  }
+
+  # Sanity check
+  if (typeof(a) != "closure") {
+    throw("Expected closure but found something else: ", typeof(a));
+  }
+
   args <- formals(a);
   argsNames <- names(args);
 
   res <- list();
-  for (k in seq(along=args)) {
-    arg     <- args[k];
-    argName <- argsNames[k];
+  for (kk in seq(along=args)) {
+    arg     <- args[kk];
+    argName <- argsNames[kk];
 
     s <- argName;
 
-    argDefault <- arg[[1]];
+    argDefault <- arg[[1L]];
     if (!missing(argDefault)) {
-      if (is.character(argDefault)) {
-        s <- paste(s, "=", "\"", argDefault, "\"", sep="", collapse="");
-      } else if (is.null(argDefault)) {
-        s <- paste(s, "=NULL", sep="", collapse="");
-      } else if (is.language(argDefault)) {
-        argDefault <- as.character(arg[1]);
+      argDefault <- deparse(argDefault, width.cutoff=20L);
+      argDefault <- trim(argDefault);
+
+      # Escape '%' (which is a comment in Rd format)?
+      if (escapeRd) {
+        argDefault <- gsub("\\%", "\\\\%", argDefault);
+      }
+
+      if (collapse) {
+        argDefault <- paste(argDefault, collapse=" ");
         s <- paste(s, "=", argDefault, sep="", collapse="");
       } else {
-        s <- paste(s, "=", argDefault, sep="", collapse="");
+        s <- c(s, "=", argDefault);
       }
     }
 
@@ -2385,9 +2554,9 @@ setMethodS3("argsToString", "Rdoc", function(static, fcn, ...) {
 # @keyword documentation
 #*/###########################################################################
 setMethodS3("getRdTitle", "Rdoc", function(this, class, method, ...) {
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # e s c a p e N a m e ( )
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   escapeName <- function(name) {
     name <- gsub("\\#", "POUND", name);
     name <- gsub("\\$", "DOLLAR", name);
@@ -2402,26 +2571,26 @@ setMethodS3("getRdTitle", "Rdoc", function(this, class, method, ...) {
     name <- gsub("<-", "< -", name);
     name;
   } # escapeName()
-  
+
   title <- NULL;
-  
+
   # Search for the file <class>.<method>.Rd in the man/ directory
   name <- createName.Rdoc(NULL, getName(class), method, escape=FALSE);
   name <- escapeName(name);
-  
+
   rdName <- Rdoc$escapeRdFilename(name);
   rdFile <- paste(rdName, "Rd", sep=".");
   url <- file.path(getManPath(this), rdFile);
   if (file.exists(url)) {
     src <- paste(readLines(url, warn=FALSE), collapse="\n");
-  
+
     # Search for \title{...} in the Rd source
     titlePos <- regexpr("\\title\\{[^\\}]*}", src);
     if (titlePos == -1) {
       warning(paste("Could not find a \\title{} definition in the Rd file for ", method, " in ", getName(class), ". Will search in loaded packages.", sep=""));
       "";
     } else {
-      title <- trim(substring(src, titlePos+6, titlePos+attr(titlePos, "match.length")-2));
+      title <- trim(substring(src, first=titlePos+6, last=titlePos+attr(titlePos, "match.length")-2));
     }
   } else {
     warning(paste("The Rd file for ", method, " in ", getName(class), " could not be found. Will search in loaded packages.", sep=""));
@@ -2575,13 +2744,13 @@ setMethodS3("check", "Rdoc", function(this, manPath=getManPath(this), verbose=FA
   } else {
     res <- tools:::check_Rd_files_in_man_dir(manPath);
     if (length(res$files_with_surely_bad_Rd) > 0) {
-      throw("Syntax error in Rd file(s): ", 
+      throw("Syntax error in Rd file(s): ",
                           paste(res$files_with_surely_bad_Rd, collapse=", "));
-    }  
+    }
 
     if (length(res$files_with_likely_bad_Rd) > 0) {
       print(res$files_with_likely_bad_Rd);
-      throw("Syntax error in Rd file(s): ", 
+      throw("Syntax error in Rd file(s): ",
                           paste(res$files_with_surely_bad_Rd, collapse=", "));
     }
   }
@@ -2649,6 +2818,30 @@ setMethodS3("isVisible", "Rdoc", function(static, modifiers, visibilities, ...) 
 
 #########################################################################
 # HISTORY:
+# 2013-06-27
+# o Added trial version of Rdoc tag @usage.
+# 2013-05-30
+# o Now Rdoc$compile() infer the package name from the DESCRIPTION
+#   file (instead from the package directory name).
+# 2013-05-19
+# o Now Rdoc$getUsage() inserts line breaks so that any usage line
+#   is at most 90 characters long.
+# 2013-04-08
+# o Now the @RdocData Rdoc tag also adds an \docType{data} Rd tag.
+# 2013-04-04
+# o BUG FIX: In R.oo v1.13.1 a bug was introduced causing @allmethods
+#   to ignore the optional following tag value.
+# 2013-04-03
+# o Now Rdoc$compile() always outputs Rd files with '\n' line breaks
+#   regardless of system.
+# o Now Rdoc$compile() uses locale "C" (default) to assert that
+#   the same Rd files are generated regardless of system settings.
+# o Now Rdoc$compile() no longer gives a warning if argument 'filename'
+#   is a vector.  It should also handle multiple filenames and
+#   source=TRUE.
+# 2013-03-25
+# o BUG FIX: getTagValue() could read/consume a following '}', which
+#   should not be considered a tag value.
 # 2013-03-08
 # o Added support for @author "John Doe" as well as @author "JD" where
 #   the initials are then inferred from the package's DESCRIPTION file.
@@ -2659,7 +2852,7 @@ setMethodS3("isVisible", "Rdoc", function(static, modifiers, visibilities, ...) 
 #   environment variable R_DOC_DIR for locating the internal
 #   KEYWORDS.db.  Thanks to Charles Hogg at NIST for suggesting this.
 # 2012-04-17
-# o Now Rdoc$getUsage() searches also the package namespace for 
+# o Now Rdoc$getUsage() searches also the package namespace for
 #   the function definition.  This is done, before searching the
 #   global environment.
 # o Added private static getObject().
@@ -2680,7 +2873,7 @@ setMethodS3("isVisible", "Rdoc", function(static, modifiers, visibilities, ...) 
 # o BUG FIX: Rdoc$compile() did not work with R v2.10.0 and newer.
 # 2008-08-11
 # o Replace all 'a %in% b' with is.element(a,b) due to weird bug, cf.
-#   my R-devel post 'Argument "nomatch" matched by multiple actual 
+#   my R-devel post 'Argument "nomatch" matched by multiple actual
 #   arguments ... %in% -> match?!?' on March 6, 2008.
 # 2008-07-30
 # o Added shorttags: 'raw'.
@@ -2691,12 +2884,12 @@ setMethodS3("isVisible", "Rdoc", function(static, modifiers, visibilities, ...) 
 # 2007-01-06
 # o Now getMethodsInheritedFrom() recognizes visiblity private.
 # 2006-09-12
-# o Prepared the Rdoc compiler to no longer generating the \synopsis{} 
-#   statement for the @synopsis tag, which was the case for static 
+# o Prepared the Rdoc compiler to no longer generating the \synopsis{}
+#   statement for the @synopsis tag, which was the case for static
 #   methods.  I got an early note from Kurt Hornik saying all R base and
-#   recommended package will have \synopsis{} removed in favor of the 
+#   recommended package will have \synopsis{} removed in favor of the
 #   \usage{} statement by the release of R v2.4.0.  The Rd tag will be
-#   deprecated around R v3.0.0 or so. 
+#   deprecated around R v3.0.0 or so.
 # 2006-05-29
 # o Added protected static method isVisible().
 # o Added argument to @allmethods to specify visibility etc.
@@ -2741,7 +2934,7 @@ setMethodS3("isVisible", "Rdoc", function(static, modifiers, visibilities, ...) 
 # 2005-06-08
 # o BUG FIX: getRdKeywords() gave an error if no keywords are available.
 # 2005-06-03
-# o Added internal addKeyword() to Rdoc$compile(). 
+# o Added internal addKeyword() to Rdoc$compile().
 # o Now an RdocMethod tag will not add keyword 'internal' if the
 #   class starts with a lower case, e.g. 'matrix'.
 # 2005-02-15
@@ -2756,8 +2949,8 @@ setMethodS3("isVisible", "Rdoc", function(static, modifiers, visibilities, ...) 
 #   a more informative error is given (with filename and Rdoc name).
 # o By default, now Rdoc$compile() runs Rdoc$check() at the end.
 # 2005-02-03
-# o Added a first simple test for undefined top-level tags in the 
-#   generated Rd code. Utilizes tools::Rd_parse(), which might be 
+# o Added a first simple test for undefined top-level tags in the
+#   generated Rd code. Utilizes tools::Rd_parse(), which might be
 #   renamed etc. according to its help page.
 # 2005-02-02
 # o Added support for options() containing tag variables such as @author.
@@ -2771,7 +2964,7 @@ setMethodS3("isVisible", "Rdoc", function(static, modifiers, visibilities, ...) 
 # o Added check(), which is a wrapper for tools:::check_Rd_files_in_man().
 # o setManPath() now calls as.character() too.
 # o BUG FIX: setNameFormat("method.class") gave an error.
-# o BUG FIX: getPackageNameOf() now only return names of packages and 
+# o BUG FIX: getPackageNameOf() now only return names of packages and
 #   not just any environment.
 # o Changed the default name format to "method.class", which is the
 #   standard used by R.
@@ -2795,7 +2988,7 @@ setMethodS3("isVisible", "Rdoc", function(static, modifiers, visibilities, ...) 
 #   may not exist just before \end{Section} without having a line break
 #   in between. The problem is that R CMD check & Co removes trailing
 #   line breaks. The work around is to add a "\emph{}\n" line to fool it.
-#   For Rdoc this is currently done for @howtocite tags. Another reason 
+#   For Rdoc this is currently done for @howtocite tags. Another reason
 #   for using Rdoc ;)
 # 2004-03-03
 # o Update class to make use of tryCatch() instead of trycatch().
@@ -2827,12 +3020,12 @@ setMethodS3("isVisible", "Rdoc", function(static, modifiers, visibilities, ...) 
 #   Updated the Rdoc comments saying pointing out that the classes and
 #   methods have to be loaded before calling Rdoc$compile().
 # 2003-07-07
-# o "BUG FIX": Both @examples and @include does not escape special Rd 
+# o "BUG FIX": Both @examples and @include does not escape special Rd
 #   characters such as '%' -> '\%'.
 # o BUG FIX: Forgot to escape '%' in \usage{}, which lead to unbalanced
 #   curly brackets when R CMD check * ran.
 # 2003-05-03
-# o BUG FIX: Misunderstood the usage or \synopsis and \usage. I thought 
+# o BUG FIX: Misunderstood the usage or \synopsis and \usage. I thought
 #   it was either or, but of course not.
 # 2003-04-29
 # o Rdoc FIX: In the class hierarchy abstract classes was \emph{}'s, but
@@ -2861,12 +3054,12 @@ setMethodS3("isVisible", "Rdoc", function(static, modifiers, visibilities, ...) 
 # o Improved the Rdoc comments and added a running example.
 # 2003-04-13
 # o Tags are now ended with a space or a punctuation ( ,;!) but not a
-#   period since it can be used in method names and not a colon since 
+#   period since it can be used in method names and not a colon since
 #   that can be used as for instance @see base::help.
 # 2003-03-12
 # o Added getManPath() and setManPath().
 # o Major update: Now Rdoc$compile() will do most of the work. Now the
-#   Rdoc perl script basically can be removed and all Rdoc to Rd 
+#   Rdoc perl script basically can be removed and all Rdoc to Rd
 #   compilation can be done from within R.
 # o Now an <class>.usage.Rdoc file is created for each class.
 # o Added private argsString() and public getUsage().
@@ -2887,7 +3080,7 @@ setMethodS3("isVisible", "Rdoc", function(static, modifiers, visibilities, ...) 
 # * buildClass() now also creates methods section (<class>.method.Rdoc).
 # * Added getTitle() and createMethods().
 # 2002-02-26
-# * BUG FIX: extends() and implements() did neither work because of 
+# * BUG FIX: extends() and implements() did neither work because of
 #   interactions with the package "methods"
 # * BUG FIX: Due to the new package "methods", my getExtends() did not
 #   work as expected in this class. Now getExtends() is only called if
@@ -2898,7 +3091,7 @@ setMethodS3("isVisible", "Rdoc", function(static, modifiers, visibilities, ...) 
 # * Remove require(R.oo). It'll generate a loop in R v 1.4.0.
 # 2001-08-06
 # * Minor bug fix: Rdoc couldn't generate class documentation for classes
-#   in a package that also existed in .GlobalEnv. 
+#   in a package that also existed in .GlobalEnv.
 # * Made Rdoc a true static class.
 # 2001-07-17
 # 2001-07-05
@@ -2906,7 +3099,7 @@ setMethodS3("isVisible", "Rdoc", function(static, modifiers, visibilities, ...) 
 # 2001-07-01
 # * Made hierarchy() emphasizes abstract classes, which is more informative.
 # * When the perl script Rdoc.pl tried to compile this it complained, since
-#   the start and stop tags for Rdoc comments were detected. Made a 
+#   the start and stop tags for Rdoc comments were detected. Made a
 #   workaround that works for now.
 # 2001-06-29
 # * Created!
