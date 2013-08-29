@@ -1,6 +1,46 @@
 Package: R.oo
 =============
 
+Version: 1.15.1 [2013-08-29]
+o library("R.oo", warn.conflicts=FALSE, quietly=TRUE) will load the
+  package completely silently.
+o Now startupMessage() for Package acknowledges library(..., quietly=TRUE).
+o setConstructorS3() no longer requires that R.oo is attached ("loaded").
+
+
+Version: 1.15.0 [2013-08-23]
+o CLEANUP: Dropped deprecated inst/HOWTOSITE replaced by inst/CITATION.
+o CLEANUP: Package no longer utilizes ':::'.
+o CLEANUP: Made get- and showHowToCite() protected methods.
+o CLEANUP: Now getHowToCite() for Package utilizes utils::citation(),
+  if package don't contain a HOWTOCITE file.  It is recommended to
+  write packages with CITATION instead of HOWTOCITE.
+o CLEANUP: Hiding non-essential methods from the Rd help index, e.g.
+  charToInt(), intToChar(), hashCode(), equals(), dimension() and trim().
+
+
+Version: 1.14.0 [2013-08-20]
+o Now it's possible to call static methods without attaching
+  ("loading") the package, e.g. R.oo::Class$forName("Object").
+  Added unit tests for this.
+o Now getPackage() for Class first searches the namesspace of the
+  Class object and then the attached ("loaded") packages.
+o Now '$' and '$<-' for Object locates the static instance of the
+  Class using getStaticInstance() for Object.
+o Updated getStaticInstance() for Object to search more locations.
+
+
+Version: 1.13.10 [2013-07-11]
+o Now R.oo::ll() works without attaching the package.  This is done
+  by attaching R.oo when called.
+o Now it is possible to use static methods of a Class without
+  attaching the package where the Class is defined, e.g.
+  R.utils::Arguments$getIndex(2).  To enable this feature,
+  options("R.oo::Class/searchNamespaces"=TRUE) must be set.
+o BUG FIX: ll(private=TRUE) gave an error if the environment
+  contained the special '...' argument.
+
+
 Version: 1.13.9 [2013-07-01]
 o Bumped up package dependencies.
 

@@ -734,11 +734,6 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   compileRdoc <- function(rdocs, showDeprecated=FALSE, verbose=FALSE, debug=FALSE) {
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    # Pre-processing
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    require("tools") || throw("Package 'tools' not found");
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # Validate arguments
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     if (!is.list(rdocs))
@@ -1398,7 +1393,9 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
       if (is.null(howToCite)) {
         line <- "\\emph{No citation information available.}\n";
       } else {
-        line <- paste("\\preformatted{", howToCite, "}\n", sep="");
+        line <- strwrap(howToCite, width=85L);
+        line <- paste(line, collapse="\n");
+        line <- paste("\\preformatted{", line, "}\n", sep="");
         # Add the following line to fix a "R CMD check-bug" in LaTeX.
         # /HB 2004-03-10
         line <- paste(line, "\\emph{}\n", sep="");
@@ -1884,7 +1881,9 @@ setMethodS3("compile", "Rdoc", function(this, filename=".*[.]R$", destPath=getMa
           } else {
             # R v2.9.2 and before
             tryCatch({
-              rdParse <- tools::Rd_parse(text=rd);
+              ns <- getNamespace("tools");
+              tools_Rd_parse <- get("Rd_parse", mode="function", envir=ns);
+              rdParse <- tools_Rd_parse(text=rd);
               if (length(rdParse$rest) > 0) {
                 throw(RdocException("Unknown top-level text in generated Rd code for Rdoc comment '", attr(rd, "name"), "' (in '", attr(rd, "sourcefile"), "') (typically due to too many or a missing bracket): ", paste(rdParse$rest, collapse=", ", sep="")));
               }
@@ -2555,6 +2554,12 @@ setMethodS3("argsToString", "Rdoc", function(static, fcn, escapeRd=FALSE, collap
 #*/###########################################################################
 setMethodS3("getRdTitle", "Rdoc", function(this, class, method, ...) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  # Local functions
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  tools_fetchRdDB <- get("fetchRdDB", mode="function", envir=asNamespace("tools"), inherits=FALSE);
+
+
+  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # e s c a p e N a m e ( )
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   escapeName <- function(name) {
@@ -2605,7 +2610,7 @@ setMethodS3("getRdTitle", "Rdoc", function(this, class, method, ...) {
         path <- system.file("help", package=packageName);
         filebase <- file.path(path, packageName);
         tryCatch({
-          entry <- tools:::fetchRdDB(filebase, key=methodName);
+          entry <- tools_fetchRdDB(filebase, key=methodName);
           tags <- lapply(entry, FUN=attr, "Rd_tag");
           idx <- which(tags == "\\title");
           if (length(idx) > 1) {
@@ -2726,15 +2731,13 @@ setMethodS3("getPackageNameOf", "Rdoc", function(static, objectName, mode="any",
 # @keyword documentation
 #*/###########################################################################
 setMethodS3("check", "Rdoc", function(this, manPath=getManPath(this), verbose=FALSE, ...) {
-  require("tools") || throw("Could not load package: tools");
-
   # file paths with trailing '/' are not recognized! /HB 2004-10-13
   manPath <- gsub("/$", "", manPath);
   if (verbose)
     cat("Checking Rd files in '", manPath, "'...\n", sep="");
 
   if (compareVersion(as.character(getRversion()), "2.10.0") >= 0) {
-    # R v2.10.0 and newer
+    # For R (>= 2.10.0)
     pathnames <- list.files(pattern="[.]Rd$", path=manPath, full.names=TRUE);
     res <- NULL;
     for (kk in seq(along=pathnames)) {
@@ -2742,7 +2745,9 @@ setMethodS3("check", "Rdoc", function(this, manPath=getManPath(this), verbose=FA
       res <- tools::checkRd(pathname);
     }
   } else {
-    res <- tools:::check_Rd_files_in_man_dir(manPath);
+    # For R (< 2.10.0)
+    tools_check_Rd_files_in_man_dir <- get("check_Rd_files_in_man_dir", mode="function", envir=asNamespace("tools"), inherits=FALSE);
+    res <- tools_check_Rd_files_in_man_dir(manPath);
     if (length(res$files_with_surely_bad_Rd) > 0) {
       throw("Syntax error in Rd file(s): ",
                           paste(res$files_with_surely_bad_Rd, collapse=", "));
