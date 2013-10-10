@@ -1,4 +1,4 @@
-###########################################################################/** 
+###########################################################################/**
 # @RdocFunction .makeObjectFinalizer
 #
 # @title "Creates a standalone finalizer function for Object"
@@ -48,9 +48,10 @@
     } else {
       name <- "";
     }
-  
+
     if (name == "") {
-      name <- capture.output(print.default(env));
+      # Cannot assume 'utils' is attached
+      name <- utils::capture.output(print.default(env));
       name <- name[1]; # Just in case
       name <- gsub("[<]*environment:[ ]*([^>]*)[>]", "\\1", name);
     }
@@ -90,7 +91,7 @@
       if (name == "do.call") {
         name <- call[[2L]];
         if (!is.symbol(name)) next;
-        name <- as.character(name);      
+        name <- as.character(name);
       }
       if (name == "parse") {
         return(TRUE);
@@ -98,7 +99,7 @@
     } # for (kk ...)
     FALSE;
   } # isParseCalled()
- 
+
 
   # NOTE: The finalizer() depends on the 'this' object. # /HB 2011-04-02
   finalizer <- function(env) {
@@ -106,7 +107,8 @@
     # it, this will be our best chance to run the correct finalizer(),
     # which might be in a subclass of a different package that is still
     # loaded.
-    isRooLoaded <- any(is.element(c("package:R.oo", "dummy:R.oo"), search()));
+    isRooLoaded <- is.element("package:R.oo", search());
+    isRooLoaded <- isRooLoaded || is.element("dummy:R.oo", search());
     if (isRooLoaded) {
       finalize(this);
       return();
@@ -120,7 +122,7 @@
       if (!isLibraryReentrant()) {
         # If not, check if base::parse() triggered the garbage collection
         # and/or has been called, because then we must not call library(),
-        # because it will in turn call parse() potentially causing R to 
+        # because it will in turn call parse() potentially causing R to
         # crash.
         if (isParseCalled()) {
           reloadRoo <- FALSE;
@@ -131,6 +133,7 @@
     }
 
     if (reloadRoo) {
+      # (1) Attach the 'R.oo' package
       suppressMessages({
         isRooLoaded <- require("R.oo", quietly=TRUE);
       });
@@ -145,27 +148,27 @@
       warning("Object may not be finalize():d properly because the R.oo package is not loaded: ", getObjectInfo(this));
     }
 
-    # NOTE! Before detach R.oo again, we have to make sure the Object:s
+    # NOTE! Before detaching R.oo again, we have to make sure the Object:s
     # allocated by R.oo itself (e.g. an Package object), will not reload
     # R.oo again when being garbage collected, resulting in an endless
     # loop.  We do this by creating a dummy finalize() function, detach
     # R.oo, call garbage collect to clean out all R.oo's objects, and
     # then remove the dummy finalize() function.
-    # (1) Put a dummy finalize() function on the search path.
+    # (2) Put a dummy finalize() function on the search path.
     # To please R CMD check
     attachX <- base::attach;
     attachX(list(finalize = function(...) { }), name="dummy:R.oo",
                                                   warn.conflicts=FALSE);
 
-    # (2) Detach R.oo
+    # (3) Since 'R.oo' was attached above, unload it
     if (is.element("package:R.oo", search())) {
       detach("package:R.oo");
     }
 
-    # (3) Force all R.oo's Object:s to be finalize():ed.
+    # (4) Force all R.oo's Object:s to be finalize():ed.
     gc();
 
-    # (4) Remove the dummy finalize():er again.
+    # (5) Remove the dummy finalize():er again.
     if (is.element("dummy:R.oo", search())) {
       detach("dummy:R.oo");
     }
@@ -177,6 +180,11 @@
 
 ############################################################################
 # HISTORY:
+# 2013-09-20
+# o BUG FIX: The finalizer returned by .makeObjectFinalizer() assumed
+#   that the 'utils' is attached while calling capture.output(), which
+#   under certain conditions could generate 'Error in getObjectInfo(this) :
+#   could not find function "capture.output"'.
 # 2013-01-08
 # o ROBUSTNESS: Now .makeObjectFinalizer() returns a finalizer that is
 #   reentrant, i.e. it will only try to reload R.oo on R versions where
