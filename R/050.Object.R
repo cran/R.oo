@@ -1357,8 +1357,8 @@ setMethodS3("extend", "Object", function(this, ...className, ..., ...fields=NULL
   modifiers <- attr(fields, "modifiers");
 
   # Append already existing modifiers?
-  if (exists("...modifiers", envir=this.env)) {
-    modifiersT <- get("...modifiers", envir=this.env);
+  if (exists("...modifiers", envir=this.env, inherits=FALSE)) {
+    modifiersT <- get("...modifiers", envir=this.env, inherits=FALSE);
     for (key in names(modifiersT)) {
       modifiers[[key]] <- c(modifiers[[key]], modifiersT[[key]]);
     }
@@ -1460,7 +1460,7 @@ setMethodS3("$", "Object", function(this, name) {
   cacheName <- paste("...$.lookup", name, sep=".");
   if (!is.null(envir) && exists(cacheName, envir=envir, inherits=FALSE)) {
     envirCache <- envir;
-    lookup <- get(cacheName, envir=envirCache);
+    lookup <- get(cacheName, envir=envirCache, inherits=FALSE);
     if (identical(attr(lookup, "memberAccessorOrder"), memberAccessorOrder)) {
       if (lookup == 1L) {
         # Still to be figured out how to do! /HB 2003-01-18
@@ -1544,7 +1544,7 @@ setMethodS3("$", "Object", function(this, name) {
         attr(lookup, "memberAccessorOrder") <- memberAccessorOrder;
         assign(cacheName, lookup, envir=envir);
         envirStatic <- envir;
-        return(get(name, envir=envirStatic));
+        return(get(name, envir=envirStatic, inherits=FALSE));
       }
     } else if (memberAccessor == 3L) {
 
@@ -1590,7 +1590,7 @@ setMethodS3("$", "Object", function(this, name) {
         attr(lookup, "memberAccessorOrder") <- memberAccessorOrder;
         attr(lookup, "static.envir") <- static.envir;
         assign(cacheName, lookup, envir=envir);
-        return(get(name, envir=static.envir));
+        return(get(name, envir=static.envir, inherits=FALSE));
       }
     }
   } # for (memberAccessor in memberAccessorOrder)
@@ -1604,7 +1604,7 @@ setMethodS3("$", "Object", function(this, name) {
   assign(cacheName, lookup, envir=envir);
 
   NULL;
-}, createGeneric=FALSE) # $()
+}) # $()
 
 
 
@@ -1730,7 +1730,7 @@ setMethodS3("$<-", "Object", function(this, name, value) {
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
       # 2. If there exists a field, assign the value to that field.
       envir <- attr(this, ".env");
-      if (exists(name, envir=envir)) {
+      if (exists(name, envir=envir, inherits=FALSE)) {
         assign(name, value, envir=envir);
         return(invisible(this));
       }
@@ -1768,7 +1768,7 @@ setMethodS3("$<-", "Object", function(this, name, value) {
   } # for (memberAccessor in memberAccessorOrder)
 
   invisible(this);
-}, createGeneric=FALSE) # $<-()
+}) # $<-()
 
 
 
@@ -1776,13 +1776,13 @@ setMethodS3("$<-", "Object", function(this, name, value) {
 setMethodS3("[[", "Object", function(this, name) {
   UseMethod("$");
 #   "$"(this, name);
-}, createGeneric=FALSE) # "[["()
+}) # "[["()
 
 
 setMethodS3("[[<-", "Object", function(this, name, value) {
   UseMethod("$<-");
 #   "$<-"(this, name, value);
-}, createGeneric=FALSE) # "[[<-"()
+}) # "[[<-"()
 
 
 
@@ -1876,6 +1876,8 @@ setMethodS3("callSuperMethodS3", "default", function(this, methodName, ..., nbrO
   availableMethods <- c(methods(methodName), methodName);
   for (method in methods) {
     if (is.element(method, availableMethods)) {
+      # TO DO/FIX ME: This part only works when packages are attached.
+      # /HB 2013-10-08
       if (exists(method, mode="function")) {
         return(do.call(method, args=list(this, ...)))
       }
@@ -2055,12 +2057,12 @@ setMethodS3("clearCache", "Object", function(this, recursive=TRUE, ...) {
   if (recursive) {
     # Make sure that this object has not already been called
     # earlier in the same clear-cache request.
-    if (!exists("...clearCache", envir=env)) {
+    if (!exists("...clearCache", envir=env, inherits=FALSE)) {
       assign("...clearCache", TRUE, envir=env);
       on.exit(rm(list="...clearCache", envir=env));
       fields <- getFields(this, private=TRUE);
       for (field in fields) {
-        object <- get(field, envir=env);
+        object <- get(field, envir=env, inherits=FALSE);
         if (inherits(object, "Object")) {
           clearCache(object, recursive=TRUE);
         }
@@ -2101,11 +2103,11 @@ setMethodS3("clearCache", "Object", function(this, recursive=TRUE, ...) {
 setMethodS3("getFieldModifiers", "Object", function(this, ...) {
   env <- attr(this, ".env");
 
-  if (!exists("...modifiers", envir=env)) {
+  if (!exists("...modifiers", envir=env, inherits=FALSE)) {
     return(list());
   }
 
-  get("...modifiers", envir=env);
+  get("...modifiers", envir=env, inherits=FALSE);
 }, protected=TRUE)
 
 
@@ -2186,8 +2188,11 @@ setMethodS3("gc", "Object", function(this, ...) {
 #
 # @keyword programming
 # @keyword methods
+# @keyword internal
 #*/###########################################################################
 setMethodS3("registerFinalizer", "Object", function(this, ...) {
+  .Deprecated(msg="registerFinalizer() for Object is deprecated.");
+
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -2196,13 +2201,15 @@ setMethodS3("registerFinalizer", "Object", function(this, ...) {
     # it, this will be our best chance to run the correct finalizer(),
     # which might be in a subclass of a different package that is still
     # loaded.
-    isRooLoaded <- any(is.element(c("package:R.oo", "dummy:R.oo"), search()));
+    isRooLoaded <- is.element("package:R.oo", search());
+    isRooLoaded <- isRooLoaded || is.element("dummy:R.oo", search());
     if (isRooLoaded) {
       finalize(this);
     } else {
+      # (1) Attach the 'R.oo' package
       suppressMessages({
         isRooLoaded <- require("R.oo", quietly=TRUE);
-      })
+      });
 
       # For unknown reasons R.oo might not have been loaded.
       if (isRooLoaded) {
@@ -2211,22 +2218,27 @@ setMethodS3("registerFinalizer", "Object", function(this, ...) {
         warning("Failed to temporarily reload 'R.oo' and finalize().");
       }
 
-      # NOTE! Before detach R.oo again, we have to make sure the Object:s
+      # NOTE! Before detaching R.oo again, we have to make sure the Object:s
       # allocated by R.oo itself (e.g. an Package object), will not reload
       # R.oo again when being garbage collected, resulting in an endless
       # loop.  We do this by creating a dummy finalize() function, detach
       # R.oo, call garbage collect to clean out all R.oo's objects, and
       # then remove the dummy finalize() function.
-      # (1) Put a dummy finalize() function on the search path.
+      # (2) Put a dummy finalize() function on the search path.
       # To please R CMD check
       attachX <- base::attach;
       attachX(list(finalize = function(...) { }), name="dummy:R.oo",
                                                     warn.conflicts=FALSE);
-      # (2) Detach R.oo
-      detach("package:R.oo");
-      # (3) Force all R.oo's Object:s to be finalize():ed.
+
+      # (3) Since 'R.oo' was attached above, unload it
+      if (is.element("package:R.oo", search())) {
+        detach("package:R.oo");
+      }
+
+      # (4) Force all R.oo's Object:s to be finalize():ed.
       gc();
-      # (4) Remove the dummy finalize():er again.
+
+      # (5) Remove the dummy finalize():er again.
       detach("dummy:R.oo");
     }
   } # localFinalizer()
@@ -2240,11 +2252,14 @@ setMethodS3("registerFinalizer", "Object", function(this, ...) {
   reg.finalizer(attr(this, ".env"), localFinalizer, onexit=FALSE);
 
   invisible(this);
-}, protected=TRUE) # registerFinalizer()
+}, protected=TRUE, deprecated=TRUE) # registerFinalizer()
 
 
 ############################################################################
 # HISTORY:
+# 2013-09-25
+# o CLEANUP: Deprecated registerFinalizer() for Object, which is
+#   not used.
 # 2013-08-20
 # o Updated getStaticInstance() for Object to search more locations.
 # 2013-01-08
