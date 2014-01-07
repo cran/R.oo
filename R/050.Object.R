@@ -23,6 +23,8 @@
 #     which is the case with the Class class.
 #     \emph{Note that this value belongs to the reference variable
 #     and not to the Object, which means it can not be referenced.}}
+#   \item{finalize}{If @TRUE, method @seemethod "finalize" will
+#     be called on this Object when it is garbage collected.}
 # }
 #
 # \section{Fields and Methods}{
@@ -211,7 +213,7 @@ setMethodS3("clone", "Object", function(this, ...) {
   attr(clone, ".env") <- clone.env
 
   # Copy all variables in the environment.
-  this.env <- attr(this, ".env")
+  this.env <- attr(this, ".env");
   fields <- getFields(this, private=TRUE);
   for (field in fields) {
     value <- get(field, envir=this.env, inherits=FALSE);
@@ -1238,6 +1240,13 @@ setMethodS3("staticCode", "Object", function(static, ...) {
 #   \item{...fields}{An optional named @list of fields.  This makes it possible
 #     to specify a set of fields using a @list object.}
 #   \item{...envir}{An @environment.}
+#   \item{...finalize}{
+#     A @logical controlling whether method @seemethod "finalize" should
+#     be called on the @see Object when it is garbage collected or not.
+#     If @TRUE, it will be called.  If @FALSE, it will not be called.
+#     If @NA, it will be called according to argument \code{finalize}
+#     of the @see Object constructor.
+#   }
 # }
 #
 # \value{
@@ -1274,7 +1283,7 @@ setMethodS3("staticCode", "Object", function(static, ...) {
 if (is.element("R.oo", search())) {
   rm(list="extend", pos="R.oo"); # To avoid warning about renaming existing extend()
 }
-setMethodS3("extend", "Object", function(this, ...className, ..., ...fields=NULL, ...envir=parent.frame()) {
+setMethodS3("extend", "Object", function(this, ...className, ..., ...fields=NULL, ...envir=parent.frame(), ...finalize=NA) {
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   # Local functions
   # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1336,13 +1345,29 @@ setMethodS3("extend", "Object", function(this, ...className, ..., ...fields=NULL
   # Set class
   class(this) <- unique(c(...className, class(this)));
 
-  # Note, we have to re-register the finalizer here and not in Object(),
-  # because here the reference variable 'this' will have the correct
-  # class attribute, which it does not in Object().
-  finalizer <- .makeObjectFinalizer(this, reloadRoo=TRUE);
-  onexit <- getOption("R.oo::Object/finalizeOnExit", FALSE);
-  reg.finalizer(this.env, finalizer, onexit=onexit);
+  # Should the Object be finalized?
+  finalize <- TRUE;
+  if (exists("...finalize", finalize, envir=this.env, inherits=FALSE)) {
+    finalize <- get("...finalize", finalize, envir=this.env, inherits=FALSE);
+    finalize <- isTRUE(finalize);
+  }
+  # Override by extend(..., ...finalize=TRUE/FALSE)?
+  if (!is.na(...finalize)) finalize <- isTRUE(...finalize);
+  if (finalize) {
+    # Note, we have to re-register the finalizer here and not in Object(),
+    # because here the reference variable 'this' will have the correct
+    # class attribute, which it does not in Object().
+    finalizer <- .makeObjectFinalizer(this, reloadRoo=TRUE);
+    onexit <- getOption("R.oo::Object/finalizeOnExit", FALSE);
+    reg.finalizer(this.env, finalizer, onexit=onexit);
+  }
 
+  # extend(..., ...finalize=FALSE) should always remove any
+  # previously registered finalizers.
+  if (!is.na(...finalize) && !isTRUE(...finalize)) {
+    # Unregister finalizer (by registering a dummy one)
+    reg.finalizer(this.env, f=function(...) {});
+  }
 
   # Finally, create the static instance?
   if (!is.element("Class", ...className)) {
@@ -1511,9 +1536,7 @@ setMethodS3("$", "Object", function(this, name) {
             static <- .getStaticInstance(this, static=static);
             envirS <- environment(static);
             for (getMethodName in getMethodNames) {
-              method <- .findS3Method(getMethodName, envir=envirS, mustExist=FALSE);
-##              if (exists(getMethodName, mode="function")) {
-##                method <- get(getMethodName, mode="function");
+              method <- .getS3Method(getMethodName, envir=envirS, mustExist=FALSE);
               if (!is.null(method)) {
                 ref <- this;
                 attr(ref, "disableGetMethods") <- TRUE;
@@ -1563,9 +1586,8 @@ setMethodS3("$", "Object", function(this, name) {
       envirS <- environment(static);
       methodNames <- paste(name, class(this), sep=".");
       for (methodName in methodNames) {
-        method <- .findS3Method(methodName, envir=envirS, mustExist=FALSE);
+        method <- .getS3Method(methodName, envir=envirS, mustExist=FALSE);
         if (!is.null(method)) {
-##        if (exists(methodName, mode="function")) {
           # Using explicit UseMethod() code
           code <- sprintf("function(...) \"%s\"(this, ...)", name);
           fcn <- eval(base::parse(text=code));
@@ -1711,10 +1733,8 @@ setMethodS3("$<-", "Object", function(this, name, value) {
             static <- .getStaticInstance(this, static=static);
             envirS <- environment(static);
             for (setMethodName in setMethodNames) {
-              method <- .findS3Method(setMethodName, envir=envirS, mustExist=FALSE);
+              method <- .getS3Method(setMethodName, envir=envirS, mustExist=FALSE);
               if (!is.null(method)) {
-##              if (exists(setMethodName, mode="function")) {
-##                method <- get(setMethodName, mode="function");
                 ref <- this;
                 attr(ref, "disableSetMethods") <- TRUE;
                 method(ref, value);
@@ -2023,6 +2043,7 @@ setMethodS3("clearLookupCache", "Object", function(this, ...) {
 # \arguments{
 #   \item{recursive}{If @TRUE, the same method is called also on all
 #      fields that are @see "Object":s. Circular dependencies can exists.}
+#   \item{gc}{If @TRUE, the garbage collector is called, otherwise not.}
 #   \item{...}{Not used.}
 # }
 #
@@ -2043,7 +2064,7 @@ setMethodS3("clearLookupCache", "Object", function(this, ...) {
 # @keyword programming
 # @keyword methods
 #*/###########################################################################
-setMethodS3("clearCache", "Object", function(this, recursive=TRUE, ...) {
+setMethodS3("clearCache", "Object", function(this, recursive=TRUE, gc=FALSE, ...) {
   env <- attr(this, ".env");
 
   fields <- getFieldModifier(this, "cached");
@@ -2069,6 +2090,9 @@ setMethodS3("clearCache", "Object", function(this, recursive=TRUE, ...) {
       }
     }
   }
+
+  # Run the garbage collector?
+  if (gc) gc();
 
   invisible(this);
 })
@@ -2159,7 +2183,7 @@ setMethodS3("gc", "Object", function(this, ...) {
 ###########################################################################/**
 # @RdocMethod registerFinalizer
 #
-# @title "Registers a finalizer hook for the object"
+# @title "Registers a finalizer hook for the object [DEFUNCT]"
 #
 # \description{
 #  @get "title".
@@ -2191,72 +2215,18 @@ setMethodS3("gc", "Object", function(this, ...) {
 # @keyword internal
 #*/###########################################################################
 setMethodS3("registerFinalizer", "Object", function(this, ...) {
-  .Deprecated(msg="registerFinalizer() for Object is deprecated.");
-
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  # Local functions
-  # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  localFinalizer <- function(env) {
-    # Note, R.oo might be detached when this is called!  If so, reload
-    # it, this will be our best chance to run the correct finalizer(),
-    # which might be in a subclass of a different package that is still
-    # loaded.
-    isRooLoaded <- is.element("package:R.oo", search());
-    isRooLoaded <- isRooLoaded || is.element("dummy:R.oo", search());
-    if (isRooLoaded) {
-      finalize(this);
-    } else {
-      # (1) Attach the 'R.oo' package
-      suppressMessages({
-        isRooLoaded <- require("R.oo", quietly=TRUE);
-      });
-
-      # For unknown reasons R.oo might not have been loaded.
-      if (isRooLoaded) {
-        finalize(this);
-      } else {
-        warning("Failed to temporarily reload 'R.oo' and finalize().");
-      }
-
-      # NOTE! Before detaching R.oo again, we have to make sure the Object:s
-      # allocated by R.oo itself (e.g. an Package object), will not reload
-      # R.oo again when being garbage collected, resulting in an endless
-      # loop.  We do this by creating a dummy finalize() function, detach
-      # R.oo, call garbage collect to clean out all R.oo's objects, and
-      # then remove the dummy finalize() function.
-      # (2) Put a dummy finalize() function on the search path.
-      # To please R CMD check
-      attachX <- base::attach;
-      attachX(list(finalize = function(...) { }), name="dummy:R.oo",
-                                                    warn.conflicts=FALSE);
-
-      # (3) Since 'R.oo' was attached above, unload it
-      if (is.element("package:R.oo", search())) {
-        detach("package:R.oo");
-      }
-
-      # (4) Force all R.oo's Object:s to be finalize():ed.
-      gc();
-
-      # (5) Remove the dummy finalize():er again.
-      detach("dummy:R.oo");
-    }
-  } # localFinalizer()
-
-
-  # Note, we cannot register the finalizer here, because then
-  # the reference variable 'this' will be of the wrong class,
-  # that is, not the "final" class. However, we still do it so
-  # that pure Object:s will be finalized too.  This will be
-  # overridden if extend(<Object>) is called.
-  reg.finalizer(attr(this, ".env"), localFinalizer, onexit=FALSE);
-
-  invisible(this);
+  .Defunct("registerFinalizer() for Object is deprecated.");
 }, protected=TRUE, deprecated=TRUE) # registerFinalizer()
 
 
 ############################################################################
 # HISTORY:
+# 2014-01-05
+# o CLEANUP: Defunct registerFinalizer() for Object.
+# o Added argument 'gc=FALSE' to clearCache().
+# 2013-10-13
+# o Now extend() for Object only registers a finalizer if attribute
+#   'finalize' is TRUE.
 # 2013-09-25
 # o CLEANUP: Deprecated registerFinalizer() for Object, which is
 #   not used.

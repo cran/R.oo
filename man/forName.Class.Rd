@@ -23,11 +23,11 @@
 ## Class$forName(name, ...)
 
 ## Don't use the below:
-\method{forName}{Class}(this, name, ...)
+\method{forName}{Class}(static, name, ...)
 }
 
 \arguments{
-  \item{...}{Not used.}
+  \item{...}{Optional arguments passed to internal lookup function.}
 }
 
 \value{

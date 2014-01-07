@@ -6,10 +6,11 @@
 attachX <- base::attach;
 
 attachX(list(
-  Object = function(core=NA) {
+  Object = function(core=NA, finalize=TRUE) {
     # Create a new environment and wrap it up as a private field of a list.
     this <- core;
-    attr(this, ".env") <- new.env();
+    this.env <- new.env();
+    attr(this, ".env") <- this.env;
     class(this) <- "Object";
 
     if (getOption("R.oo::Object/instantiationTime", FALSE)) {
@@ -27,18 +28,19 @@ attachX(list(
       # it, this will be our best chance to run the correct finalizer(),
       # which might be in a subclass of a different package that is still
       # loaded.
-      isRooLoaded <- is.element("package:R.oo", search());
-      isRooLoaded <- isRooLoaded || is.element("dummy:R.oo", search());
-      if (isRooLoaded) {
+      isRooAvail <- is.element("package:R.oo", search());
+      isRooAvail <- isRooAvail || is.element("dummy:R.oo", search());
+      isRooAvail <- isRooAvail || is.element("R.oo", loadedNamespaces());
+      if (isRooAvail) {
         finalize(this);
       } else {
         # (1) Attach the 'R.oo' package
         suppressMessages({
-          isRooLoaded <- require("R.oo", quietly=TRUE);
+          isRooAvail <- require("R.oo", quietly=TRUE);
         });
 
         # For unknown reasons R.oo might not have been loaded.
-        if (isRooLoaded) {
+        if (isRooAvail) {
           finalize(this);
         } else {
 ##          warning("Failed to temporarily reload 'R.oo' and finalize().");
@@ -71,18 +73,31 @@ attachX(list(
       }
     } # finalizer()
 
-    onexit <- getOption("R.oo::Object/finalizeOnExit", FALSE);
-    reg.finalizer(attr(this, ".env"), finalizer, onexit=onexit);
+    # Should this Object be finalized?
+    if (finalize) {
+      onexit <- getOption("R.oo::Object/finalizeOnExit", FALSE);
+      reg.finalizer(this.env, finalizer, onexit=onexit);
+    }
+    assign("...finalize", finalize, envir=this.env, inherits=FALSE);
 
     this;
   },
 
-  extend = function(this, ...className, ...) {
+  extend = function(this, ...className, ..., ...finalize=TRUE) {
     fields <- list(...);
     names <- names(fields);
+    this.env <- attr(this, ".env");
     for (name in names)
-      assign(name, fields[[name]], envir=attr(this, ".env"));
+      assign(name, fields[[name]], envir=this.env);
     class(this) <- c(...className, class(this));
+
+    # Override this (=unregister finalizer) according to argument
+    # '...finalize' of extend()?
+    if (!is.na(...finalize) && !isTRUE(...finalize)) {
+      # Unregister finalizer (by registering a dummy one)
+      reg.finalizer(this.env, f=function(...) {});
+    }
+
     this;
   },
 
@@ -109,6 +124,14 @@ rm(list="attachX");
 
 ############################################################################
 # HISTORY:
+# 2014-01-05
+# o BUG FIX: The temporary finalizer() registered for Object while
+#   loading the R.oo package itself would cause cyclic loading of R.oo.
+#   The reason was that it checked whether R.oo was available or not,
+#   by only looking at attached namespaces but not loaded ones.
+# 2013-10-13
+# o Added argument 'finalize' to Object() and '...finalize' to extend()
+#   for Object.  The latter override the former.
 # 2012-12-18
 # o R CMD check for R devel no longer gives a NOTE about attach().
 # 2012-11-28
