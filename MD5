@@ -1,6 +1,6 @@
-afff036e1588c815e7f2774ca06c35af *DESCRIPTION
+daa2810c13803918213c97357afeda6e *DESCRIPTION
 e3c2912622aa80b2517da2c0785bbead *NAMESPACE
-f9cff79dc4b0667be8756b52a1f6ceaf *NEWS
+27a20c64481e8dee6f686c234d2ae45d *NEWS
 5b3e0291bcc049d9ada9005162c5259a *R/000.R
 036b736fd78edbfd223194ccf9341faa *R/006.fixVarArgs.R
 17449bea012e661714466e173d404d9b *R/020.makeObjectFinalizer,private.R
@@ -16,9 +16,9 @@ edefe2421629cb833bbf9f260886a094 *R/Class.misc.R
 bf973c6be3fe30b28e195b3b141323f3 *R/Exception.R
 2007e8e74516d315b2f790873094a9bc *R/Interface.R
 e1215b5a3ae63046d6d169d6efadb70e *R/InternalErrorException.R
-92fe333306b9a72f58de11e1e4e1d0eb *R/Package.R
-c76b25208e83c33f0d0530acfd4ec368 *R/RccViolationException.R
-6bc325d51e2391e86ec561accc53ec17 *R/Rdoc.R
+6173096fe524e84956e96e5f0654fd77 *R/Package.R
+6898dcf52f05bb5aca3ad7fe23e6d2a3 *R/RccViolationException.R
+3757bdd0392a0d88d6ffd2892cf9c260 *R/Rdoc.R
 e007f1047cd6d22af1682b696d8111ff *R/RdocException.R
 e8e3b204efce65c05aa50dca1f59b970 *R/abort.R
 ac3a33cf1dd34179325151dd009ff6da *R/classRepresentation.misc.R
@@ -38,8 +38,9 @@ b8b6c695cee9eb18304ec6f0daa3dd04 *R/objectSize.default.R
 d573ca299c7e656d9325f3fa35415ab5 *R/trim.R
 f81d192b9e80bb5e2485eadc164fb41c *R/typeOfClass.R
 180c9367491b40998fd02ab386c8b440 *R/zzz.R
-76408372bd759d84f7716d50aba942f9 *R/zzz.rJava-tweaks.R
+2ef0403219f4bb9ffa1c744bdc787c86 *R/zzz.avoid_Object_clashes.R
 876ecd0d1086da7656574be4b7739d14 *inst/CITATION
+7e7e13402a3c82cd31ff3b2c85341590 *inst/WORDLIST
 6958ed0722d07b6ca46fafca8aabd608 *inst/doc/Bengtsson.pdf
 0f69446bf87d203d9aa7ae96b6711b97 *inst/misc/ASCII.R
 be5e10acdaefd2ff6cc016f2a0ffb689 *inst/misc/Exception.R
@@ -58,10 +59,10 @@ b1a24e7675a94714a08c22590cd010c4 *man/Interface.Rd
 ce077dc2a937b8ad29504501084e3d2a *man/InternalErrorException.Rd
 16cdcb7c6c60f84829d097362b8b22bc *man/Non-documented_objects.Rd
 9402d21c663fd36e71c99ae23c5a674c *man/Object.Rd
-65b5df3066f8056ae5e49543ec364ec8 *man/Package.Rd
+f2345a3c94453786c8795ddb27929ba8 *man/Package.Rd
 6c45a8333908be4343911761c6f7a862 *man/R.oo-package.Rd
-1b37c21d1ac2bc41a319ee74d47e23d9 *man/RccViolationException.Rd
-0b1b66b5802535f0fae13526dffddf02 *man/Rdoc.Rd
+96b8ebaca18f24fa8909a41fc24a46a6 *man/RccViolationException.Rd
+2870d6bf83a0fc1e62838cc078f07c0e *man/Rdoc.Rd
 dac8e8181cc28d73f816b9a77894ba1e *man/RdocException.Rd
 f2decc7171f4f3f3235896658981729d *man/abort.Rd
 0e332f1997b5165c17da8aaa043f55e5 *man/argsToString.Class.Rd
@@ -72,7 +73,7 @@ f2decc7171f4f3f3235896658981729d *man/abort.Rd
 5a9ea3b1e21e7ba99b5a520be238c1dd *man/as.character.Interface.Rd
 b7bcf3ceb4419d6058e08f37899242f3 *man/as.character.Object.Rd
 2e907a5d0ba7c0fe22717158c892f355 *man/as.character.Package.Rd
-8a2f4d447369069b8754ae71450fc7f1 *man/as.character.RccViolationException.Rd
+fce03677219580b92f0f026c5d8dac08 *man/as.character.RccViolationException.Rd
 3541b5a81b14fd75ef7a7b40f7286c93 *man/as.character.RdocException.Rd
 9e55b4dafa5f86945a30b85e88941139 *man/attach.BasicObject.Rd
 0efcacaf2f405347ea3ebbc370bfa238 *man/attach.Object.Rd
@@ -148,7 +149,7 @@ b26db8431a42f48bb1c6650c8de8ed3f *man/getPackage.Class.Rd
 40e4c0bb372498dfddb8f9f93e722b98 *man/getPackageNameOf.Rdoc.Rd
 cc7fbf6d2f01271d3f28f67079c59145 *man/getPath.Package.Rd
 3570722216042431936a0103eeac4bfd *man/getPosition.Package.Rd
-e9e9bdca88c52684c3a9d8567148f3e9 *man/getRccUrl.RccViolationException.Rd
+6b886fe4aa46ae00498cbbe282ffea34 *man/getRccUrl.RccViolationException.Rd
 a492acc6766b63e4decdf860d534f621 *man/getRdDeclaration.Class.Rd
 3e79fa4abebf702cba1402ee681601ee *man/getRdDeclaration.classRepresentation.Rd
 dca312a51b46e57312c6ee66d4963f17 *man/getRdHierarchy.Class.Rd
@@ -235,7 +236,7 @@ b18311f0f4c8fcf30747aa0105b39cda *tests/BasicObject.R
 bb885403cb282ce2230ce2a51b59b241 *tests/Object.finalize,noattach.R
 13e77cd617b44cf1e8af480c70001bc4 *tests/Object.finalize,onoff.R
 66b5b1551498ad20595f3ad1a31fe371 *tests/Object.finalize.R
-8c33d8d4949f9f7dad19599cac0a38d4 *tests/Package.R
+4d9b542eaa8e22dc13b8815c6ee364d3 *tests/Package.R
 19a0210b7f75cc6addc00399431cca98 *tests/Package.unload.R
 260cd18edfe192c9cc4e739eabf30985 *tests/StaticMethodsAndNamespaces.R
 d0bb42cb3b0727f37bc061c0e84720ec *tests/abort.R
