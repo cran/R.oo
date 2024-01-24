@@ -1,13 +1,13 @@
-f104ebf4d4a27f8457bc20e9fe6ecdf6 *DESCRIPTION
+3dadb07bb7360ee8cde397b899e334b9 *DESCRIPTION
 e3c2912622aa80b2517da2c0785bbead *NAMESPACE
-0bcfdaf59cb904117b22cd0fadc8d4f5 *NEWS.md
+0461770d7e574e14c34a362aa333a270 *NEWS.md
 5b3e0291bcc049d9ada9005162c5259a *R/000.R
 036b736fd78edbfd223194ccf9341faa *R/006.fixVarArgs.R
 17449bea012e661714466e173d404d9b *R/020.makeObjectFinalizer,private.R
 f67e4ccc5624a99c29243e395b978b71 *R/030.ObjectClassFunctions.R
 d31786df8ab1796ca0d4fdc8c0af8ca0 *R/040.setConstructorS3.R
 076d6871e2820ad1a8f3493f17c4ce21 *R/050.Object.R
-f942033c74a8275f8ec75f0d984ecc97 *R/060.Class.R
+5f2f7a26ebdd80fd89a948d7bcf9854d *R/060.Class.R
 5dc92b7fe9cdc5c9e04e6626609fc6bc *R/999.NonDocumentedObjects.R
 83b0ae93bbd2e0b6e1c015d810ccb612 *R/999.package.R
 758e4ee2f2e836f293c75ad8be85ccae *R/ASCII.R
@@ -30,7 +30,7 @@ d8c14096ad4f0cec2b18b743bde4abf3 *R/extend.default.R
 2bdd10dbd7a659969077218b05d633a6 *R/getConstructorS3.R
 c2044ea5396bdffb7edc01380cf29658 *R/getName.environment.R
 bb16183f42121aacd8e94c12c44c80af *R/getNnnByName.R
-6d710a81c5c3fbc09560bc68bbf46ee8 *R/hashCode.R
+b53a3edefd5d1de3486cbcfa4aefb28b *R/hashCode.R
 4a9aae846687a89e6e8b9d81ace66a9b *R/ll.default.R
 b8b6c695cee9eb18304ec6f0daa3dd04 *R/objectSize.default.R
 1dc11d8f4746dd0832eca76a1182f4a0 *R/objectSize.environment.R
@@ -39,7 +39,7 @@ d573ca299c7e656d9325f3fa35415ab5 *R/trim.R
 f81d192b9e80bb5e2485eadc164fb41c *R/typeOfClass.R
 180c9367491b40998fd02ab386c8b440 *R/zzz.R
 2ef0403219f4bb9ffa1c744bdc787c86 *R/zzz.avoid_Object_clashes.R
-876ecd0d1086da7656574be4b7739d14 *inst/CITATION
+8fb6b9dcccb2ca42072cde9d53d9fa3c *inst/CITATION
 7e7e13402a3c82cd31ff3b2c85341590 *inst/WORDLIST
 6958ed0722d07b6ca46fafca8aabd608 *inst/doc/Bengtsson.pdf
 0f69446bf87d203d9aa7ae96b6711b97 *inst/misc/ASCII.R
@@ -49,10 +49,10 @@ be5e10acdaefd2ff6cc016f2a0ffb689 *inst/misc/Exception.R
 c93c880bcff2a3decdfac66d859bbd69 *man/BasicObject.Rd
 65b287cd0ee6f3a2c20a39e8e474c055 *man/Class.Rd
 737069b4fb4ac535bbbe806186f4cc14 *man/DOLLAR.BasicObject.Rd
-37c53e9ff963c8ca5c702c97b8897910 *man/DOLLAR.Class.Rd
+ccbe33f13ac060bab4bda25ea0b0eb33 *man/DOLLAR.Class.Rd
 407c5e01931e259411212c477a3bd724 *man/DOLLAR.Object.Rd
 4ee23b6cc0dc1f40bae5410d248569f2 *man/DOLLARLT_-.BasicObject.Rd
-7fe9522af1f19c8abf58869f5d18bb22 *man/DOLLARLT_-.Class.Rd
+d42e70813de70bf1607c37ec1eeb963b *man/DOLLARLT_-.Class.Rd
 382a22cfa217fb97d7d15e39a6ffd422 *man/DOLLARLT_-.Object.Rd
 9255607a267448ff9e665ef01fef9300 *man/Exception.Rd
 b1a24e7675a94714a08c22590cd010c4 *man/Interface.Rd
@@ -139,7 +139,7 @@ c976acc73c1a4ed32e366b36af4b50d3 *man/getLastException.Exception.Rd
 7fc05ad512ac8efebe03df33209864e2 *man/getManPath.Rdoc.Rd
 df2eb30241aea986e2e890919888b781 *man/getMessage.Exception.Rd
 b1d13c7b06c5c56ef6c36128c23709da *man/getMessage.InternalErrorException.Rd
-3aec6602206f1d959b8dae1ac9575a24 *man/getMethods.Class.Rd
+6e3291be41e014514f06b4f2ad01f7fe *man/getMethods.Class.Rd
 feaa11e74ea1fe59c6c7570db47b52e8 *man/getName.Class.Rd
 57b03bab837e08aa59ddbb4147fb1d72 *man/getName.Package.Rd
 c4150476fb649019a5bc485bbb5be059 *man/getName.environment.Rd
@@ -173,7 +173,7 @@ be9ff6d7bc02c93d8b01191406c24aa4 *man/hasField.BasicObject.Rd
 01da01107c8b331cde76fdda9afa2b8d *man/hasField.Object.Rd
 fce21c7e3a0ffc4c2131f9baa2c328c7 *man/hashCode.BasicObject.Rd
 91b51d77e4dc1292af617374187eca2b *man/hashCode.Object.Rd
-d7cc8d2005e81869597141bda0eb1653 *man/hashCode.Rd
+7a43b6eec740945cf52e12061990eb9e *man/hashCode.Rd
 77677cdee77b5f236042d8799d3f86ac *man/hierarchy.Rdoc.Rd
 55099b79a40ba5f6a0cf1ad6fbdf1698 *man/intToChar.Rd
 f02ced2a5c71ffebebfdf69fa79b3d63 *man/isAbstract.Class.Rd
@@ -244,7 +244,7 @@ a6d6dafc1837ebf25a20d5da12a1fffe *tests/attachLocally.Object.R
 c14c98dd367a26bce140563350ff4a49 *tests/equals.R
 2b5676d1b5a917158bfea6cca92da84a *tests/extend.default.R
 3d331609f3d79fa4cf8840bcaf6655c8 *tests/getConstructorS3.R
-65097e1dc4a8e7c39f4fc32e89e84aa2 *tests/hashCode.R
+3300674c6735c9f389e8b705e9b1ce20 *tests/hashCode.R
 8d7daba42e53f552214734fad71f2df0 *tests/isBeingCreated.Class.R
 6991fe671d618138be9d06745c866371 *tests/ll.R
 2605f974d27c6b7b7cc16919cf4504b8 *tests/local.R

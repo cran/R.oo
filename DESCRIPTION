@@ -1,6 +1,6 @@
 Package: R.oo
-Version: 1.25.0
-Depends: R (>= 2.13.0), R.methodsS3 (>= 1.8.1)
+Version: 1.26.0
+Depends: R (>= 2.13.0), R.methodsS3 (>= 1.8.2)
 Imports: methods, utils
 Suggests: tools
 Title: R Object-Oriented Programming with or without References
@@ -14,6 +14,6 @@ LazyLoad: TRUE
 URL: https://github.com/HenrikBengtsson/R.oo
 BugReports: https://github.com/HenrikBengtsson/R.oo/issues
 NeedsCompilation: no
-Packaged: 2022-06-12 00:26:52 UTC; hb
+Packaged: 2024-01-24 02:17:13 UTC; henrik
 Repository: CRAN
-Date/Publication: 2022-06-12 02:20:02 UTC
+Date/Publication: 2024-01-24 05:12:50 UTC
