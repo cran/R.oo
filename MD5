@@ -1,6 +1,6 @@
-1d7bf4f727e5b6f85dcd6f3845c1ddae *DESCRIPTION
+399a35992d7ca22970056224370442ee *DESCRIPTION
 eacfc984aed10edeaf9145aaf9a1d7da *NAMESPACE
-1560e562b32cb31a076c05e1daef3144 *NEWS.md
+9eb1c78877eca4bb3d57c519f9f03900 *NEWS.md
 5b3e0291bcc049d9ada9005162c5259a *R/000.R
 ba90a83a672c8430fa7ebd1e35a5a7fa *R/006.fixVarArgs.R
 17449bea012e661714466e173d404d9b *R/020.makeObjectFinalizer,private.R
@@ -18,7 +18,7 @@ bf973c6be3fe30b28e195b3b141323f3 *R/Exception.R
 e1215b5a3ae63046d6d169d6efadb70e *R/InternalErrorException.R
 c350a0ae6615456d6001f13a254da3a0 *R/Package.R
 6898dcf52f05bb5aca3ad7fe23e6d2a3 *R/RccViolationException.R
-40eaad1a1234845ecc598e18d7f2522e *R/Rdoc.R
+719d163ad57f9af6008e6395b413d508 *R/Rdoc.R
 e007f1047cd6d22af1682b696d8111ff *R/RdocException.R
 e8e3b204efce65c05aa50dca1f59b970 *R/abort.R
 ac3a33cf1dd34179325151dd009ff6da *R/classRepresentation.misc.R
